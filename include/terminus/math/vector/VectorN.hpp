@@ -348,6 +348,13 @@ class Vector_<ValueT,0> : public Vector_Base<Vector_<ValueT>>
         static double dot( const Vector_Base<Vector1T>& vec1,
                            const Vector_Base<Vector2T>& vec2 )
         {
+            if( vec1.impl().size() > vec2.impl().size() )
+            {
+                std::stringstream sout;
+                sout << "Vector 1 is smaller than the second vector. Actual: "
+                     << vec1.impl().size() << ", " << vec2.impl().size();
+                throw std::runtime_error( sout.str() );
+            }
             double mag = 0;
 
             auto it1 = vec1.impl().begin();
