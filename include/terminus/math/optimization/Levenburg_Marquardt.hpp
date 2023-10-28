@@ -97,26 +97,36 @@ ImageResult<typename ImplT::domain_type> levenberg_marquardt( const Least_Square
         // Measurement Jacobian
         typename ImplT::jacobian_type J = model.jacobian(x);
 
-        tmns::log::trace( "J: ", J.to_log_string() );
-        VectorN<double> del_J = -1.0 * Rinv * (transpose(J) * error);
+        tmns::log::info( "J: ", J.to_log_string() );
+
+        MatrixN<double> JT = transpose( J );
+        tmns::log::info( "JT: ", JT.to_log_string() );
+
+        VectorN<double> JTE = (JT * error);
+        tmns::log::info( "JTE: ", JT.to_log_string() );
+
+        VectorN<double> RJ = Rinv * JTE;
+        tmns::log::info( "RJ: ", RJ.to_log_string() );
+
+        VectorN<double> del_J = -1.0 * RJ;
 
         tmns::log::trace( "DELJ: ", del_J.to_log_string() );
 
         // Hessian of cost function (using Gauss-Newton approximation)
         auto TJ = transpose( J );
-        tmns::log::trace( "TJ: ", TJ.to_log_string() );
+        tmns::log::trace( ADD_CURRENT_LOC(), "TJ: ", TJ.to_log_string() );
 
         MatrixN<double> TJJ = TJ * J;
-        tmns::log::trace( "TJJ: ", TJJ.to_log_string() );
+        tmns::log::trace( ADD_CURRENT_LOC(), "TJJ: ", TJJ.to_log_string() );
 
         MatrixN<double> hessian = Rinv * TJJ;
-        tmns::log::trace( "hessian: ", hessian.to_log_string() );
+        tmns::log::trace( ADD_CURRENT_LOC(), "hessian: ", hessian.to_log_string() );
 
         int64_t iterations = 0;
         double norm_try = norm_start + 1.0;
         while( norm_try > norm_start )
         {
-            tmns::log::trace( "Norm Try: ", norm_try, ", Norm Start: ", norm_start );
+            tmns::log::trace( ADD_CURRENT_LOC(), "Norm Try: ", norm_try, ", Norm Start: ", norm_start );
             // Increase diagonal elements to dynamically mix gradient
             // descent and Gauss-Newton.
             Matrix<double> hessian_lm = hessian;

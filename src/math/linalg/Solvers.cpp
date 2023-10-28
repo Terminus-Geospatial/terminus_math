@@ -19,6 +19,9 @@ namespace tmns::math::linalg {
 ImageResult<VectorN<double>> solve_symmetric( const MatrixN<double>& A,
                                               const VectorN<double>& b )
 {
+    tmns::log::info( ADD_CURRENT_LOC(), "A: ", A.to_log_string() );
+    tmns::log::info( ADD_CURRENT_LOC(), "b: ", b.to_log_string() );
+
     // Create Eigen matrix
     auto eigen_A = eigen::to_eigen<::Eigen::MatrixXd>( A );
     auto eigen_b = eigen::to_eigen<::Eigen::VectorXd>( b );

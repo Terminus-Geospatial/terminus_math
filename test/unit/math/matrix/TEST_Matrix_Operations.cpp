@@ -5,10 +5,7 @@
  */
 #include <gtest/gtest.h>
 
-#include <terminus/math/matrix/Matrix.hpp>
-#include <terminus/math/matrix/Matrix_Matrix_Product.hpp>
-#include <terminus/math/matrix/Matrix_Operations.hpp>
-#include <terminus/math/matrix/Matrix_Proxy.hpp>
+#include <terminus/math/matrix.hpp>
 
 namespace tmx = tmns::math;
 
@@ -507,6 +504,46 @@ TEST_F( Matrix_Operations, matrix_multiplication_blended )
     {
         ASSERT_NEAR( (*it), exp_result[counter++], 0.01 );
     }
+}
+
+/************************************************/
+/*      Test Weird Matrix Multiplication        */
+/************************************************/
+TEST_F( Matrix_Operations, matrix_multiplication_4_mats )
+{
+    std::vector<double> data { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    // Create duplicate matrices
+    tmx::MatrixN<double> mat_1( 3, 3, data );
+    tmx::MatrixN<double> mat_2( 3, 3, data );
+    tmx::MatrixN<double> mat_3( 3, 3, data );
+    tmx::MatrixN<double> mat_4( 3, 3, data );
+
+    // Multiply matrices
+    auto mat_5 = mat_1 * mat_2;
+    auto mat_6 = mat_3 * mat_4;
+
+    auto mat_7 = mat_5 * mat_6;
+
+    std::array<double,9> exp_result {  7560.0000,   9288.0000,  11016.0000,
+                                      17118.0000,  21033.0000,  24948.0000,
+                                      26676.0000,  32778.0000,  38880.0000 };
+
+    size_t counter = 0;
+    for( auto it = mat_7.begin(); it != mat_7.end(); it++ )
+    {
+        ASSERT_NEAR( (*it), exp_result[counter++], 0.01 );
+    }
+}
+
+/************************************************/
+/*      Test Weird Matrix Multiplication        */
+/************************************************/
+TEST_F( Matrix_Operations, matrix_multiplication_lm_issue )
+{
+    
+    auto TJ = transpose( J );
+
+    MatrixN<double> TJJ = TJ * J;
 }
 
 /************************************************/

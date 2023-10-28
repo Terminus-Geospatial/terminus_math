@@ -377,8 +377,9 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
             // Make sure the matrix is square
             if( rows() != cols() )
             {
-                std::cerr << "error: Matrix must be square.  Actual: "
-                          << rows() << " x " << cols();
+                tmns::log::error( ADD_CURRENT_LOC(), 
+                                  "Matrix must be square.  Actual: ",
+                                  rows(), " x ", cols() );
                 return result;
             }
             
@@ -395,8 +396,9 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
                 // Make sure matrix is square
                 if( a.rows() != a.cols() )
                 {
-                    std::cerr << "error: Matrix must be square.  Actual: "
-                              << a.rows() << " x " << a.cols();
+                    tmns::log::error( ADD_CURRENT_LOC(), 
+                                  "Matrix must be square.  Actual: ",
+                                  a.rows(), " x ", a.cols() );
                     return result;
                 }
                 
