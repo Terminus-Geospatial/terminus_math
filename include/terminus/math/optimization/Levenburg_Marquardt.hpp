@@ -90,20 +90,33 @@ ImageResult<typename ImplT::domain_type> levenberg_marquardt( const Least_Square
         // Difference between observed and predicted and error (2-norm of difference)
         error = model.difference( observation, h );
         norm_start = error.magnitude();
-        tmns::log::debug( "LM: outer iteration starting robust norm: ", norm_start );
+        tmns::log::debug( ADD_CURRENT_LOC(), 
+                          "LM: outer iteration starting robust norm: ",
+                          norm_start );
 
         // Measurement Jacobian
         typename ImplT::jacobian_type J = model.jacobian(x);
 
+        tmns::log::trace( "J: ", J.to_log_string() );
         VectorN<double> del_J = -1.0 * Rinv * (transpose(J) * error);
 
+        tmns::log::trace( "DELJ: ", del_J.to_log_string() );
+
         // Hessian of cost function (using Gauss-Newton approximation)
-        MatrixN<double> hessian = Rinv * ( transpose( J ) * J );
+        auto TJ = transpose( J );
+        tmns::log::trace( "TJ: ", TJ.to_log_string() );
+
+        MatrixN<double> TJJ = TJ * J;
+        tmns::log::trace( "TJJ: ", TJJ.to_log_string() );
+
+        MatrixN<double> hessian = Rinv * TJJ;
+        tmns::log::trace( "hessian: ", hessian.to_log_string() );
 
         int64_t iterations = 0;
         double norm_try = norm_start + 1.0;
         while( norm_try > norm_start )
         {
+            tmns::log::trace( "Norm Try: ", norm_try, ", Norm Start: ", norm_start );
             // Increase diagonal elements to dynamically mix gradient
             // descent and Gauss-Newton.
             Matrix<double> hessian_lm = hessian;

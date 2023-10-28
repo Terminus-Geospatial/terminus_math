@@ -88,6 +88,9 @@ class Least_Squares_Model_Base
         template <typename DomainT>
         MatrixN<double> jacobian( const DomainT& x ) const
         {
+            tmns::log::trace( ADD_CURRENT_LOC(), 
+                              "Start of Method ",
+                              x.to_log_string() );
             // Get nominal function value
             auto h0 = impl().operator()(x);
 
