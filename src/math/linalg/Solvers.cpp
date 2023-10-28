@@ -28,6 +28,8 @@ ImageResult<VectorN<double>> solve_symmetric( const MatrixN<double>& A,
 
     Eigen::MatrixXd x = eigen_A.value().colPivHouseholderQr().solve( eigen_b.value() );
 
+    std::cout << x << std::endl;
+    std::cout << "size: " << x.size() << std::endl;
     return outcome::ok<VectorN<double>>( VectorN<double>( x.data(),
                                                           x.size() ) );
 }

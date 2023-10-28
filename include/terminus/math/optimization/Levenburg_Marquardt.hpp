@@ -94,6 +94,8 @@ ImageResult<typename ImplT::domain_type> levenberg_marquardt( const Least_Square
                           "LM: outer iteration starting robust norm: ",
                           norm_start );
 
+        // @todo:  Fix matrix multiplication problem.
+
         // Measurement Jacobian
         typename ImplT::jacobian_type J = model.jacobian(x);
 
@@ -110,10 +112,9 @@ ImageResult<typename ImplT::domain_type> levenberg_marquardt( const Least_Square
 
         VectorN<double> del_J = -1.0 * RJ;
 
-        tmns::log::trace( "DELJ: ", del_J.to_log_string() );
 
         // Hessian of cost function (using Gauss-Newton approximation)
-        auto TJ = transpose( J );
+        MatrixN<double> TJ = transpose( J );
         tmns::log::trace( ADD_CURRENT_LOC(), "TJ: ", TJ.to_log_string() );
 
         MatrixN<double> TJJ = TJ * J;

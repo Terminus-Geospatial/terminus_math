@@ -79,12 +79,22 @@ class Vector_<ValueT,0> : public Vector_Base<Vector_<ValueT>>
         }
 
         /**
+         * @brief Constructor Given an std::array
+         */
+        template <typename OtherValueT,
+                  size_t OtherSize>
+        explicit Vector_( const std::array<OtherValueT,OtherSize>& data )
+          : m_data( data.begin(), data.end() )
+        {
+        }
+
+        /**
          * Constructor given pointer and size
         */
         explicit Vector_( const ValueT* ptr,
                           size_t        size )
+            : m_data( ptr, ptr + size )
         {
-            std::copy( ptr, ptr + size, m_data.begin() );
         }
 
         /**
@@ -384,5 +394,8 @@ class Vector_<ValueT,0> : public Vector_Base<Vector_<ValueT>>
 
 template <typename ValueT>
 using VectorN = Vector_<ValueT,0>;
+
+using VectorNf = VectorN<float>;
+using VectorNd = VectorN<double>;
 
 } // End of tmns::math namespace

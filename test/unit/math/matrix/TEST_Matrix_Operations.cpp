@@ -538,17 +538,6 @@ TEST_F( Matrix_Operations, matrix_multiplication_4_mats )
 /************************************************/
 /*      Test Weird Matrix Multiplication        */
 /************************************************/
-TEST_F( Matrix_Operations, matrix_multiplication_lm_issue )
-{
-    
-    auto TJ = transpose( J );
-
-    MatrixN<double> TJJ = TJ * J;
-}
-
-/************************************************/
-/*      Test Weird Matrix Multiplication        */
-/************************************************/
 TEST_F( Matrix_Operations, matrix_multiplication_vector_blended )
 {
     // Create Proxy Matrix

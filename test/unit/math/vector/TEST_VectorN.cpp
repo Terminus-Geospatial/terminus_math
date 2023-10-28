@@ -37,3 +37,24 @@ TEST( VectorN, simple_operations )
     ASSERT_NEAR( vec02[3],  3, 0.001 );
     
 }
+
+/************************************************/
+/*      Test Various Vector Constructors        */
+/************************************************/
+TEST( VectorN, Constructors )
+{
+    // Create an array 
+    std::array<double,3> arr01 { 1, 2, 3 };
+
+    // Create Vector
+    tmns::math::VectorNd vec01( arr01 );
+    ASSERT_NEAR( vec01[0], 1, 0.001 );
+    ASSERT_NEAR( vec01[1], 2, 0.001 );
+    ASSERT_NEAR( vec01[2], 3, 0.001 );
+
+    // Create another vector with raw pointer constructor
+    tmns::math::VectorNd vec02( arr01.data(), arr01.size() );
+    ASSERT_NEAR( vec02[0], 1, 0.001 );
+    ASSERT_NEAR( vec02[1], 2, 0.001 );
+    ASSERT_NEAR( vec02[2], 3, 0.001 );
+}
