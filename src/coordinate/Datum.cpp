@@ -164,6 +164,126 @@ double Datum::radius( [[maybe_unused]] double lat_deg,
     return std::sqrt( x * x + y * y );
 }
 
+/*****************************************************************************/
+/*      Convert a 3D Coordinate from Geodetic to Cartesian Coordinates       */
+/*****************************************************************************/
+math::Vector3d Datum::geodetic_to_cartesian( const math::Vector3d& llh ) const
+{
+    double a  = m_impl->m_semi_major_axis;
+    double b  = m_impl->m_semi_minor_axis;
+    double a2 = a * a;
+    double b2 = b * b;
+    double e2 = (a2 - b2) / a2;
+
+    double lat = llh.y();
+    if ( lat < -90 ) lat = -90;
+    if ( lat >  90 ) lat = 90;
+
+    double rlon = ( llh.x() + m_impl->m_meridian_offset ) * ( M_PI / 180 );
+    double rlat = lat * ( M_PI / 180 );
+    double slat = std::sin( rlat );
+    double clat = std::cos( rlat );
+    double slon = std::sin( rlon );
+    double clon = std::cos( rlon );
+    double radius = a / std::sqrt( 1.0 - e2 * slat * slat );
+
+    return math::Vector3d( { ( radius + llh.z() ) * clat * clon,
+                             ( radius + llh.z() ) * clat * slon,
+                             ( radius * ( 1 - e2 ) + llh.z() ) * slat } );
+}   
+
+/**
+ * This algorithm is a non-iterative algorithm from "An analytical method to transform geocentric into geodetic
+ * coordinates" by Hugues Vermeille, Journal of Geodesy 2011.
+ * 
+ * This is an improvement over the 1988/Proj4's implementation as it's a smidgen faster and it still works near the
+ * center of the datum.
+ */
+math::Vector3d Datum::cartesian_to_geodetic( const math::Vector3d& xyz ) const
+{
+    const double a2 = m_impl->m_semi_major_axis * m_impl->m_semi_major_axis;
+    const double b2 = m_impl->m_semi_minor_axis * m_impl->m_semi_minor_axis;
+    const double e2 = 1 - b2 / a2;
+    const double e4 = e2 * e2;
+
+    double xy_dist = std::sqrt( xyz[0] * xyz[0] + xyz[1] * xyz[1] );
+    double p  = ( xyz[0] * xyz[0] + xyz[1] * xyz[1] ) / a2;
+    double q  = ( 1 - e2 ) * xyz[2] * xyz[2] / a2;
+    double r  = ( p + q - e4 ) / 6.0;
+    double r3 = r * r * r;
+
+    math::Vector3d llh;
+
+    double evolute = 8 * r3 + e4 * p * q;
+    double u = std::numeric_limits<double>::quiet_NaN();
+    if ( evolute > 0 )
+    {
+        // outside the evolute
+        double right_inside_pow = std::sqrt(e4 * p * q);
+        double sqrt_evolute = std::sqrt( evolute );
+        u = r + 0.5 * std::pow( sqrt_evolute + right_inside_pow, 2.0/3.0 )
+          + 0.5 * std::pow( sqrt_evolute - right_inside_pow, 2.0/3.0 );
+    }
+    else if( std::fabs( xyz[2] ) < std::numeric_limits<double>::epsilon() )
+    {
+        // On the equator plane
+        llh[1] = 0;
+        llh[2] = xyz.magnitude() - m_impl->m_semi_major_axis;
+    }
+    else if( evolute < 0 and std::fabs(q) > std::numeric_limits<double>::epsilon() )
+    {
+        // On or inside the evolute
+        double atan_result = std::atan2( sqrt( e4 * p * q ), std::sqrt( -evolute ) + std::sqrt(-8 * r3) );
+        u = -4 * r * std::sin( 2.0 / 3.0 * atan_result )
+                   * std::cos( M_PI / 6.0 + 2.0 / 3.0 * atan_result );
+    }
+    else if( std::fabs(q) < std::numeric_limits<double>::epsilon() and p <= e4 )
+    {
+        // In the singular disc
+        llh[2] = -m_impl->m_semi_major_axis * std::sqrt(1 - e2) * std::sqrt(e2 - p) / std::sqrt(e2);
+        llh[1] = 2 * std::atan2( std::sqrt(e4 - p), std::sqrt(e2*(e2 - p)) + std::sqrt(1-e2) * std::sqrt(p) );
+    }
+    else
+    {
+        // Near the cusps of the evolute
+        double inside_pow = sqrt(evolute) + sqrt(e4 * p * q);
+        u = r + 0.5   * std::pow( inside_pow,  2.0/3.0 )
+              + 2*r*r * std::pow( inside_pow, -2.0/3.0 );
+    }
+
+    if( !std::isnan(u) )
+    {
+        double v   = std::sqrt( u * u + e4 * q );
+        double u_v = u + v;
+        double w   = e2 * ( u_v - q ) / ( 2 * v );
+        double k   = u_v / ( w + std::sqrt( w * w + u_v ) );
+        double D   = k * xy_dist / ( k + e2 );
+        double dist_2 = D * D + xyz[2] * xyz[2];
+        llh[2] = ( k + e2 - 1 ) * std::sqrt( dist_2 ) / k;
+        llh[1] = 2 * std::atan2( xyz[2], std::sqrt( dist_2 ) + D );
+    }
+
+    if ( xy_dist + xyz[0] > ( std::sqrt(2) - 1 ) * xyz[1] )
+    {
+        // Longitude is between -135 and 135
+        llh[0] = 360.0 * std::atan2( xyz[1], xy_dist + xyz[0] ) / M_PI;
+    }
+    else if( xy_dist + xyz[1] < ( std::sqrt(2) + 1 ) * xyz[0] )
+    {
+        // Longitude is between -225 and 45
+        llh[0] = - 90.0 + 360.0 * std::atan2( xyz[0], xy_dist - xyz[1] ) / M_PI;
+    }
+    else
+    {
+        // Longitude is between -45 and 225
+        llh[0] = 90.0 - 360.0 * std::atan2( xyz[0], xy_dist + xyz[1] ) / M_PI;
+    }
+    llh[0] -= m_impl->m_meridian_offset;
+    llh[1] *= 180.0 / M_PI;
+
+    return llh;
+}
+
 /************************************/
 /*      From Well-Known Name        */
 /************************************/

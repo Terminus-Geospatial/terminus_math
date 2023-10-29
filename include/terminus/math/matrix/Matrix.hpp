@@ -107,7 +107,7 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
         template <typename ContainerT>
         Matrix( const ContainerT& data ) requires (Is_STL_Container<ContainerT>::value)
         {
-            if( data.size() <= RowsN * ColsN )
+            if( data.size() < RowsN * ColsN )
             {
                 std::stringstream sout;
                 sout << "Array has less data than required matrix size. Required: " << RowsN * ColsN
