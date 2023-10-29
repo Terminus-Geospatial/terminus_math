@@ -127,6 +127,19 @@ class Matrix_Matrix_Product : public Matrix_Base<Matrix_Matrix_Product<Matrix1T,
         }
 
         /**
+         * Return all diagonal components
+         */
+        VectorN<value_type> diagonal() const
+        {
+            VectorN<value_type> output( std::min( rows(), cols() ) );
+            for( size_t x = 0; x < output.size(); x++ )
+            {
+                output[x] = this->operator()( x, x );
+            }
+            return output;
+        }
+
+        /**
          * Get name
          */
         static std::string name()
