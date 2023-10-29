@@ -6,7 +6,10 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/Vector_Utilities.hpp>
+#include <terminus/log/utility.hpp>
+#include <terminus/math/vector/Vector_Utilities.hpp>
+
+namespace tmx = tmns::math;
 
 /********************************************/
 /*          Check To Vector Methods         */
@@ -23,6 +26,26 @@ TEST( Vector_Utilities, ToVector_Methods )
     ASSERT_NEAR( vec2.z(),-2, 0.0001 );
 }
 
+/*************************************/
+/*       Test Vector Addition        */
+/*************************************/
+TEST( Vector_Utilities, vector_addition )
+{
+    tmns::math::Vector3d vec_01 ( { -1, 2.1, 0.5 } );
+    tmns::math::Vector3d vec_02 ( {  8, 5.9, 8.5 } );
+
+    auto vec_03 = vec_01 + vec_02;
+
+    // Verify the iterator works
+    tmns::log::trace( vec_03.to_log_string() );
+    double exp_value = 7;
+    for( auto it = vec_03.begin(); it != vec_03.end(); it++ )
+    {
+        ASSERT_NEAR( (*it), exp_value, 0.0001 );
+        exp_value += 1;
+    }
+}
+
 /****************************************************/
 /*      Test Vector / Scalar Multiplication         */
 /****************************************************/
@@ -34,12 +57,12 @@ TEST( Vector_Utilities, vector_scalar_multiplication )
 
     // Test Scalar x Vector
     auto res_01 = vec_01 * scalar_01;
-    ASSERT_NEAR( res_01.x(), -3, 0.001 );
-    ASSERT_NEAR( res_01.y(), 6.3, 0.001 );
-    ASSERT_NEAR( res_01.z(), 1.5, 0.001 );
+    ASSERT_NEAR( res_01[0], -3, 0.001 );
+    ASSERT_NEAR( res_01[1], 6.3, 0.001 );
+    ASSERT_NEAR( res_01[2], 1.5, 0.001 );
 
     // Test Vector x Scalar
-    auto res_02 = scalar_01 * vec_01;
+    tmns::math::Vector3d res_02 = scalar_01 * vec_01;
     ASSERT_NEAR( res_02.x(), -3, 0.001 );
     ASSERT_NEAR( res_02.y(), 6.3, 0.001 );
     ASSERT_NEAR( res_02.z(), 1.5, 0.001 );
@@ -56,7 +79,22 @@ TEST( Vector_Utilities, vector_scalar_division )
 
     // Test Scalar x Vector
     auto res_01 = vec_01 / scalar_01;
-    ASSERT_NEAR( res_01.x(), -0.5, 0.001 );
-    ASSERT_NEAR( res_01.y(), 1.1, 0.001 );
-    ASSERT_NEAR( res_01.z(), 0.4, 0.001 );
+    ASSERT_NEAR( res_01[0], -0.5, 0.001 );
+    ASSERT_NEAR( res_01[1], 1.1, 0.001 );
+    ASSERT_NEAR( res_01[2], 0.4, 0.001 );
+}
+
+/****************************************/
+/*      Test Vector Normalization       */
+/****************************************/
+TEST( Vector_Utilities, normalize_l2 )
+{
+    // Test 1, normal vector
+    tmns::math::Vector3f vec01( { 1, 2, 3 } );
+
+    auto res_01 = tmx::normalize( vec01 );
+    ASSERT_NEAR( res_01[0], 0.267, 0.001 );
+    ASSERT_NEAR( res_01[1], 0.535, 0.001 );
+    ASSERT_NEAR( res_01[2], 0.802, 0.001 );
+
 }

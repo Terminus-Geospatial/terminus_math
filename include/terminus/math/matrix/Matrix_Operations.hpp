@@ -344,4 +344,113 @@ Matrix<typename Product_Type<typename Vector1T::value_type,
     return result;
 }
 
+/**
+ * Matrix Inverse (2x2 case)
+ */
+template <typename T>
+Matrix<T, 2, 2> inverse( const Matrix<T,2,2>& m)
+{
+    T const* d = m.data();
+    T det = d[0]*d[3] - d[1]*d[2];
+    if( det == T(0) )
+    {
+        throw std::runtime_error( "Matrix is singular in inverse()" );
+    }
+    Matrix<T, 2, 2> out( { d[3]/det, 
+                           -d[1]/det,
+                           -d[2]/det,
+                           d[0]/det } );
+    return out;
+}
+  
+/**
+ * Matrix inversion
+ */
+template <class MatrixT>
+Matrix<typename MatrixT::value_type> inverse( const Matrix_Base<MatrixT>& m )
+{
+    using value_type = MatrixT::value_type;
+    value_type zero = value_type();
+
+    size_t size = m.impl().cols();
+    MatrixN<value_type> buf = m;
+
+    // Initialize the permutation
+    VectorN<size_t> pm( size );
+    for( size_t i=0; i<size; ++i )
+    {
+        pm(i) = i;
+    }
+
+    // Perform LU decomposition with partial pivoting
+    for( size_t i = 0; i < size; ++i )
+    {
+        Matrix_Col<MatrixN<value_type> > mci( buf, i );
+        Matrix_Row<MatrixN<value_type> > mri( buf, i );
+
+        size_t i_norm_inf = i + index_norm_inf( subvector( mci, i, size - i ) );
+        
+        if( buf( i_norm_inf, i ) == zero )
+        {
+            throw std::runtime_error( "Matrix is singular in inverse()" );
+        }
+        if( i_norm_inf != i )
+        {
+            size_t pbuf = pm(i);
+            pm(i) = pm(i_norm_inf);
+            pm(i_norm_inf) = pbuf;
+            VectorN<value_type> rowbuf = mri;
+            mri = select_row( buf, i_norm_inf );
+            select_row( buf, i_norm_inf ) = rowbuf;
+        }
+        if( i != size-1 )
+        {
+            subvector( mci, i+1, size-i-1 ) /= buf( i, i );
+            submatrix( buf, i+1, i+1, size-i-1, size - i - 1 ) -= outer_prod( subvector( mci, i+1, size - i - 1 ),
+                                                                              subvector( mri, i+1, size - i - 1 ) );
+        }
+    }
+
+    // Build up a permuted identity matrix
+    Matrix<value_type> inverse(size,size);
+    for ( size_t i=0; i<size; ++i )
+    {
+        inverse( i, pm(i) ) = value_type(1);
+    }
+
+    // Divide by the lower-triangular term
+    for( size_t i=0; i<size; ++i )
+    {
+        for( size_t j=0; j<size; ++j )
+        {
+            value_type t = inverse(i,j);
+            if( t != zero )
+            {
+                for( size_t k = i + 1; k < size; ++k )
+                {
+                    inverse(k,j) -= buf(k,i) * t;
+                }
+            }
+        }
+    }
+
+    // Divide by the upper-triangular term
+    for( ssize_t i=size-1; i>=0; --i )
+    {
+        for( ssize_t j=size-1; j>=0; --j )
+        {
+            value_type t = inverse(i,j) /= buf(i,i);
+            if( t != zero )
+            {
+                for( ssize_t k=i-1; k>=0; --k )
+                {
+                    inverse(k,j) -= buf(k,i) * t;
+                }
+            }
+        }
+    }
+
+    return inverse;
+  }
+
 } // End of tmns::math namespace

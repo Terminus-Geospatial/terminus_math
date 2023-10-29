@@ -73,6 +73,17 @@ class Vector_ : public Vector_Base<Vector_<ValueT,Dims>>
         }
 
         /**
+         * Constructor given STL vector
+         */
+        template <typename ContainerT>
+        Vector_( const ContainerT& container )
+        {
+            std::copy( container.begin(),
+                       container.begin() + std::min( m_data.size(), container.size() ),
+                       m_data.begin() );
+        }
+
+        /**
          * Constructor given a fill value
          */
         Vector_( const ValueT& fill_value )

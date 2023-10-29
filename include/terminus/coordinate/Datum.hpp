@@ -175,7 +175,7 @@ class Datum
     private:
 
         /// @brief Underlying Datum Type
-        std::unique_ptr<detail::Datum_Impl> m_impl;
+        std::shared_ptr<detail::Datum_Impl> m_impl;
 
 }; // End of Datum class
 

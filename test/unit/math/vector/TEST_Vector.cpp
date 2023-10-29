@@ -33,6 +33,7 @@ TEST( Vector, Constructors )
 {
     // Create an array 
     std::array<double,3> arr01 { 1, 2, 3 };
+    std::vector<double> arr02 { 1, 2, 3 };
 
     // Create Vector
     tmns::math::Vector3d vec01( arr01 );
@@ -45,6 +46,12 @@ TEST( Vector, Constructors )
     ASSERT_NEAR( vec02[0], 1, 0.001 );
     ASSERT_NEAR( vec02[1], 2, 0.001 );
     ASSERT_NEAR( vec02[2], 3, 0.001 );
+
+    // Construct Vector using std::vector
+    tmns::math::Vector3d vec03( arr02 );
+    ASSERT_NEAR( vec03[0], 1, 0.001 );
+    ASSERT_NEAR( vec03[1], 2, 0.001 );
+    ASSERT_NEAR( vec03[2], 3, 0.001 );
 
 }
 

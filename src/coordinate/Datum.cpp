@@ -20,7 +20,7 @@ namespace tmns::coordinate {
 /*      Default Constructor     */
 /********************************/
 Datum::Datum()
-    : m_impl( std::make_unique<detail::Datum_Impl>() )
+    : m_impl( std::make_shared<detail::Datum_Impl>() )
 {
     OGRSpatialReference gdal_spatial_ref;
     gdal_spatial_ref.importFromProj4( m_impl->m_proj_str.c_str() );

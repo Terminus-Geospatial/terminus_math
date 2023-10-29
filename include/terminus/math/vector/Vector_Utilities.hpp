@@ -6,10 +6,11 @@
 #pragma once
 
 // Terminus Libraries
-#include "../types/Functors.hpp"
-#include "Vector_Functors.hpp"
-#include "Vector_Transpose.hpp"
-#include "Vector.hpp"
+#include <terminus/math/Enums.hpp>
+#include <terminus/math/types/Functors.hpp>
+#include <terminus/math/vector/Vector_Functors.hpp>
+#include <terminus/math/vector/Vector_Transpose.hpp>
+#include <terminus/math/vector/VectorN.hpp>
 
 namespace tmns::math {
 
@@ -250,6 +251,67 @@ std::enable_if_t<Is_Scalar<ScalarT>::value,
                  ScalarT                          s )
 {
     return transpose( v.child() / s );
+}
+
+/**
+ * Get Vector Magnitude Squared
+ */
+template <typename VectorT>
+double magnitude_sq( const VectorT& vec )
+{
+    double mag = 0;
+    for( auto it = vec.begin(); it != vec.end(); it++ )
+    {
+        mag += (*it) * (*it);
+    }
+    return mag;
+}
+
+/**
+ * Get Vector Magnitude
+ */
+template <typename VectorT>
+double magnitude( const VectorT& vec, 
+                  DistanceType   mode = DistanceType::L2 )
+{
+    if( mode == DistanceType::L2 )
+    {
+        return std::sqrt( magnitude_sq( vec ) );
+    }
+    else
+    {
+        throw std::runtime_error( "L1 norm is not supported at this time." );
+    }
+}
+
+/**
+ * Normalize a vector
+ */
+template <typename VectorT>
+VectorT normalize( const VectorT& vec, 
+                   DistanceType   mode = DistanceType::L2 )
+{
+    // L1 norm not supported at this time
+    if( mode == DistanceType::L1 )
+    {
+        throw std::runtime_error( "L1 norm not supported at this time." );
+    }
+
+    // Create output
+    auto output = vec;
+
+    // get magnitude
+    if( mode == DistanceType::L2 )
+    {
+        auto mag = magnitude( vec, mode );
+
+        for( auto it = output.begin(); it != output.end(); it++ )
+        {
+            (*it) = (*it) / mag;
+        }
+    }
+
+    return output;
 }
 
 } // End of tmns::math namespace

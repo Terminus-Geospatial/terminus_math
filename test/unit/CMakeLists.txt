@@ -21,6 +21,7 @@ add_executable( ${TEST}
     math/vector/TEST_Vector.cpp
     math/vector/TEST_VectorN.cpp
     math/vector/TEST_Vector_Transpose.cpp
+    math/vector/TEST_Vector_Utilities.cpp
     math/TEST_Point.cpp
     math/TEST_Quaternion.cpp
     math/TEST_Rectangle.cpp
