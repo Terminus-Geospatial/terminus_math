@@ -6,8 +6,9 @@
 #pragma once
 
 // Terminus Libraries
-#include "Matrix.hpp"
-#include "Sub_Matrix.hpp"
+#include <terminus/math/matrix/Matrix.hpp>
+#include <terminus/math/matrix/Sub_Matrix.hpp>
+#include <terminus/math/vector/Sub_Vector.hpp>
 
 namespace tmns::math {
 
@@ -15,7 +16,7 @@ namespace tmns::math {
  * Dynamicall allocated, arbitrary-dimension matrix class.
  */
 template <typename ElementT>
-class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT> >
+class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
 {
     public:
 
@@ -272,6 +273,19 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT> >
         const_iter_t end() const
         {
             return m_data.end();
+        }
+
+        /**
+         * Return all diagonal components
+         */
+        VectorN<value_type> diagonal() const
+        {
+            VectorN<value_type> output( std::min( rows(), cols() ) );
+            for( size_t x = 0; x < output.size(); x++ )
+            {
+                output[x] = this->operator()( x, x );
+            }
+            return output;
         }
 
         /**

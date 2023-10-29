@@ -99,26 +99,14 @@ ImageResult<typename ImplT::domain_type> levenberg_marquardt( const Least_Square
         // Measurement Jacobian
         typename ImplT::jacobian_type J = model.jacobian(x);
 
-        tmns::log::info( "J: ", J.to_log_string() );
-
         MatrixN<double> JT = transpose( J );
-        tmns::log::info( "JT: ", JT.to_log_string() );
-
         VectorN<double> JTE = (JT * error);
-        tmns::log::info( "JTE: ", JT.to_log_string() );
-
         VectorN<double> RJ = Rinv * JTE;
-        tmns::log::info( "RJ: ", RJ.to_log_string() );
-
         VectorN<double> del_J = -1.0 * RJ;
-
 
         // Hessian of cost function (using Gauss-Newton approximation)
         MatrixN<double> TJ = transpose( J );
-        tmns::log::trace( ADD_CURRENT_LOC(), "TJ: ", TJ.to_log_string() );
-
         MatrixN<double> TJJ = TJ * J;
-        tmns::log::trace( ADD_CURRENT_LOC(), "TJJ: ", TJJ.to_log_string() );
 
         MatrixN<double> hessian = Rinv * TJJ;
         tmns::log::trace( ADD_CURRENT_LOC(), "hessian: ", hessian.to_log_string() );

@@ -82,6 +82,19 @@ class Matrix_Unary_Functor : public Matrix_Base<Matrix_Unary_Functor<MatrixT,Fun
         }
 
         /**
+         * Return all diagonal components
+         */
+        VectorN<value_type> diagonal() const
+        {
+            VectorN<value_type> output( std::min( rows(), cols() ) );
+            for( size_t x = 0; x < output.size(); x++ )
+            {
+                output[x] = this->operator()( x, x );
+            }
+            return output;
+        }
+
+        /**
          * Iterator overload
         */
         class Iterator : public boost::iterator_facade<Iterator,
@@ -287,6 +300,19 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
         {
             return m_functor( child1()( i, j ),
                               child2()( i, j ) );
+        }
+
+        /**
+         * Return all diagonal components
+         */
+        VectorN<value_type> diagonal() const
+        {
+            VectorN<value_type> output( std::min( rows(), cols() ) );
+            for( size_t x = 0; x < output.size(); x++ )
+            {
+                output[x] = this->operator()( x, x );
+            }
+            return output;
         }
 
         /**

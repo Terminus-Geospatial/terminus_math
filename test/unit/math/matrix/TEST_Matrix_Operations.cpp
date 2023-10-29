@@ -558,3 +558,34 @@ TEST_F( Matrix_Operations, matrix_multiplication_vector_blended )
         ASSERT_NEAR( (*it), exp_result[counter++], 0.01 );
     }
 }
+
+/************************************/
+/*      Test Matrix Diagonals       */
+/************************************/
+TEST_F( Matrix_Operations, diagonal )
+{
+    // Create a set of matrices
+    tmx::Matrix<double,4,3> mat01( {  1,  2,  3,
+                                      4,  5,  6,
+                                      7,  8,  9,
+                                     10, 11, 12 } );
+
+    tmx::MatrixN<double> mat02( 4, 3, {  1,  2,  3,
+                                         4,  5,  6,
+                                         7,  8,  9,
+                                        10, 11, 12 } );
+
+    // Test on normal matrix
+    auto res_1 = mat01.diagonal();
+    ASSERT_EQ( res_1.size(), 3 );
+    ASSERT_NEAR( res_1[0], 1, 0.001 );
+    ASSERT_NEAR( res_1[1], 5, 0.001 );
+    ASSERT_NEAR( res_1[2], 9, 0.001 );
+    
+    // Test on matrix addition
+    auto res_2 = ( mat01 + mat02 ).diagonal();
+    ASSERT_EQ( res_2.size(), 3 );
+    ASSERT_NEAR( res_2[0],  2, 0.001 );
+    ASSERT_NEAR( res_2[1], 10, 0.001 );
+    ASSERT_NEAR( res_2[2], 18, 0.001 );
+}

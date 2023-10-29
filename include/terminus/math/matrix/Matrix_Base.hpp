@@ -103,7 +103,6 @@ class Matrix_Base
             return Matrix_Row<const MatrixT>( impl(), row );
         }
 
-
         /**
          * Print the matrix in a pretty format
          */
