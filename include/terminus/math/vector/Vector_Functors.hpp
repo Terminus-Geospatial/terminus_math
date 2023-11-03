@@ -304,6 +304,16 @@ class Vector_Binary_Functor : public Vector_Base<Vector_Binary_Functor<Vector1T,
                              m_func );
         }
 
+        /**
+         * Get name
+         */
+        static std::string name()
+        {
+            std::stringstream sout;
+            sout << "Vector_Binary_Functor<" << Vector1T::name() << "," << Vector2T::name() << "," << FunctorT::name() << ">";
+            return sout.str();
+        }
+
     private:
 
         const Vector1T& m_vec1;

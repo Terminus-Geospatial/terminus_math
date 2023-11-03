@@ -42,6 +42,51 @@ class Point_ : public Vector_<ValueT,Dims>
         }
 
         /**
+         * Copy-Constructor
+         */
+        template <typename OtherVectorT>
+        Point_( const Vector_Base<OtherVectorT>& other )
+        {
+            // Make sure the size matches
+            if( other.impl().size() != Dims )
+            {
+                std::stringstream sout;
+                sout << "Input vector has incorrect size. Expected: " << Dims 
+                     << ", Actual: " << other.impl().size();
+                throw std::runtime_error( sout.str() );
+            }
+
+            for( size_t i = 0; i < this->data().size(); i++ )
+            {
+                this->data()[i] = other.impl()[i];
+            }
+        }
+
+        /**
+         * Assignment Operator
+         */
+        template <typename OtherVectorT>
+        Point_<ValueT,Dims> operator = ( const Vector_Base<OtherVectorT>& other )
+        {
+            // Make sure the size matches
+            if( other.impl().size() != Dims )
+            {
+                std::stringstream sout;
+                sout << "Input vector has incorrect size. Expected: " << Dims 
+                     << ", Actual: " << other.impl().size();
+                throw std::runtime_error( sout.str() );
+            }
+
+            // Create output point
+            Point_<ValueT,Dims> output;
+            for( size_t i = 0; i < Dims; i++ )
+            {
+                output[i] = other[i];
+            }
+            return output;
+        }
+
+        /**
          * Addition Operator
         */
         template< typename OtherValueT>

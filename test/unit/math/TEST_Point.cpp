@@ -6,8 +6,12 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
+#include <terminus/log/utility.hpp>
 #include <terminus/math/Point.hpp>
 #include <terminus/math/Point_Utilities.hpp>
+#include <terminus/math/vector.hpp>
+
+namespace tmx = tmns::math;
 
 /****************************************/
 /*          Test the Constructors       */
@@ -20,6 +24,39 @@ TEST( Point, Constructors )
     tmns::math::Point2d pt1;
     ASSERT_NEAR( pt1.x(), 0, EPS );
     ASSERT_NEAR( pt1.y(), 0, EPS );
+
+}
+
+/****************************************************************/
+/*      Test the Assignment Operator and Copy Constructors      */
+/****************************************************************/
+TEST( Point, Conversions )
+{
+    //////////////////////////////////////////////////////////
+    //  TEST 1: Create a Binary Vector (from adding vectors)
+    //////////////////////////////////////////////////////////
+    tmx::VectorNd vec_01( 4, 1 );
+    tmx::Vector4d vec_02( { 1, 2, 3, 4 } );
+
+    auto vec_03 = vec_01 + vec_02;
+
+    // Convert to a point using copy-constructor
+    tmx::Point4d result_01( vec_03 );
+    
+    for( size_t i=0; i<4; i++ )
+    {
+        ASSERT_NEAR( result_01[i], i+2, 0.001 );
+    }
+
+    // Convert to a point using assignment operator
+    tmx::Point4d result_02( vec_03 );
+    
+    for( size_t i=0; i<4; i++ )
+    {
+        ASSERT_NEAR( result_02[i], i+2, 0.001 );
+    }
+
+
 }
 
 /************************************************/
