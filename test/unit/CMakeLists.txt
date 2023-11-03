@@ -19,6 +19,7 @@ add_executable( ${TEST}
     math/matrix/TEST_Matrix.cpp
     math/matrix/TEST_MatrixN.cpp
     math/optimization/TEST_Levenburg_Marquardt.cpp
+    math/types/TEST_Compound_Types.cpp
     math/types/TEST_Fundamental_Types.cpp
     math/vector/TEST_Vector.cpp
     math/vector/TEST_VectorN.cpp
