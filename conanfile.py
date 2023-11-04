@@ -22,7 +22,8 @@ class ConanProject(ConanFile):
                 "with_coverage": [True, False]
     }
 
-    default_options = { "with_tests": True,
+    default_options = { "shared": True,
+                        "with_tests": True,
                         "with_docs": True,
                         "with_coverage": False,
                         "boost/*:shared": True
@@ -48,10 +49,10 @@ class ConanProject(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.variables["CONAN_PKG_NAME"]        = self.name
-        tc.variables["CONAN_PKG_VERSION"]     = self.version
-        tc.variables["CONAN_PKG_DESCRIPTION"] = self.description
-        tc.variables["CONAN_PKG_URL"]         = self.url
+        tc.variables["NAME_FROM_CONANFILE"]        = self.name
+        tc.variables["VERSION_FROM_CONANFILE"]     = self.version
+        tc.variables["DESCRIPTION_FROM_CONANFILE"] = self.description
+        tc.variables["URL_FROM_CONANFILE"]         = self.url
 
         tc.variables["TERMINUS_MATH_ENABLE_TESTS"]    = self.options.with_tests
         tc.variables["TERMINUS_MATH_ENABLE_DOCS"]     = self.options.with_docs
@@ -70,12 +71,13 @@ class ConanProject(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = tools.files.collect_libs(self)
-
-    def package_id(self):
-        self.info.clear()
+        self.cpp_info.builddirs = [f'share/cmake/{self.name}']
 
     def export_sources(self):
 
         for p in [ "CMakeLists.txt", "include/*", "src/*", "test/*", "README.md" ]:
-            copy( self, p, self.recipe_folder, self.export_sources_folder )
+            copy( self,
+                  p,
+                  self.recipe_folder,
+                  self.export_sources_folder )
+
