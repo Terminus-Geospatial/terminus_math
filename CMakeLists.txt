@@ -19,14 +19,24 @@ project( ${NAME_FROM_CONANFILE}
             LANGUAGES CXX
 )
 
-#  Give Vscode a fighting chance
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 #  Set C++ 20 Support
 set( CMAKE_CXX_STANDARD 20 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 
-include(terminus_cmake)
+#  Give Vscode a fighting chance
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+#  Setup libdl for debug GCC builds
+if( CMAKE_BUILD_TYPE STREQUAL "debug" OR CMAKE_BUILD_TYPE STREQUAL "Debug" )
+    if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+        set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -rdynamic -ldl" )
+    endif()
+endif()
+
+# Bring in CMake helpers for TERMINUS projects
+include( terminus_cmake )
 
 #-------------------------------------#
 #-     Add Manual CMake Scripts      -#
@@ -36,58 +46,26 @@ LIST( APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules")
 #  Look for dependencies
 include( "${PROJECT_SOURCE_DIR}/cmake/scripts/Find_Dependencies.cmake" )
 
-add_subdirectory( src )
+include_directories( include )
 
-include( GNUInstallDirs )
+add_library( ${PROJECT_NAME} SHARED
+                src/coordinate/Datum.cpp
+                src/math/linalg/Solvers.cpp
+                src/math/Quaternion.cpp
+                src/math/Quaternion_Utilities.cpp )
 
-install( TARGETS
-               ${PROJECT_NAME}
-         EXPORT
-               ${PROJECT_NAME}Targets
-         ARCHIVE
-               DESTINATION
-                    ${CMAKE_INSTALL_LIBDIR}
-                    COMPONENT lib
-          RUNTIME
-               DESTINATION ${CMAKE_INSTALL_BINDIR}
-               COMPONENT bin
-          LIBRARY 
-               DESTINATION ${CMAKE_INSTALL_LIBDIR}
-               COMPONENT lib 
+target_link_libraries( ${PROJECT_NAME} PUBLIC
+    Boost::headers
+Boost::log
+    Boost::log_setup
+    Boost::stacktrace
+    terminus_core::terminus_core
+    terminus_log::terminus_log
+    terminus_outcome::terminus_outcome
+    GDAL::GDAL
 )
 
-set( INSTALL_CMAKEDIR share/cmake/${PROJECT_NAME} )
-
-install( EXPORT 
-               ${PROJECT_NAME}Targets
-         NAMESPACE
-               "${PROJECT_NAME}::"
-         DESTINATION
-               ${INSTALL_CMAKEDIR}
-)
-
-message( "VERSION_FROM_CONANFILE: ${VERSION_FROM_CONANFILE}" )
-message( "VERSION: ${PROJECT_VERSION}" )
-message( "CMAKE_PROJECT_VERSION: ${CMAKE_PROJECT_VERSION}" )
-include( CMakePackageConfigHelpers )
-write_basic_package_version_file( 
-     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-     VERSION ${PROJECT_VERSION}
-     COMPATIBILITY SameMajorVersion
-)
-
-configure_package_config_file( 
-     ${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in
-     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-     INSTALL_DESTINATION ${INSTALL_CMAKEDIR}
-)
-
-install(  FILES
-               ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-               ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-          DESTINATION
-               ${INSTALL_CMAKEDIR}
-)
+terminus_lib_configure( ${PROJECT_NAME} )
 
 #  Enable code coverage
 if( TERMINUS_MATH_ENABLE_COVERAGE )
@@ -99,8 +77,4 @@ if( TERMINUS_MATH_ENABLE_TESTS )
      add_subdirectory( test/unit )
 endif()
 
-#  Copy all header files in the project folder
-install( DIRECTORY 
-               ${CMAKE_SOURCE_DIR}/include 
-         DESTINATION
-               ${CMAKE_INSTALL_INCLUDEDIR} )
+install( DIRECTORY include/terminus DESTINATION include)

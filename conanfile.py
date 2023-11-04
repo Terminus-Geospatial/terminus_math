@@ -71,7 +71,10 @@ class ConanProject(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.builddirs = [f'share/cmake/{self.name}']
+        self.cpp_info.libs = ["terminus_math"]
+
+    def package_id(self):
+        self.info.clear()
 
     def export_sources(self):
 

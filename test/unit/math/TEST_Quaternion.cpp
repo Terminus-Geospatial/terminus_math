@@ -20,3 +20,14 @@ TEST( Quaternion, Constructors )
     ASSERT_NEAR( q1.imag().z(), 0, 0.001 );
 
 }
+
+/****************************************/
+/*      Test the Quaternion Inverse     */
+/****************************************/
+TEST( Quaternion, Inverse )
+{
+    tmns::math::Quaternion q1;
+
+    auto inv = q1.inverse();
+}
+
