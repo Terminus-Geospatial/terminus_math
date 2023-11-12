@@ -263,8 +263,7 @@ class Least_Squares_Model_Base_Fixed
             //std::cout << "h0 = " << h0 << std::endl;
 
             // Jacobian is #params x #outputs
-            Matrix<double, NO, NI> H( h0.size(), x.size() );
-            //Matrix<double> H(h0.size(), x.size());
+            Matrix<double, NO, NI> H;
             //std::cout << "H = " << H << std::endl;
 
             // For each param dimension, add epsilon and re-evaluate h() to
@@ -323,8 +322,8 @@ typename ImplT::domain_type levenberg_marquardt_fixed( const Least_Squares_Model
     typename ImplT::result_type error = model.difference(observation, h);
     double norm_start = error.magnitude();
 
-    tmns::log::debug( "LM: initial guess for the model is ", seed );
-    tmns::log::debug( "LM: starting error ", error );
+    tmns::log::debug( "LM: initial guess for the model is ", seed.to_log_string() );
+    tmns::log::debug( "LM: starting error ", error.to_log_string() );
     tmns::log::debug( "LM: starting norm is: ", norm_start );
 
     // Solution may already be good enough
@@ -347,7 +346,7 @@ typename ImplT::domain_type levenberg_marquardt_fixed( const Least_Squares_Model
     {
         bool shortCircuit = false;
         outer_iter++;
-        tmns::log::debug( "LM: outer iteration ", outer_iter, "   x = ", x );
+        tmns::log::debug( "LM: outer iteration ", outer_iter, "   x = ", x.to_log_string() );
 
         // Compute the value, derivative, and hessian of the cost function
         // at the current point.  These remain valid until the parameter
@@ -357,19 +356,19 @@ typename ImplT::domain_type levenberg_marquardt_fixed( const Least_Squares_Model
         h = model(x);
 
         // Difference between observed and predicted and error (2-norm of difference)
-        error = model.difference(observation, h);
-        tmns::log::trace( "error: ", error.to_string() );
-
+        error = model.difference( observation, h );
         norm_start = error.magnitude();
-        tmns::log::debug( "LM: outer iteration starting robust norm: ", norm_start );
+        tmns::log::debug( ADD_CURRENT_LOC(), 
+                          "LM: outer iteration starting robust norm: ",
+                          norm_start );
 
         // Measurement Jacobian
         J = model.jacobian(x);
 
-        tmns::log::trace( "J: ", J.to_string() );
+        tmns::log::trace( "J: ", J.to_log_string() );
       
         J_trans = transpose( J );
-        tmns::log::trace( "J Transpose: ", J_trans.to_string() );
+        tmns::log::trace( "J Transpose: ", J_trans.to_log_string() );
 
         del_J = -1.0 * Rinv * ( J_trans * error );
         //Vector<double> del_J = -1.0 * Rinv * (J_trans * error);
@@ -399,27 +398,31 @@ typename ImplT::domain_type levenberg_marquardt_fixed( const Least_Squares_Model
 
             // Solve for update
             typename ImplT::domain_type delta_x;
-            if( hessian_lm.rows() <= 2 && det( hessian_lm ) > 0.0 )
+            if( hessian_lm.rows() <= 2 && hessian_lm.determinant() > 0.0 )
             {
                 // Direct method is more efficient for small matrices, also
                 // here we avoid calling LAPACK which we've seen misbehave
                 // in this situation in a multi-threaded environment.
-                hessian_lm_inv = inverse(hessian_lm);
-                delta_x = hessian_lm_inv * del_J;
+                delta_x = hessian_lm.inverse() * del_J;
             }
             else
             {
                 try
                 {
-                    // By construction, hessian_lm is symmetric and
-                    // positive-definite.
-                    delta_x = solve_symmetric( hessian_lm, del_J );
+                    // By construction, hessian_lm is symmetric and positive-definite.
+                    auto solve_res = linalg::solve_symmetric( hessian_lm, del_J );
+                    delta_x = solve_res.value();
                 }
                 catch( const std::exception& e )
                 {
                     // If lambda is very small, the matrix becomes numerically
                     // singular. In that case use the more general least_squares solver.
-                    delta_x = least_squares( hessian_lm, del_J );
+                    auto solve_res = linalg::solve( hessian_lm, del_J );
+                    if( solve_res.has_error() )
+                    {
+                        return solve_res.error();
+                    }
+                    delta_x = solve_res.value();
                 }
             }
 
@@ -429,10 +432,10 @@ typename ImplT::domain_type levenberg_marquardt_fixed( const Least_Squares_Model
             typename ImplT::result_type h_try = model(x_try);
 
             typename ImplT::result_type error_try = model.difference(observation, h_try);
-            norm_try = norm_2(error_try);
+            norm_try = error_try.magnitude();
 
-            tmns::log::debug( "LM: inner iteration ", iterations, " error is ", error_try );
-            tmns::log::debug( "\tLM: inner iteration ", iterations,  " norm is ", norm_try );
+            tmns::log::debug( ADD_CURRENT_LOC(), "LM: inner iteration ", iterations, " error is ", error_try.to_log_string() );
+            tmns::log::trace( ADD_CURRENT_LOC(), "\tLM: inner iteration ", iterations, " norm is ", norm_try );
 
             if( norm_try > norm_start )
             {
