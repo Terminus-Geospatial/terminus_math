@@ -516,7 +516,7 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
                 }
             }}
 
-            return inverse;
+            return inverse_mat;
         }
 
         /**

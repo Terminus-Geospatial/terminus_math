@@ -105,6 +105,49 @@ class Quaternion
         Quaternion inverse() const;
 
         /**
+         * Build a rotation matrix from a quaternion
+         */
+        template <typename MatrixT>
+        void rotation_matrix( Matrix_Base<MatrixT>& rmat ) const
+        {
+            MatrixT rot = rmat.impl();
+            ElementT w2 = real()     * real();
+            ElementT x2 = imag().x() * imag().x();
+            ElementT y2 = imag().y() * imag().y();
+            ElementT z2 = imag().z() * imag().z();
+            ElementT wx = real()     * imag().x();
+            ElementT wy = real()     * imag().y();
+            ElementT wz = real()     * imag().z();
+            ElementT xy = imag().x() * imag().y();
+            ElementT yz = imag().y() * imag().z();
+            ElementT zx = imag().z() * imag().x();
+
+            rot(0,0) = w2 + x2 - y2 - z2;
+            rot(1,1) = w2 - x2 + y2 - z2;
+            rot(2,2) = w2 - x2 - y2 + z2;
+            rot(0,1) = 2 * (xy - wz);
+            rot(0,2) = 2 * (zx + wy);
+            rot(1,2) = 2 * (yz - wx);
+            rot(1,0) = 2 * (xy + wz);
+            rot(2,0) = 2 * (zx - wy);
+            rot(2,1) = 2 * (yz + wx);
+        }
+
+        Matrix<ElementT,3,3> to_rotation_matrix() const
+        {
+            auto rot = Matrix<ElementT,3,3>::identity();
+            rotation_matrix( rot );
+            return rot;
+        }
+
+        Matrix<ElementT,4,4> rotation_matrix_4() const
+        {
+            auto rot = Matrix<ElementT,4,4>::identity();
+            rotation_matrix( rot );
+            return rot;
+        }
+
+        /**
          * Build a quaternion from a rotation matrix
          */
         template <typename MatrixT>

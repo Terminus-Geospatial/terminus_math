@@ -302,13 +302,13 @@ class Least_Squares_Model_Base_Fixed
 template <typename ImplT,
           int      NI,
           int      NO>
-typename ImplT::domain_type levenberg_marquardt_fixed( const Least_Squares_Model_Base_Fixed<ImplT, NI, NO>& least_squares_model,
-                                                       const typename ImplT::domain_type&                   seed,
-                                                       const typename ImplT::result_type&                   observation,
-                                                       LM_STATUS_CODE&                                      status,
-                                                       double abs_tolerance = MATH_LM_ABS_TOL,
-                                                       double rel_tolerance = MATH_LM_REL_TOL,
-                                                       double max_iterations = MATH_LM_MAX_ITER) {
+ImageResult<typename ImplT::domain_type> levenberg_marquardt_fixed( const Least_Squares_Model_Base_Fixed<ImplT, NI, NO>& least_squares_model,
+                                                                    const typename ImplT::domain_type&                   seed,
+                                                                    const typename ImplT::result_type&                   observation,
+                                                                    LM_STATUS_CODE&                                      status,
+                                                                    double abs_tolerance = MATH_LM_ABS_TOL,
+                                                                    double rel_tolerance = MATH_LM_REL_TOL,
+                                                                    double max_iterations = MATH_LM_MAX_ITER) {
 
     status = LM_STATUS_CODE::ERROR_DID_NOT_CONVERGE;
 
@@ -420,7 +420,8 @@ typename ImplT::domain_type levenberg_marquardt_fixed( const Least_Squares_Model
                     auto solve_res = linalg::solve( hessian_lm, del_J );
                     if( solve_res.has_error() )
                     {
-                        return solve_res.error();
+                        return outcome::fail( (core::error::ErrorCode)(solve_res.error().code().value()),
+                                              solve_res.error().message() );
                     }
                     delta_x = solve_res.value();
                 }
@@ -496,7 +497,7 @@ typename ImplT::domain_type levenberg_marquardt_fixed( const Least_Squares_Model
     }
 
     tmns::log::debug( "LM: finished with: ", outer_iter );
-    return x;
+    return outcome::ok<typename ImplT::domain_type>( x );
 
 } // End levenberg_marquardt
 
