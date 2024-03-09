@@ -511,12 +511,12 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
                 {
                     for( ssize_t k = i-1; k >= 0; --k )
                     {
-                        inverse(k,j) -= buf(k,i) * t;
+                        inverse_mat(k,j) -= buf(k,i) * t;
                     }
                 }
             }}
 
-            return inverse;
+            return inverse_mat;
         }
 
         /**
