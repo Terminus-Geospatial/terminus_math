@@ -65,6 +65,8 @@ Boost::log
     GDAL::GDAL
 )
 
+install( TARGETS ${PROJECT_NAME} )
+
 terminus_lib_configure( ${PROJECT_NAME} )
 
 #  Enable code coverage

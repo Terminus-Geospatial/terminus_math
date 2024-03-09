@@ -576,6 +576,7 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
 }; // End of Matrix class
 
 using Matrix_3x3 = Matrix<double,3,3>;
+using Matrix_4x4 = Matrix<double,4,4>;
 
 // Overload a few type traits
 
