@@ -254,6 +254,29 @@ std::enable_if_t<Is_Scalar<ScalarT>::value,
 }
 
 /**
+ * Vector dot product
+ */
+template <typename Vector1T,
+          typename Vector2T>
+Product_Type<typename Vector1T::value_type, typename Vector2T::value_type>::type
+    dot( const Vector_Base<Vector1T>& v1,
+         const Vector_Base<Vector2T>& v2 )
+{
+    auto result = typename Product_Type<typename Vector1T::value_type,
+                                        typename Vector2T::value_type>::type();
+    
+    typename Vector1T::const_iter_t i1   = v1.impl().begin();
+    typename Vector1T::const_iter_t end1 = v1.impl().end();
+
+    typename Vector2T::const_iter_t i2 = v2.impl().begin();
+    for( ; i1 != end1 ; ++i1, ++i2 )
+    {
+        result += *i1 * *i2;
+    }
+    return result;
+}
+
+/**
  * Get Vector Magnitude Squared
  */
 template <typename VectorT>

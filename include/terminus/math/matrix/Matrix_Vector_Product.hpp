@@ -54,8 +54,8 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
 
         reference_type operator()( size_t i ) const requires ( !TransposeN )
         {
-            return VectorT::dot( select_row( m_matrix, i ),
-                                 m_vector );
+            return dot( select_row( m_matrix, i ),
+                        m_vector );
         }
 
         class Iterator : public boost::iterator_facade<Iterator,

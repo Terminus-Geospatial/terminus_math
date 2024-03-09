@@ -16,49 +16,182 @@
 namespace tmns::math::eigen {
 
 /**
- * Convert Matrix to Eigen Matrix
+ * Convert from Terminus Matrix to Eigen Matrix
 */
-template <typename OutMatrixT,
-          typename MatrixT>
-ImageResult<OutMatrixT> to_eigen( const MatrixT& mat ) requires ( std::is_same_v<::Eigen::MatrixXd,OutMatrixT> )
+template <typename InputTmnsMatrixType>
+struct TMNS_to_Eigen_Picker
 {
-    ::Eigen::MatrixXd result = Eigen::Map<Eigen::MatrixXd>( const_cast<double*>( mat.data() ),
-                                                            mat.rows(),
-                                                            mat.cols() );
+    using ValueT = InputTmnsMatrixType::value_type;
 
-    return outcome::ok<::Eigen::MatrixXd>( result );
+    using EigenT = ::Eigen::Matrix<ValueT,
+                                   ::Eigen::Dynamic,
+                                   ::Eigen::Dynamic>;
+
+    /**
+     * Get the pointer
+    */
+    static ValueT* to_ptr( const InputTmnsMatrixType& mat )
+    {
+        return mat.data();
+    }
+
+    static EigenT map( const MatrixN<ValueT>& mat )
+    {
+        return Eigen::Map<EigenT>( to_ptr( mat ),
+                                   mat.rows(),
+                                   mat.cols() );
+    }
+
+}; // End of TMNS_to_Eigen_Picker
+
+/**
+ * Convert from Terminus Matrix to Eigen Matrix
+*/
+template <typename MatrixValueT>
+struct TMNS_to_Eigen_Picker<MatrixN<MatrixValueT>>
+{
+    using ValueT = MatrixValueT;
+
+    using EigenT = ::Eigen::Matrix<MatrixValueT,
+                                   ::Eigen::Dynamic,
+                                   ::Eigen::Dynamic>;
+    
+    /**
+     * Get the pointer
+    */
+    static ValueT* to_ptr( const MatrixN<MatrixValueT>& mat )
+    {
+        return const_cast<ValueT*>( mat.data() );
+    }
+
+    static EigenT map( const MatrixN<ValueT>& mat )
+    {
+        return Eigen::Map<EigenT>( to_ptr( mat ),
+                                   mat.rows(),
+                                   mat.cols() );
+    }
+
+}; // End of TMNS_to_Eigen_Picker (MatrixN<ValueT>)
+
+/**
+ * Convert from Const Terminus Matrix to Eigen Matrix
+*/
+template <typename MatrixValueT>
+struct TMNS_to_Eigen_Picker<const MatrixN<MatrixValueT>>
+{
+    using ValueT = MatrixValueT;
+
+    using EigenT = ::Eigen::Matrix<MatrixValueT,
+                                   ::Eigen::Dynamic,
+                                   ::Eigen::Dynamic>;
+
+    /**
+     * Get the pointer
+    */
+    static ValueT* to_ptr( const MatrixValueT& mat )
+    {
+        return mat.data();
+    }
+
+    static EigenT map( const MatrixN<ValueT>& mat )
+    {
+        return Eigen::Map<EigenT>( to_ptr( mat ),
+                                   mat.rows(),
+                                   mat.cols() );
+    }
+    
+}; // End of TMNS_to_Eigen_Picker (MatrixN<double>)
+
+/**
+ * Picker for a Terminus Dynamic Vector to Eigen Dynamic Vector
+*/
+template <typename VectorValueT>
+struct TMNS_to_Eigen_Picker<VectorN<VectorValueT>>
+{
+    using ValueT = VectorValueT;
+
+    using EigenT = ::Eigen::Vector<ValueT,
+                                   ::Eigen::Dynamic>;
+    
+    /**
+     * Get the pointer
+    */
+    static ValueT* to_ptr( const VectorN<VectorValueT>& vec )
+    {
+        return const_cast<ValueT*>( vec.data().data() );
+    }
+
+    static EigenT map( const VectorN<VectorValueT>& vec )
+    {
+        return Eigen::Map<EigenT>( to_ptr( vec ),
+                                   vec.size() );
+    }
+
+}; // End of TMNS_to_Eigen_Picker (VectorN<double>)
+
+template <typename VectorValueT>
+struct TMNS_to_Eigen_Picker<const VectorN<VectorValueT>>
+{
+    using ValueT = VectorValueT;
+
+    using EigenT = ::Eigen::Vector<ValueT,
+                                   ::Eigen::Dynamic>;
+    
+    /**
+     * Get the pointer
+    */
+    static ValueT* to_ptr( const VectorN<VectorValueT>& vec )
+    {
+        return vec.data().data();
+    }
+
+    static EigenT map( const VectorN<VectorValueT>& vec )
+    {
+        return Eigen::Map<EigenT>( to_ptr( vec ),
+                                   vec.size() );
+    }
+    
+}; // End of TMNS_to_Eigen_Picker (MatrixN<double>)
+
+/**
+ * @brief Function to convert a Terminus matrix into an Eigen matrix.
+ * This should remain type-neutral, as the TMNS_to_Eigen_Picker will implement the
+ * specializations 
+*/
+template <typename EigenT,
+          typename InputMatrixT>
+ImageResult<EigenT> to_eigen( const InputMatrixT& mat )
+{
+    // Construct the end result
+    return outcome::ok<EigenT>( TMNS_to_Eigen_Picker<InputMatrixT>::map( mat ) );
+}
+
+
+/**
+ * Convert an Eigen Matrix into a Terminus MatrixN.
+*/
+template <typename MatrixT,
+          typename EigenMatrixT>
+ImageResult<MatrixN<typename MatrixT::value_type>> from_eigen( const EigenMatrixT& mat ) 
+    requires (std::is_same<MatrixT,MatrixN<typename MatrixT::value_type>>::value)
+{
+    using ValueT = typename MatrixT::value_type;
+    return outcome::ok<MatrixT>( MatrixT( mat.rows(),
+                                          mat.cols(),
+                                          mat.data() ) );
 }
 
 /**
- * Convert Vector to Eigen Vector
+ * Convert Eigen Vector to Terminus Vector
 */
-template <typename OutVectorT,
-          typename VectorT>
-ImageResult<OutVectorT> to_eigen( const VectorT& vec ) requires ( std::is_same_v<OutVectorT,::Eigen::VectorXd> )
+template <typename VectorT,
+          typename EigenT>
+ImageResult<VectorN<typename VectorT::value_type>> from_eigen( const EigenT& in )
+    requires std::is_same<VectorT,VectorN<typename VectorT::value_type>>::value
 {
-    ::Eigen::VectorXd result = Eigen::VectorXd::Map( &vec.data()[0], vec.size() );
-
-    return outcome::ok<::Eigen::MatrixXd>( result );
-}
-
-/**
- * Convert Eigen Vector to Vector
-*/
-template <typename VectorT>
-ImageResult<VectorT> from_eigen( const ::Eigen::VectorXd& vec )
-{
-    return outcome::ok<VectorT>( VectorT( vec.data(),
-                                          vec.size() ) );
-}
-
-/**
- * Convert Eigen Vector to Vector
-*/
-template <typename VectorT>
-ImageResult<VectorT> from_eigen( const ::Eigen::MatrixXd& vec )
-{
-    return outcome::ok<VectorT>( VectorT( vec.data(),
-                                          vec.size() ) );
+    using ValueT = typename VectorT::value_type;
+    return outcome::ok<VectorN<ValueT>>( VectorT( in.data(),
+                                                  in.size() ) );
 }
 
 } // End of tmns::math::eigen namespace

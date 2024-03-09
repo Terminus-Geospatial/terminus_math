@@ -22,9 +22,12 @@ ImageResult<VectorN<double>> solve_symmetric( const MatrixN<double>& A,
     tmns::log::info( ADD_CURRENT_LOC(), "A: ", A.to_log_string() );
     tmns::log::info( ADD_CURRENT_LOC(), "b: ", b.to_log_string() );
 
+    using EigenMatrixT = eigen::TMNS_to_Eigen_Picker<MatrixN<double>>::EigenT;
+    using EigenVectorT = eigen::TMNS_to_Eigen_Picker<VectorN<double>>::EigenT;
+
     // Create Eigen matrix
-    auto eigen_A = eigen::to_eigen<::Eigen::MatrixXd>( A );
-    auto eigen_b = eigen::to_eigen<::Eigen::VectorXd>( b );
+    auto eigen_A = eigen::to_eigen<EigenMatrixT>( A );
+    auto eigen_b = eigen::to_eigen<EigenVectorT>( b );
 
     Eigen::MatrixXd x = eigen_A.value().colPivHouseholderQr().solve( eigen_b.value() );
 
@@ -41,9 +44,12 @@ ImageResult<VectorN<double>> solve( const MatrixN<double>& mat_A,
                                     const VectorN<double>& vec_b,
                                     double                 eps )
 {
+    using EigenMatrixT = eigen::TMNS_to_Eigen_Picker<MatrixN<double>>::EigenT;
+    using EigenVectorT = eigen::TMNS_to_Eigen_Picker<VectorN<double>>::EigenT;
+
     // Convert to eigen types
-    auto A = eigen::to_eigen<::Eigen::MatrixXd>( mat_A );
-    auto b = eigen::to_eigen<::Eigen::VectorXd>( vec_b );
+    auto A = eigen::to_eigen<EigenMatrixT>( mat_A );
+    auto b = eigen::to_eigen<EigenVectorT>( vec_b );
 
     // Create the Jacobian SVN Engine
     Eigen::JacobiSVD<Eigen::Matrix<double,

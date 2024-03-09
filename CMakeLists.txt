@@ -51,6 +51,7 @@ include_directories( include )
 add_library( ${PROJECT_NAME} SHARED
                 src/coordinate/Datum.cpp
                 src/math/linalg/Solvers.cpp
+                src/math/linalg/SVD.cpp
                 src/math/Quaternion.cpp
                 src/math/Quaternion_Utilities.cpp )
 

@@ -20,11 +20,12 @@ TEST( linalg_operations, Rank_and_Nullspace )
                                         3, 5, 7,
                                         4, 9, 2 } );
 
-    tmx::MatrixN<double> nullsp = tmx::linalg::nullspace( magic );
-    EXPECT_EQ( 0u, nullsp.cols() );
-    EXPECT_EQ( 0u, nullsp.rows() );
-    EXPECT_EQ( 3,  tmx::linalg::rank(magic) );  // It's square yo
-    EXPECT_EQ( 0u, tmx::linalg::nullity(magic) );
+    auto nullsp = tmx::linalg::nullspace( magic );
+    ASSERT_FALSE( nullsp.has_error() );
+    ASSERT_EQ( 0u, nullsp.value().cols() );
+    ASSERT_EQ( 0u, nullsp.value().rows() );
+    ASSERT_EQ( 3,  tmx::linalg::rank(magic) );  // It's square yo
+    ASSERT_EQ( 0u, tmx::linalg::nullity(magic) );
 
     {
         // Common example of nullspace
@@ -33,28 +34,28 @@ TEST( linalg_operations, Rank_and_Nullspace )
         cow(1,0) = 2;  cow(1,1) = 0; cow(1,2) = 1; cow(1,3) = -7;
 
         nullsp = tmx::linalg::nullspace(cow);
-        EXPECT_EQ( nullsp.cols(), 2u );
-        EXPECT_EQ( nullsp.rows(), 4u );
+        ASSERT_EQ( nullsp.value().cols(), 2u );
+        ASSERT_EQ( nullsp.value().rows(), 4u );
 
         tmx::VectorN<double> definition_check;
-        definition_check = cow * tmx::select_col(nullsp,0);
+        definition_check = cow * tmx::select_col(nullsp.value(),0);
         for( uint32_t i = 0; i < definition_check.size(); i++ )
         {
-            EXPECT_NEAR( 0, definition_check(i), 1e-8 );
+            ASSERT_NEAR( 0, definition_check(i), 1e-8 );
         }
-        definition_check = cow * tmx::select_col( nullsp, 1 );
+        definition_check = cow * tmx::select_col( nullsp.value(), 1 );
         for ( uint32_t i = 0; i < definition_check.size(); i++ )
         {
-            EXPECT_NEAR( 0, definition_check(i), 1e-8 );
+            ASSERT_NEAR( 0, definition_check(i), 1e-8 );
         }
-        EXPECT_EQ( 2,  tmx::linalg::rank( cow ) );
-        EXPECT_EQ( 2u, tmx::linalg::nullity( cow ) );
+        ASSERT_EQ( 2,  tmx::linalg::rank( cow ) );
+        ASSERT_EQ( 2u, tmx::linalg::nullity( cow ) );
     }
 
     {
         // Data that threw an error in the past
         float monkey_data[63] = {
-        148291,148852,187,537654,539688,678,793,796,1,
+            148291,148852,187,537654,539688,678,793,796,1,
         1.60418e+06,958416,974,1.67335e+06,999744,1016,1647,984,1,
         1.09336e+06,835077,753,1.5972e+06,1.2199e+06,1100,1452,1109,1,
         371148,156024,394,303324,127512,322,942,396,1,
@@ -64,29 +65,30 @@ TEST( linalg_operations, Rank_and_Nullspace )
         };
 
         tmx::Matrix_Proxy<float> monkey( monkey_data, 7, 9 );
-        nullsp = tmx::linalg::nullspace( monkey );
-        EXPECT_EQ( 2u, nullsp.cols() );
-        EXPECT_EQ( 9u, nullsp.rows() );
-        EXPECT_EQ( 7, tmx::linalg::rank( monkey ) );
-        EXPECT_EQ( 2u, tmx::linalg::nullity( monkey ) );
+        auto nullsp3 = tmx::linalg::nullspace( monkey );
+        ASSERT_EQ( 2u, nullsp3.value().cols() );
+        ASSERT_EQ( 9u, nullsp3.value().rows() );
+        ASSERT_EQ( 7, tmx::linalg::rank( monkey ) );
+        ASSERT_EQ( 2u, tmx::linalg::nullity( monkey ) );
 
         tmx::VectorN<double> definition_check;
-        definition_check = monkey * tmx::select_col( nullsp, 0 );
+        definition_check = monkey * tmx::select_col( nullsp3.value(), 0 );
         for( uint32_t i = 0; i < definition_check.size(); i++ )
         {
-            EXPECT_NEAR( 0, definition_check(i), 1e-1 );
+            ASSERT_NEAR( 0, definition_check(i), 1e-1 );
         }
-        definition_check = monkey * select_col( nullsp, 1 );
+        definition_check = monkey * select_col( nullsp3.value(), 1 );
         for ( uint32_t i = 0; i < definition_check.size(); i++ )
         {
-            EXPECT_NEAR( 0, definition_check(i), 1e-1 );
+            ASSERT_NEAR( 0, definition_check(i), 1e-1 );
         }
 
-        nullsp = tmx::linalg::nullspace( tmx::transpose( monkey ) );
-        EXPECT_EQ( 0u, nullsp.cols() );
-        EXPECT_EQ( 0u, nullsp.rows() );
-        EXPECT_EQ(  7, tmx::linalg::rank( tmx::transpose( monkey ) ) );
-        EXPECT_EQ( 0u, tmx::linalg::nullity( tmx::transpose( monkey ) ) );
+        auto nullsp4 = tmx::linalg::nullspace( tmx::transpose( monkey ) );
+        ASSERT_FALSE( nullsp4.has_error() );
+        ASSERT_EQ( 0u, nullsp4.value().cols() );
+        ASSERT_EQ( 0u, nullsp4.value().rows() );
+        ASSERT_EQ(  7, tmx::linalg::rank( tmx::transpose( monkey ) ) );
+        ASSERT_EQ( 0u, tmx::linalg::nullity( tmx::transpose( monkey ) ) );
     }
 
     {
@@ -102,24 +104,24 @@ TEST( linalg_operations, Rank_and_Nullspace )
         };
 
         tmx::Matrix_Proxy<double> shark( shark_data, 7, 9 );
-        nullsp = tmx::linalg::nullspace(shark);
-        EXPECT_EQ( nullsp.cols(), 2u );
-        EXPECT_EQ( nullsp.rows(), 9u );
+        auto nullsp5 = tmx::linalg::nullspace(shark);
+        ASSERT_EQ( nullsp5.value().cols(), 2u );
+        ASSERT_EQ( nullsp5.value().rows(), 9u );
 
         tmx::VectorN<double> definition_check;
-        definition_check = shark * tmx::select_col( nullsp, 0 );
+        definition_check = shark * tmx::select_col( nullsp5.value(), 0 );
         for( size_t i = 0; i < definition_check.size(); i++ )
         {
-            EXPECT_NEAR( 0, definition_check(i), 1e-5 );
+            ASSERT_NEAR( 0, definition_check(i), 1e-5 );
         }
-        definition_check = shark * tmx::select_col( nullsp, 1 );
+        definition_check = shark * tmx::select_col( nullsp5.value(), 1 );
       
         for( size_t i = 0; i < definition_check.size(); i++ )
         {
-          EXPECT_NEAR( 0, definition_check(i), 1e-5 );
+          ASSERT_NEAR( 0, definition_check(i), 1e-5 );
         }
 
-        EXPECT_EQ( 7, rank(shark) );
-        EXPECT_EQ( 2u, nullity(shark) );
+        ASSERT_EQ(  7, tmx::linalg::rank(shark) );
+        ASSERT_EQ( 2u, tmx::linalg::nullity(shark) );
     }
 }

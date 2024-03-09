@@ -32,15 +32,31 @@ typename VectorT::value_type calc_threshold( const Matrix_Base<MatrixT>& A,
 */
 ImageResult<VectorN<double>> svd_impl( const MatrixN<double>& A );
 
+/**
+ * Get just the singular values
+*/
+ImageResult<VectorN<float>> svd_impl( const MatrixN<float>& A );
+
 ImageResult<void> svd_impl( const MatrixN<double>& A,
                             MatrixN<double>&       U,
                             VectorN<double>&       S,
                             MatrixN<double>&       V );
 
+/**
+ * Decompose matrix using Singular Value Decomposition
+ */
 ImageResult<void> complete_svd_impl( const MatrixN<double>& A,
                                      MatrixN<double>&       U,
                                      VectorN<double>&       S,
                                      MatrixN<double>&       V );
+
+/**
+ * Decompose matrix using Singular Value Decomposition
+ */
+ImageResult<void> complete_svd_impl( const MatrixN<float>& A,
+                                     MatrixN<float>&       U,
+                                     VectorN<float>&       S,
+                                     MatrixN<float>&       V );
 
 /**
  * Compute the singular values of a Matrix A
@@ -125,7 +141,7 @@ template <class MatrixT>
 int rank( const Matrix_Base<MatrixT>& A,
           typename MatrixT::value_type thresh = -1 )
 {
-    using value_type = typedef typename MatrixT::value_type;
+    using value_type = typename MatrixT::value_type;
     MatrixN<value_type> U, V;
     VectorN<value_type> S;
     complete_svd( A.impl(), U, S, V );
