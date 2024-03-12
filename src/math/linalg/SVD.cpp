@@ -6,7 +6,7 @@
 #include <terminus/math/linalg/SVD.hpp>
 
 // Project Libraries
-#include "../../thirdparty/eigen/Eigen_Utilities.hpp"
+#include <terminus/math/thirdparty/eigen/Eigen_Utilities.hpp>
 
 // Eigen Libraries
 #include <Eigen/SVD>
@@ -16,10 +16,11 @@ namespace tmns::math::linalg {
 /**************************************/
 /*        Get singular values         */
 /**************************************/
-ImageResult<VectorN<double>> svd_impl( const MatrixN<double>& mat_A )
+ImageResult<VectorN<double>> svd( const MatrixN<double>& mat_A )
 {
     // Convert to eigen type
     auto A = eigen::to_eigen<::Eigen::MatrixXd>( mat_A );
+    std::cout << A.value() << std::endl;
 
     // Create the Jacobian SVN Engine
     Eigen::JacobiSVD<Eigen::Matrix<double,
@@ -33,7 +34,8 @@ ImageResult<VectorN<double>> svd_impl( const MatrixN<double>& mat_A )
     Eigen::Matrix<double,
                   Eigen::Dynamic,
                   Eigen::Dynamic,
-                  Eigen::RowMajor> s = svd.singularValues().asDiagonal();
+                  Eigen::RowMajor> s = svd.singularValues().asDiagonal().diagonal();
+    std::cout << s << std::endl;
 
     VectorN<double> output_tmns( s.data(),
                                  s.size() );
@@ -44,10 +46,17 @@ ImageResult<VectorN<double>> svd_impl( const MatrixN<double>& mat_A )
 /**************************************/
 /*        Get singular values         */
 /**************************************/
-ImageResult<VectorN<float>> svd_impl( const MatrixN<float>& mat_A )
+ImageResult<VectorN<float>> svd( const MatrixN<float>& mat_A )
 {
+    auto X = mat_A.data();
+    for( int i=0; i < 12; i++ ){
+        std::cout << i << " -> " << X[i] << std::endl;
+    }
     // Convert to eigen type
     auto A = eigen::to_eigen<::Eigen::MatrixXf>( mat_A );
+
+    std::cout << std::endl << std::endl << "======ZZZZZ========\n";
+    std::cout << A.value() << std::endl;
 
     // Create the Jacobian SVN Engine
     Eigen::JacobiSVD<Eigen::Matrix<float,
@@ -61,8 +70,9 @@ ImageResult<VectorN<float>> svd_impl( const MatrixN<float>& mat_A )
     Eigen::Matrix<float,
                   Eigen::Dynamic,
                   Eigen::Dynamic,
-                  Eigen::RowMajor> s = svd.singularValues().asDiagonal();
+                  Eigen::RowMajor> s = svd.singularValues().asDiagonal().diagonal();
 
+    std::cout << s << std::endl;
     VectorN<float> output_tmns( s.data(),
                                 s.size() );
 

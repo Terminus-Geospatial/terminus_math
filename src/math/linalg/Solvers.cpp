@@ -6,7 +6,7 @@
 #include <terminus/math/linalg/Solvers.hpp>
 
 // Project Libraries
-#include "../../thirdparty/eigen/Eigen_Utilities.hpp"
+#include <terminus/math/thirdparty/eigen/Eigen_Utilities.hpp>
 
 // Eigen Libraries
 #include <Eigen/SVD>

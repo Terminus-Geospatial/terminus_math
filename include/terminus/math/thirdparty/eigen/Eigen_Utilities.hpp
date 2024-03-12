@@ -17,6 +17,8 @@ namespace tmns::math::eigen {
 
 /**
  * Convert from Terminus Matrix to Eigen Matrix
+ * 
+ * @note This is the general Matrix<> type
 */
 template <typename InputTmnsMatrixType>
 struct TMNS_to_Eigen_Picker
@@ -37,7 +39,7 @@ struct TMNS_to_Eigen_Picker
 
     static EigenT map( const MatrixN<ValueT>& mat )
     {
-        return Eigen::Map<EigenT>( to_ptr( mat ),
+        return Eigen::Map<EigenT>( to_ptr( mat.transpose() ),
                                    mat.rows(),
                                    mat.cols() );
     }
@@ -46,6 +48,8 @@ struct TMNS_to_Eigen_Picker
 
 /**
  * Convert from Terminus Matrix to Eigen Matrix
+ * 
+ * This is the MatrixN<> dynamically-sized variant
 */
 template <typename MatrixValueT>
 struct TMNS_to_Eigen_Picker<MatrixN<MatrixValueT>>
@@ -54,7 +58,8 @@ struct TMNS_to_Eigen_Picker<MatrixN<MatrixValueT>>
 
     using EigenT = ::Eigen::Matrix<MatrixValueT,
                                    ::Eigen::Dynamic,
-                                   ::Eigen::Dynamic>;
+                                   ::Eigen::Dynamic,
+                                   ::Eigen::RowMajor>;
     
     /**
      * Get the pointer
@@ -66,9 +71,11 @@ struct TMNS_to_Eigen_Picker<MatrixN<MatrixValueT>>
 
     static EigenT map( const MatrixN<ValueT>& mat )
     {
-        return Eigen::Map<EigenT>( to_ptr( mat ),
+        MatrixN<ValueT> matT = mat; //transpose(mat);
+        Eigen::Map<EigenT> result( to_ptr( matT ),
                                    mat.rows(),
                                    mat.cols() );
+        return std::move( result );
     }
 
 }; // End of TMNS_to_Eigen_Picker (MatrixN<ValueT>)
@@ -175,10 +182,15 @@ template <typename MatrixT,
 ImageResult<MatrixN<typename MatrixT::value_type>> from_eigen( const EigenMatrixT& mat ) 
     requires (std::is_same<MatrixT,MatrixN<typename MatrixT::value_type>>::value)
 {
-    using ValueT = typename MatrixT::value_type;
-    return outcome::ok<MatrixT>( MatrixT( mat.rows(),
-                                          mat.cols(),
-                                          mat.data() ) );
+    // @fixme This is the utter worst way.  Someday I'll solve Eigen's Map<> class
+    MatrixT output( mat.rows(), mat.cols() );
+    auto it = output.begin();
+    auto temp = mat.transpose().reshaped(); //<Eigen::RowMajor>();
+    for( const auto& a : temp )
+    {
+        (*it++) = a;
+    }
+    return outcome::ok<MatrixT>( output );
 }
 
 /**

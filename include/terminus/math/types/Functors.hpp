@@ -366,6 +366,16 @@ struct Arg_Arg_Difference_Functor : Binary_Return_Template_Type<Difference_Type>
     {
         return arg1 - arg2;
     }
+
+    /**
+     * Get name
+     */
+    static std::string name()
+    {
+        std::stringstream sout;
+        sout << "Arg_Arg_Difference_Functor";
+        return sout.str();
+    }
 }; // End of Arg_Arg_Difference_Functor struct
 
   

@@ -178,7 +178,8 @@ class Matrix_Unary_Functor : public Matrix_Base<Matrix_Unary_Functor<MatrixT,Fun
 
         /// @brief Functor to apply
         FunctorT m_functor;
-};
+
+}; // End of Matrix_Unary_Functor<> class
 
 /**
  * Matrix Row Traits
@@ -425,6 +426,18 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
             return iter_t( child1().end(),
                            child2().end(),
                            m_functor );
+        }
+
+
+        /**
+         * Get name
+         */
+        static std::string name()
+        {
+            std::stringstream sout;
+            sout << "Matrix_Binary_Functor<" << Matrix1T::name() << ", " << Matrix2T::name()
+                 << ", " << FunctorT::name() << ">";
+            return sout.str();
         }
 
 

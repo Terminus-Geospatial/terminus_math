@@ -28,14 +28,20 @@ typename VectorT::value_type calc_threshold( const Matrix_Base<MatrixT>& A,
 } // End of detail namespace
 
 /**
- * Get the singular values
-*/
-ImageResult<VectorN<double>> svd_impl( const MatrixN<double>& A );
+ * Compute the singular values of a Matrix A
+ * 
+ * S will be resized if necessary to the appropriate output dimensions
+ * based on the dimensions of A.
+ */
+ImageResult<VectorN<double>> svd( const MatrixN<double>& A );
 
 /**
- * Get just the singular values
-*/
-ImageResult<VectorN<float>> svd_impl( const MatrixN<float>& A );
+ * Compute the singular values of a Matrix A
+ * 
+ * S will be resized if necessary to the appropriate output dimensions
+ * based on the dimensions of A.
+ */
+ImageResult<VectorN<float>> svd( const MatrixN<float>& A );
 
 ImageResult<void> svd_impl( const MatrixN<double>& A,
                             MatrixN<double>&       U,
@@ -58,18 +64,6 @@ ImageResult<void> complete_svd_impl( const MatrixN<float>& A,
                                      VectorN<float>&       S,
                                      MatrixN<float>&       V );
 
-/**
- * Compute the singular values of a Matrix A
- * 
- * S will be resized if necessary to the appropriate output dimensions
- * based on the dimensions of A.
- */
-template <typename AMatrixT, 
-          typename SingularValuesT>
-ImageResult<SingularValuesT> svd( const AMatrixT& A )
-{
-    return svd_impl( A );
-}
 
 /**
  * Compute the singular value decomposition of the matrix A.

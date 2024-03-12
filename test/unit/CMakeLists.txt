@@ -13,6 +13,7 @@ set( TEST ${PROJECT_NAME}_test )
 add_executable( ${TEST}
     coordinate/vw/TEST_Point_Transformations.cpp
     math/linalg/TEST_Operations.cpp
+    math/linalg/TEST_SVD.cpp
     math/matrix/TEST_Matrix_Base.cpp
     math/matrix/TEST_Matrix_Multiplication.cpp
     math/matrix/TEST_Matrix_Operations.cpp
@@ -20,6 +21,7 @@ add_executable( ${TEST}
     math/matrix/TEST_Matrix.cpp
     math/matrix/TEST_MatrixN.cpp
     math/optimization/TEST_Levenburg_Marquardt.cpp
+    math/thirdparty/eigen/TEST_Eigen_Utilities.cpp
     math/types/TEST_Compound_Types.cpp
     math/types/TEST_Fundamental_Types.cpp
     math/vector/TEST_Vector.cpp

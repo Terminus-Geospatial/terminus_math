@@ -48,9 +48,9 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
          */
         Matrix( size_t rows,
                 size_t cols )
-            : m_rows( rows ),
-              m_cols( cols ),
-              m_data( rows * cols )
+            : m_data( rows * cols ),
+              m_rows( rows ),
+              m_cols( cols )
         {
             std::fill( m_data.begin(),
                        m_data.end(),
