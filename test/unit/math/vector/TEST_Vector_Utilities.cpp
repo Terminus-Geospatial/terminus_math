@@ -37,7 +37,6 @@ TEST( Vector_Utilities, vector_addition )
     auto vec_03 = vec_01 + vec_02;
 
     // Verify the iterator works
-    tmns::log::trace( vec_03.to_log_string() );
     double exp_value = 7;
     for( auto it = vec_03.begin(); it != vec_03.end(); it++ )
     {

@@ -6,7 +6,8 @@
 #include <terminus/math/linalg/SVD.hpp>
 
 // Project Libraries
-#include <terminus/math/thirdparty/eigen/Eigen_Utilities.hpp>
+#include "../thirdparty/eigen/Eigen_Utilities.hpp"
+#include "../thirdparty/opencv/OpenCV_Utilities.hpp"
 
 // OpenCV Libraries
 #include <opencv4/opencv2/core.hpp>
@@ -18,23 +19,14 @@ namespace tmns::math::linalg {
 /**************************************/
 ImageResult<VectorN<double>> svd( const MatrixN<double>& mat_A )
 {
-    // Convert to OpenCV type
-    cv::Mat A( mat_A.rows(), mat_A.cols(), CV_64FC1 );
-    for( int r = 0; r < A.rows(); r++ )
-    for( int c = 0; c < A.cols(); c++ )
-        A.at<double>(r,c) = matA(r,c);
+    // Convert to eigen type
+    auto A = ocv::to_opencv<double>( mat_A );
 
     // Compute Matrices
     cv::Mat w, u, vt;
     cv::SVD::compute( A, w, u, vt );
     
-    std::cout << "A:\n" << A << std::endl;
-    std::cout << "w:\n"  << w << std::endl;
-    std::cout << "U:\n"  << u << std::endl;
-    std::cout << "Vt:\n" << vt << std::endl;
-
-    VectorN<double> output_tmns( s.data(),
-                                 s.size() );
+    VectorN<double> output_tmns( w.ptr<double>(), w.total() );
 
     return outcome::ok<VectorN<double>>( output_tmns );
 }
@@ -44,35 +36,14 @@ ImageResult<VectorN<double>> svd( const MatrixN<double>& mat_A )
 /**************************************/
 ImageResult<VectorN<float>> svd( const MatrixN<float>& mat_A )
 {
-    auto X = mat_A.data();
-    for( int i=0; i < 12; i++ ){
-        std::cout << i << " -> " << X[i] << std::endl;
-    }
     // Convert to eigen type
-    auto A = eigen::to_eigen<::Eigen::MatrixXf>( mat_A );
+    auto A = ocv::to_opencv<float>( mat_A );
 
-    std::cout << std::endl << std::endl << "======ZZZZZ========\n";
-    std::cout << A.value() << std::endl;
-
-    // Create the Jacobian SVN Engine
-    Eigen::JacobiSVD<Eigen::Matrix<float,
-                                   Eigen::Dynamic,
-                                   Eigen::Dynamic,
-                                   Eigen::RowMajor> > svd( A.value(),
-                                                           Eigen::ComputeThinU |
-                                                           Eigen::ComputeThinV );
+    // Compute Matrices
+    cv::Mat w, u, vt;
+    cv::SVD::compute( A, w, u, vt );
     
-    // Grab the Diagonal
-    Eigen::Matrix<float,
-                  Eigen::Dynamic,
-                  Eigen::Dynamic,
-                  Eigen::RowMajor> s = svd.singularValues().asDiagonal().diagonal();
-
-    std::cout << s << std::endl;
-    VectorN<float> output_tmns( s.data(),
-                                s.size() );
-
-    return outcome::ok<VectorN<float>>( output_tmns );
+    return outcome::ok<VectorN<float>>( w.ptr<float>(), w.total() );
 }
 
 
@@ -85,31 +56,18 @@ ImageResult<void> complete_svd_impl( const MatrixN<double>& mat_A,
                                      MatrixN<double>&       V )
 {
     // Convert to eigen type
-    auto A = eigen::to_eigen<::Eigen::MatrixXd>( mat_A );
+    auto A = ocv::to_opencv<double>( mat_A );
 
-    // Create the Jacobian SVN Engine
-    Eigen::JacobiSVD<Eigen::Matrix<double,
-                                   Eigen::Dynamic,
-                                   Eigen::Dynamic,
-                                   Eigen::RowMajor> > svd( A.value(),
-                                                           Eigen::ComputeFullU |
-                                                           Eigen::ComputeFullV |
-                                                           Eigen::FullPivHouseholderQRPreconditioner );
+    // Compute Matrices
+    cv::Mat w, u, vt;
+    cv::SVD::compute( A, w, u, vt, cv::SVD::FULL_UV );
     
     // Grab U and V
-    ::Eigen::MatrixXd u = svd.matrixU();
-    U = eigen::from_eigen<MatrixN<double>>( u ).value();
+    U = ocv::from_opencv<MatrixN<double>>( u );
 
-    ::Eigen::MatrixXd v = svd.matrixV();
-    V = eigen::from_eigen<MatrixN<double>>( v ).value();
-    
-    // Grab the Diagonal
-    Eigen::Matrix<double,
-                  Eigen::Dynamic,
-                  Eigen::Dynamic,
-                  Eigen::RowMajor> s = svd.singularValues().asDiagonal().diagonal();
+    V = ocv::from_opencv<MatrixN<double>>( vt.t() );
 
-    S = eigen::from_eigen<VectorN<double>>( s ).value();
+    S = ocv::from_opencv<VectorN<double>>( w );
 
     return outcome::ok();
 }
@@ -123,30 +81,18 @@ ImageResult<void> complete_svd_impl( const MatrixN<float>& mat_A,
                                      MatrixN<float>&       V )
 {
     // Convert to eigen type
-    auto A = eigen::to_eigen<::Eigen::MatrixXf>( mat_A );
+    auto A = ocv::to_opencv<float>( mat_A );
 
-    // Create the Jacobian SVN Engine
-    Eigen::JacobiSVD<Eigen::Matrix<float,
-                                   Eigen::Dynamic,
-                                   Eigen::Dynamic,
-                                   Eigen::RowMajor> > svd( A.value(),
-                                                           Eigen::ComputeFullU |
-                                                           Eigen::ComputeFullV );
+    // Compute Matrices
+    cv::Mat w, u, vt;
+    cv::SVD::compute( A, w, u, vt, cv::SVD::FULL_UV );
     
     // Grab U and V
-    ::Eigen::MatrixXf u = svd.matrixU();
-    U = eigen::from_eigen<MatrixN<float>>( u ).value();
+    U = ocv::from_opencv<MatrixN<float>>( u );
 
-    ::Eigen::MatrixXf v = svd.matrixV();
-    V = eigen::from_eigen<MatrixN<float>>( v ).value();
-    
-    // Grab the Diagonal
-    Eigen::Matrix<float,
-                  Eigen::Dynamic,
-                  Eigen::Dynamic,
-                  Eigen::RowMajor> s = svd.singularValues().asDiagonal();
+    V = ocv::from_opencv<MatrixN<float>>( vt.t() );
 
-    S = eigen::from_eigen<VectorN<float>>( s ).value();
+    S = ocv::from_opencv<VectorN<float>>( w );
 
     return outcome::ok();
 }

@@ -7,7 +7,7 @@
 
 // Terminus Libraries
 #include <terminus/math/matrix.hpp>
-#include <terminus/math/thirdparty/eigen/Eigen_Utilities.hpp>
+#include "../../../../../src/math/thirdparty/eigen/Eigen_Utilities.hpp"
 
 using namespace tmns::math;
 
@@ -25,17 +25,18 @@ TEST( thirdparty_eigen_utilities, to_from_eigen_matrix_float_01 )
     // Convert the Terminus matrix into an Eigen type
     auto resA = eigen::to_eigen<::Eigen::MatrixXf>( A );
     ::Eigen::MatrixXf eigenA = resA.value();
-    std::cout << "Eigen Matrix:\n" << eigenA << std::endl;
 
     // Convert back to 
     auto outResA = eigen::from_eigen<MatrixN<float>>( eigenA );
     MatrixN<float> B = outResA.value();
-    std::cout << "Result Matrix:\n" << B.to_log_string() << std::endl;
 
     auto delta = A - B;
-    tmns::log::info( delta.to_log_string() );
+    ASSERT_NEAR( delta.sum(), 0, 0.001 );
 }
 
+/********************************************************/
+/*      Convert Matrices back and forth from Eigen      */
+/********************************************************/
 TEST( thirdparty_eigen_utilities, to_from_eigen_matrix_float_02 )
 {
     // Create a Terminus Matrix
@@ -46,13 +47,11 @@ TEST( thirdparty_eigen_utilities, to_from_eigen_matrix_float_02 )
     // Convert the Terminus matrix into an Eigen type
     auto resA = eigen::to_eigen<::Eigen::MatrixXf>( A );
     ::Eigen::MatrixXf eigenA = resA.value();
-    std::cout << "Eigen Matrix:\n" << eigenA << std::endl;
 
     // Convert back to 
     auto outResA = eigen::from_eigen<MatrixN<float>>( eigenA );
     MatrixN<float> B = outResA.value();
-    std::cout << "Result Matrix:\n" << B.to_log_string() << std::endl;
 
     auto delta = A - B;
-    tmns::log::info( delta.to_log_string() );
+    ASSERT_NEAR( delta.sum(), 0, 0.001 );
 }
