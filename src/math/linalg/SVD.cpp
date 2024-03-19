@@ -8,8 +8,8 @@
 // Project Libraries
 #include <terminus/math/thirdparty/eigen/Eigen_Utilities.hpp>
 
-// Eigen Libraries
-#include <Eigen/SVD>
+// OpenCV Libraries
+#include <opencv4/opencv2/core.hpp>
 
 namespace tmns::math::linalg {
 
@@ -18,24 +18,20 @@ namespace tmns::math::linalg {
 /**************************************/
 ImageResult<VectorN<double>> svd( const MatrixN<double>& mat_A )
 {
-    // Convert to eigen type
-    auto A = eigen::to_eigen<::Eigen::MatrixXd>( mat_A );
-    std::cout << A.value() << std::endl;
+    // Convert to OpenCV type
+    cv::Mat A( mat_A.rows(), mat_A.cols(), CV_64FC1 );
+    for( int r = 0; r < A.rows(); r++ )
+    for( int c = 0; c < A.cols(); c++ )
+        A.at<double>(r,c) = matA(r,c);
 
-    // Create the Jacobian SVN Engine
-    Eigen::JacobiSVD<Eigen::Matrix<double,
-                                   Eigen::Dynamic,
-                                   Eigen::Dynamic,
-                                   Eigen::RowMajor> > svd( A.value(),
-                                                           Eigen::ComputeThinU |
-                                                           Eigen::ComputeThinV );
+    // Compute Matrices
+    cv::Mat w, u, vt;
+    cv::SVD::compute( A, w, u, vt );
     
-    // Grab the Diagonal
-    Eigen::Matrix<double,
-                  Eigen::Dynamic,
-                  Eigen::Dynamic,
-                  Eigen::RowMajor> s = svd.singularValues().asDiagonal().diagonal();
-    std::cout << s << std::endl;
+    std::cout << "A:\n" << A << std::endl;
+    std::cout << "w:\n"  << w << std::endl;
+    std::cout << "U:\n"  << u << std::endl;
+    std::cout << "Vt:\n" << vt << std::endl;
 
     VectorN<double> output_tmns( s.data(),
                                  s.size() );
