@@ -104,6 +104,20 @@ class Matrix_Base
         }
 
         /**
+         * @brief Compute sum of all elements in the matrix.
+         * @return Sum of all elements.
+        */
+        double sum() const
+        {
+            double s = 0;
+            for( auto it = impl().begin(); it != impl().end(); it++ )
+            {
+                s += (*it);
+            }
+            return s;
+        }
+
+        /**
          * Print the matrix in a pretty format
          */
         std::string to_log_string( size_t offset = 0, int precision = 4 ) const

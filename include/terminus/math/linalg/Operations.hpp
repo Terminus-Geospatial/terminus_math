@@ -65,13 +65,20 @@ ImageResult<MatrixN<typename MatrixT::value_type>> nullspace( const Matrix_Base<
     MatrixN<value_type> U, V;
     VectorN<value_type> S;
     auto svd_res = complete_svd( A.impl(), U, S, V );
+
+    std::cout << "A: " << A.to_log_string() << std::endl;
+    std::cout << "U: " << U.to_log_string() << std::endl;
+    std::cout << "S: " << S.to_log_string() << std::endl;
+    std::cout << "V: " << V.to_log_string() << std::endl;
     V = transpose(V);
 
+    // Nullity must be greater than 0
     size_t nty = nullity( A.impl(), U, S, V, thresh );
     if ( nty == 0 )
     {
         return MatrixN<value_type>( 0, 0 );
     }
+
     Matrix<value_type> nullsp(A.impl().cols(), nty );
     value_type th = ( thresh >= 0. ? thresh : detail::calc_threshold(A, S) );
     size_t nn = 0;

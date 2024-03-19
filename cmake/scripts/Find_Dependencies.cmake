@@ -45,3 +45,12 @@ find_package( Boost REQUIRED )
 find_package( terminus_core    REQUIRED )
 find_package( terminus_log     REQUIRED )
 find_package( terminus_outcome REQUIRED )
+
+#----------------------------#
+#-          OpenCV          -#
+#----------------------------#
+find_package( OpenCV REQUIRED )
+message( STATUS "OpenCV_FOUND: ${OpenCV_FOUND}")
+message( STATUS "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
+message( STATUS "OpenCV_LIBS: ${OpenCV_LIBS}")
+include_directories( ${OpenCV_INCLUDE_DIRS} )

@@ -107,3 +107,16 @@ TEST( Matrix, constructor_tests )
     ASSERT_EQ( 3, mat_05[1][0] );
     ASSERT_EQ( 4, mat_05[1][1] );
 }
+
+/****************************************/
+/*          Test the Sum Method         */
+/****************************************/
+TEST( Matrix, sum )
+{
+    std::array<double,12> data = {  23, -1,  25,   98,
+                                   327,  2, 0.1,   66,
+                                   234, 26,  76, -662 };
+    tmx::Matrix<double,3,4> A( data );
+
+    ASSERT_NEAR( A.sum(), 214.1, 0.001 );
+}

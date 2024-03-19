@@ -37,6 +37,7 @@ add_executable( ${TEST}
 target_link_libraries( ${TEST} PRIVATE
     GTest::gtest_main
     ${PROJECT_NAME}
+    ${OpenCV_LIBS}
 )
 
 gtest_discover_tests( ${TEST} )

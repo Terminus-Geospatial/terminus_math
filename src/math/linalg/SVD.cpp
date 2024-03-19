@@ -97,7 +97,8 @@ ImageResult<void> complete_svd_impl( const MatrixN<double>& mat_A,
                                    Eigen::Dynamic,
                                    Eigen::RowMajor> > svd( A.value(),
                                                            Eigen::ComputeFullU |
-                                                           Eigen::ComputeFullV );
+                                                           Eigen::ComputeFullV |
+                                                           Eigen::FullPivHouseholderQRPreconditioner );
     
     // Grab U and V
     ::Eigen::MatrixXd u = svd.matrixU();
@@ -110,7 +111,7 @@ ImageResult<void> complete_svd_impl( const MatrixN<double>& mat_A,
     Eigen::Matrix<double,
                   Eigen::Dynamic,
                   Eigen::Dynamic,
-                  Eigen::RowMajor> s = svd.singularValues().asDiagonal();
+                  Eigen::RowMajor> s = svd.singularValues().asDiagonal().diagonal();
 
     S = eigen::from_eigen<VectorN<double>>( s ).value();
 

@@ -92,7 +92,7 @@ class Matrix_Row : public Vector_Base<Matrix_Row<MatrixT>>
         /*
         // For the transposed vctor object
         template <class OtherT>
-        MatrixRow& operator=( VectorTranspose<OtherT> const& v ) {
+        Matrix_Row& operator=( VectorTranspose<OtherT> const& v ) {
             VW_ASSERT( v.size() == size(), ArgumentErr() << "Vectors must have same size in matrix row assignment.");
             std::copy( v.begin(), v.end(), begin() );
             return *this;
@@ -152,7 +152,6 @@ class Matrix_Row : public Vector_Base<Matrix_Row<MatrixT>>
          */
         reference_type operator[]( size_t i )
         {
-            std::cout << "i: " << i << ", row: " << m_row << ", " << to_string() << std::endl;
             return child()( m_row, i );
         }
 

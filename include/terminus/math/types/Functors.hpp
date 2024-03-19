@@ -291,6 +291,16 @@ class Arg_Val_Sum_Functor : Unary_Return_Binary_Template_Bind_2nd<Sum_Type,Value
         {
             return arg + m_value;
         }
+
+        /**
+         * Get name
+         */
+        static std::string name()
+        {
+            std::stringstream sout;
+            sout << "Arg_Val_Sum_Functor<" << Data_Type_Name<ValueT>::name() << ">";
+            return sout.str();
+        }
     
     private:
 
@@ -485,6 +495,16 @@ class Arg_Val_Product_Functor : Unary_Return_Binary_Template_Bind_2nd<Product_Ty
             operator()( const ArgumentT& arg ) const
         {
             return arg * m_value;
+        }
+
+        /**
+         * Get name
+         */
+        static std::string name()
+        {
+            std::stringstream sout;
+            sout << "Arg_Val_Product_Functor<" << Data_Type_Name<ValueT>::name() << ">";
+            return sout.str();
         }
 
     private:

@@ -275,6 +275,40 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
             return m_data.end();
         }
 
+        static Matrix<ElementT,0,0> zeros( size_t rows, size_t cols )
+        {
+            return Matrix<ElementT,0,0>( rows, cols );
+        }
+
+        /**
+         * Return a matrix of ones
+        */
+        static Matrix<ElementT,0,0> ones( size_t rows, size_t cols )
+        {
+            Matrix<ElementT,0,0> output( rows, cols );
+            std::fill( output.m_data.begin(),
+                       output.m_data.end(),
+                       1 );
+            return output;
+        }
+
+        /**
+         * Return an identity matrix
+         */
+        static Matrix<ElementT,0,0> identity( size_t rows, size_t cols )
+        {
+            // Create a zero matrix
+            auto output = zeros( rows, cols );
+
+            // Set 1 column
+            size_t diag = std::min( output.cols(), output.rows() );
+            for( size_t d = 0; d < diag; d++ )
+            {
+                output.impl()( d, d ) = ( value_type( 1 ) );
+            }
+            return output;
+        }
+
         /**
          * Return all diagonal components
          */

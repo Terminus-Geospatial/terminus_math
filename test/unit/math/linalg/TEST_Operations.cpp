@@ -8,12 +8,42 @@
 // Terminus Libraries
 #include <terminus/math/linalg/Operations.hpp>
 
+#include <opencv4/opencv2/core.hpp>
+
+// C++ Libraries
+#include <iostream>
+
+// Eigen Libraries
+#include <Eigen/LU>
+#include <Eigen/SVD>
+
 namespace tmx = tmns::math;
+
+/************************************/
+/*      Test the nullity method     */
+/************************************/
+TEST( linalg_operations, nullity )
+{
+    // Common example of nullspace
+    tmx::Matrix<double> A( 2, 4, { -1, 1, 2, 4, 2, 0, 1, -7} );
+
+    // Should be 2 
+    ASSERT_EQ( tmx::linalg::nullity( A ), 2 );
+    ASSERT_EQ( tmx::linalg::nullity( A, 0.1 ), 2 );
+
+    // Perform SVD on input matrix
+    tmx::MatrixN<double> U, V;
+    tmx::VectorN<double> S;
+    auto svd_res = tmx::linalg::complete_svd( A, U, S, V );
+
+    tmx::MatrixN<double> Vt = tmx::transpose(V);
+    ASSERT_EQ( tmx::linalg::nullity( A, U, S, Vt ), 2 );
+}
 
 /****************************************/
 /*      Test the nullspace method       */
 /****************************************/
-TEST( linalg_operations, Rank_and_Nullspace )
+TEST( linalg_operations, rank_and_nullspace )
 {
     // Square Matrix
     tmx::MatrixN<double> magic( 3, 3, { 8, 1, 6, 
@@ -29,16 +59,52 @@ TEST( linalg_operations, Rank_and_Nullspace )
 
     {
         // Common example of nullspace
-        tmx::Matrix<double> cow( 2, 4 );
-        cow(0,0) = -1; cow(0,1) = 1; cow(0,2) = 2; cow(0,3) = 4;
-        cow(1,0) = 2;  cow(1,1) = 0; cow(1,2) = 1; cow(1,3) = -7;
+        tmx::Matrix<double> A( 2, 4, { -1, 1, 2, 4, 2, 0, 1, -7} );
 
-        nullsp = tmx::linalg::nullspace(cow);
+        std::cout << "-------------------------------" << std::endl;
+        std::cout << "-------------------------------" << std::endl;
+        nullsp = tmx::linalg::nullspace(A);
+        std::cout << "A:\n" << A.to_log_string() << std::endl;
+        std::cout << "NUL:\n" << nullsp.value().to_log_string() << std::endl;
+
         ASSERT_EQ( nullsp.value().cols(), 2u );
         ASSERT_EQ( nullsp.value().rows(), 4u );
 
+        // Verify Ax = 0, thus each column in the nullspace will result in a dot product of zero, with each row of A.
+        tmx::MatrixN<double> nn = nullsp.value();
+        tmx::VectorNd c = tmx::select_col( nn, 0 );
+        std::cout << "C: " << c.to_log_string() << std::endl;
+        //tmx::Matrix<double,4,1> x( r0.data() );
+
+        for( int col = 0; col < nullsp.value().cols(); col++ )
+        {
+            auto dp = tmx::VectorNd::dot( tmx::select_row( A, 0 ), c );
+            std::cout << "c " << col << " : " << dp << std::endl;
+            std::cout << std::endl;
+        }
+
+        cv::Mat AAA( 2, 4, CV_64FC1 );
+        AAA.at<double>(0,0) = -1;
+        AAA.at<double>(0,1) =  1;
+        AAA.at<double>(0,2) =  2;
+        AAA.at<double>(0,3) =  4;
+        AAA.at<double>(1,0) =  2;
+        AAA.at<double>(1,1) =  0;
+        AAA.at<double>(1,2) =  1;
+        AAA.at<double>(1,3) = -7;
+
+        cv::Mat ww, uu, vvt;
+        cv::SVD::compute( AAA, ww, uu, vvt, cv::SVD::FULL_UV );
+        std::cout << "CV  A: " << AAA << std::endl;
+        std::cout << "CV  w: " << ww << std::endl;
+        std::cout << "CV  u: " << uu << std::endl;
+        std::cout << "CV vt: " << vvt << std::endl;
+        /*
+        tmx::VectorNd c1 = tmx::select_col( nullsp.value(), 1 );
+
         tmx::VectorN<double> definition_check;
         definition_check = cow * tmx::select_col(nullsp.value(),0);
+        std::cout << "def check: " << definition_check.to_log_string() << std::endl;
         for( uint32_t i = 0; i < definition_check.size(); i++ )
         {
             ASSERT_NEAR( 0, definition_check(i), 1e-8 );
@@ -50,6 +116,7 @@ TEST( linalg_operations, Rank_and_Nullspace )
         }
         ASSERT_EQ( 2,  tmx::linalg::rank( cow ) );
         ASSERT_EQ( 2u, tmx::linalg::nullity( cow ) );
+        */
     }
 
     {

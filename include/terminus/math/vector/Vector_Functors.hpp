@@ -124,6 +124,16 @@ class Vector_Unary_Functor : public Vector_Base<Vector_Unary_Functor<VectorT,Fun
         {
             return iter_t( child().end(), m_functor );
         }
+
+        /**
+         * Get name
+         */
+        static std::string name()
+        {
+            std::stringstream sout;
+            sout << "Vector_Unary_Functor<" << VectorT::name() << "," << FunctorT::name() << ">";
+            return sout.str();
+        }
     
     private:
 
