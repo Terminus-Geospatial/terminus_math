@@ -33,7 +33,7 @@ typename VectorT::value_type calc_threshold( const Matrix_Base<MatrixT>& A,
  * S will be resized if necessary to the appropriate output dimensions
  * based on the dimensions of A.
  */
-ImageResult<VectorN<double>> svd( const MatrixN<double>& A );
+Result<VectorN<double>> svd( const MatrixN<double>& A );
 
 /**
  * Compute the singular values of a Matrix A
@@ -41,28 +41,28 @@ ImageResult<VectorN<double>> svd( const MatrixN<double>& A );
  * S will be resized if necessary to the appropriate output dimensions
  * based on the dimensions of A.
  */
-ImageResult<VectorN<float>> svd( const MatrixN<float>& A );
+Result<VectorN<float>> svd( const MatrixN<float>& A );
 
-ImageResult<void> svd_impl( const MatrixN<double>& A,
-                            MatrixN<double>&       U,
-                            VectorN<double>&       S,
-                            MatrixN<double>&       V );
-
-/**
- * Decompose matrix using Singular Value Decomposition
- */
-ImageResult<void> complete_svd_impl( const MatrixN<double>& A,
-                                     MatrixN<double>&       U,
-                                     VectorN<double>&       S,
-                                     MatrixN<double>&       V );
+Result<void> svd_impl( const MatrixN<double>& A,
+                       MatrixN<double>&       U,
+                       VectorN<double>&       S,
+                       MatrixN<double>&       V );
 
 /**
  * Decompose matrix using Singular Value Decomposition
  */
-ImageResult<void> complete_svd_impl( const MatrixN<float>& A,
-                                     MatrixN<float>&       U,
-                                     VectorN<float>&       S,
-                                     MatrixN<float>&       V );
+Result<void> complete_svd_impl( const MatrixN<double>& A,
+                                MatrixN<double>&       U,
+                                VectorN<double>&       S,
+                                MatrixN<double>&       V );
+
+/**
+ * Decompose matrix using Singular Value Decomposition
+ */
+Result<void> complete_svd_impl( const MatrixN<float>& A,
+                                MatrixN<float>&       U,
+                                VectorN<float>&       S,
+                                MatrixN<float>&       V );
 
 
 /**
@@ -75,10 +75,10 @@ template <typename AMatrixT,
           typename UMatrixT,
           typename SingularValuesT,
           typename VTMatrixT>
-ImageResult<void> svd( const AMatrixT&  A,
-                       UMatrixT&        U,
-                       SingularValuesT& S,
-                       VTMatrixT&       VT )
+Result<void> svd( const AMatrixT&  A,
+                  UMatrixT&        U,
+                  SingularValuesT& S,
+                  VTMatrixT&       VT )
 {
     return svd_impl( A, U, S, VT );    
 }
@@ -94,10 +94,10 @@ template <typename AMatrixT,
           typename UMatrixT,
           typename SingularValuesT,
           typename VTMatrixT>
-ImageResult<void> complete_svd( const AMatrixT&  A,
-                                UMatrixT&        U,
-                                SingularValuesT& S,
-                                VTMatrixT&       VT )
+Result<void> complete_svd( const AMatrixT&  A,
+                           UMatrixT&        U,
+                           SingularValuesT& S,
+                           VTMatrixT&       VT )
 {
     return complete_svd_impl( A, U, S, VT );
 }

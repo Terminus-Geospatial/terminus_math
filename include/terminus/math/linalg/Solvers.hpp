@@ -13,8 +13,8 @@
 
 namespace tmns::math::linalg {
 
-ImageResult<VectorN<double>> solve_symmetric( const MatrixN<double>& A,
-                                              const VectorN<double>& b );
+Result<VectorN<double>> solve_symmetric( const MatrixN<double>& A,
+                                         const VectorN<double>& b );
 
 /**
  * Solve the equation Ax=b where A is a symmetric positive definite matrix.  This version of
@@ -22,8 +22,8 @@ ImageResult<VectorN<double>> solve_symmetric( const MatrixN<double>& A,
  */
 template <typename AMatrixT,
           typename BVectorT>
-ImageResult<VectorN<typename Promote_Type<typename AMatrixT::value_type,
-                                          typename BVectorT::value_type>::type>>
+Result<VectorN<typename Promote_Type<typename AMatrixT::value_type,
+                                     typename BVectorT::value_type>::type>>
     solve_symmetric( const AMatrixT& A,
                      const BVectorT& B )
 {
@@ -45,8 +45,8 @@ ImageResult<VectorN<typename Promote_Type<typename AMatrixT::value_type,
  * 
  * Computes the minimum-norm solution to a real linear least squares problem.
  */
-ImageResult<VectorN<double>> solve( const MatrixN<double>& mat_A,
-                                    const VectorN<double>& vec_b,
-                                    double                 eps = 0.00000001 );
+Result<VectorN<double>> solve( const MatrixN<double>& mat_A,
+                               const VectorN<double>& vec_b,
+                               double                 eps = 0.00000001 );
 
 } // End of tmns::math::linalg

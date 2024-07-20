@@ -17,7 +17,7 @@ namespace tmns::math::linalg {
 /**************************************/
 /*        Get singular values         */
 /**************************************/
-ImageResult<VectorN<double>> svd( const MatrixN<double>& mat_A )
+Result<VectorN<double>> svd( const MatrixN<double>& mat_A )
 {
     // Convert to eigen type
     auto A = ocv::to_opencv<double>( mat_A );
@@ -34,7 +34,7 @@ ImageResult<VectorN<double>> svd( const MatrixN<double>& mat_A )
 /**************************************/
 /*        Get singular values         */
 /**************************************/
-ImageResult<VectorN<float>> svd( const MatrixN<float>& mat_A )
+Result<VectorN<float>> svd( const MatrixN<float>& mat_A )
 {
     // Convert to eigen type
     auto A = ocv::to_opencv<float>( mat_A );
@@ -50,10 +50,10 @@ ImageResult<VectorN<float>> svd( const MatrixN<float>& mat_A )
 /**************************************/
 /*        Get singular values         */
 /**************************************/
-ImageResult<void> complete_svd_impl( const MatrixN<double>& mat_A,
-                                     MatrixN<double>&       U,
-                                     VectorN<double>&       S,
-                                     MatrixN<double>&       V )
+Result<void> complete_svd_impl( const MatrixN<double>& mat_A,
+                                MatrixN<double>&       U,
+                                VectorN<double>&       S,
+                                MatrixN<double>&       V )
 {
     // Convert to eigen type
     auto A = ocv::to_opencv<double>( mat_A );
@@ -75,10 +75,10 @@ ImageResult<void> complete_svd_impl( const MatrixN<double>& mat_A,
 /**************************************/
 /*        Get singular values         */
 /**************************************/
-ImageResult<void> complete_svd_impl( const MatrixN<float>& mat_A,
-                                     MatrixN<float>&       U,
-                                     VectorN<float>&       S,
-                                     MatrixN<float>&       V )
+Result<void> complete_svd_impl( const MatrixN<float>& mat_A,
+                                MatrixN<float>&       U,
+                                VectorN<float>&       S,
+                                MatrixN<float>&       V )
 {
     // Convert to eigen type
     auto A = ocv::to_opencv<float>( mat_A );

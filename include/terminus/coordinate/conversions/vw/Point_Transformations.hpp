@@ -26,9 +26,9 @@ namespace tmns::coordinate::vw {
  * horizontal (x) and vertical (y) coordinates in an image.
  */
 template <typename ElementT>
-ImageResult<math::Vector_<ElementT,3>> xyz_to_lon_lat_radius_estimate( const math::Vector_<ElementT,3>&  xyz,
-                                                                       bool                              east_positive = true,
-                                                                       bool                              centered_on_zero = true )
+Result<math::Vector_<ElementT,3>> xyz_to_lon_lat_radius_estimate( const math::Vector_<ElementT,3>&  xyz,
+                                                                  bool                              east_positive = true,
+                                                                  bool                              centered_on_zero = true )
 {
     return XYZ_to_Lon_Lat_Rad_Estimate_Functor::apply( xyz,
                                                        east_positive,
@@ -49,8 +49,8 @@ ImageResult<math::Vector_<ElementT,3>> xyz_to_lon_lat_radius_estimate( const mat
  * vertical (y) coordinates in an image.
  */
 template <typename ElementT>
-ImageResult<math::Vector_<ElementT,3>> lon_lat_radius_to_xyz_estimate( const math::Vector_<ElementT,3>& lon_lat_alt,
-                                                                       bool                             east_positive = true )
+Result<math::Vector_<ElementT,3>> lon_lat_radius_to_xyz_estimate( const math::Vector_<ElementT,3>& lon_lat_alt,
+                                                                  bool                             east_positive = true )
 {
     return Lon_Lat_Rad_To_XYZ_Estimate_Functor::apply(lon_lat_alt, east_positive);
 }

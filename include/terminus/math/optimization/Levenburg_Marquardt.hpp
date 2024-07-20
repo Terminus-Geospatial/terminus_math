@@ -40,13 +40,13 @@ namespace tmns::math::optimize {
 #define MATH_LM_MAX_ITER (100)
 
 template <typename ImplT>
-ImageResult<typename ImplT::domain_type> levenberg_marquardt( const Least_Squares_Model_Base<ImplT>& least_squares_model,
-                                                              const typename ImplT::domain_type&     seed,
-                                                              const typename ImplT::result_type&     observation,
-                                                              LM_STATUS_CODE&                        status,
-                                                              double                                 abs_tolerance  = MATH_LM_ABS_TOL,
-                                                              double                                 rel_tolerance  = MATH_LM_REL_TOL,
-                                                              double                                 max_iterations = MATH_LM_MAX_ITER)
+Result<typename ImplT::domain_type> levenberg_marquardt( const Least_Squares_Model_Base<ImplT>& least_squares_model,
+                                                         const typename ImplT::domain_type&     seed,
+                                                         const typename ImplT::result_type&     observation,
+                                                         LM_STATUS_CODE&                        status,
+                                                         double                                 abs_tolerance  = MATH_LM_ABS_TOL,
+                                                         double                                 rel_tolerance  = MATH_LM_REL_TOL,
+                                                         double                                 max_iterations = MATH_LM_MAX_ITER)
 {
     // Initialize the status
     status = LM_STATUS_CODE::ERROR_DID_NOT_CONVERGE;
@@ -302,13 +302,13 @@ class Least_Squares_Model_Base_Fixed
 template <typename ImplT,
           int      NI,
           int      NO>
-ImageResult<typename ImplT::domain_type> levenberg_marquardt_fixed( const Least_Squares_Model_Base_Fixed<ImplT, NI, NO>& least_squares_model,
-                                                                    const typename ImplT::domain_type&                   seed,
-                                                                    const typename ImplT::result_type&                   observation,
-                                                                    LM_STATUS_CODE&                                      status,
-                                                                    double abs_tolerance = MATH_LM_ABS_TOL,
-                                                                    double rel_tolerance = MATH_LM_REL_TOL,
-                                                                    double max_iterations = MATH_LM_MAX_ITER) {
+Result<typename ImplT::domain_type> levenberg_marquardt_fixed( const Least_Squares_Model_Base_Fixed<ImplT, NI, NO>& least_squares_model,
+                                                               const typename ImplT::domain_type&                   seed,
+                                                               const typename ImplT::result_type&                   observation,
+                                                               LM_STATUS_CODE&                                      status,
+                                                               double abs_tolerance = MATH_LM_ABS_TOL,
+                                                               double rel_tolerance = MATH_LM_REL_TOL,
+                                                               double max_iterations = MATH_LM_MAX_ITER) {
 
     status = LM_STATUS_CODE::ERROR_DID_NOT_CONVERGE;
 

@@ -167,7 +167,7 @@ struct TMNS_to_Eigen_Picker<const VectorN<VectorValueT>>
 */
 template <typename EigenT,
           typename InputMatrixT>
-ImageResult<EigenT> to_eigen( const InputMatrixT& mat )
+Result<EigenT> to_eigen( const InputMatrixT& mat )
 {
     // Construct the end result
     return outcome::ok<EigenT>( TMNS_to_Eigen_Picker<InputMatrixT>::map( mat ) );
@@ -179,7 +179,7 @@ ImageResult<EigenT> to_eigen( const InputMatrixT& mat )
 */
 template <typename MatrixT,
           typename EigenMatrixT>
-ImageResult<MatrixN<typename MatrixT::value_type>> from_eigen( const EigenMatrixT& mat ) 
+Result<MatrixN<typename MatrixT::value_type>> from_eigen( const EigenMatrixT& mat ) 
     requires (std::is_same<MatrixT,MatrixN<typename MatrixT::value_type>>::value)
 {
     // @fixme This is the utter worst way.  Someday I'll solve Eigen's Map<> class
@@ -198,7 +198,7 @@ ImageResult<MatrixN<typename MatrixT::value_type>> from_eigen( const EigenMatrix
 */
 template <typename VectorT,
           typename EigenT>
-ImageResult<VectorN<typename VectorT::value_type>> from_eigen( const EigenT& in )
+Result<VectorN<typename VectorT::value_type>> from_eigen( const EigenT& in )
     requires std::is_same<VectorT,VectorN<typename VectorT::value_type>>::value
 {
     using ValueT = typename VectorT::value_type;

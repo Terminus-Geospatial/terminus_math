@@ -16,8 +16,8 @@ namespace tmns::math::linalg {
 /************************************************************/
 /*          Solve the system of linear equations            */
 /************************************************************/
-ImageResult<VectorN<double>> solve_symmetric( const MatrixN<double>& A,
-                                              const VectorN<double>& b )
+Result<VectorN<double>> solve_symmetric( const MatrixN<double>& A,
+                                         const VectorN<double>& b )
 {
     tmns::log::info( ADD_CURRENT_LOC(), "A: ", A.to_log_string() );
     tmns::log::info( ADD_CURRENT_LOC(), "b: ", b.to_log_string() );
@@ -40,9 +40,9 @@ ImageResult<VectorN<double>> solve_symmetric( const MatrixN<double>& A,
 /************************************************/
 /*      Solve System of Linear Equations        */
 /************************************************/
-ImageResult<VectorN<double>> solve( const MatrixN<double>& mat_A,
-                                    const VectorN<double>& vec_b,
-                                    double                 eps )
+Result<VectorN<double>> solve( const MatrixN<double>& mat_A,
+                               const VectorN<double>& vec_b,
+                               double                 eps )
 {
     using EigenMatrixT = eigen::TMNS_to_Eigen_Picker<MatrixN<double>>::EigenT;
     using EigenVectorT = eigen::TMNS_to_Eigen_Picker<VectorN<double>>::EigenT;

@@ -45,8 +45,8 @@ class Lon_Lat_Rad_To_XYZ_Estimate_Functor : public math::Unary_Return_Same_Type
          * Perform the conversion
          */
         template <typename PointT>
-        static inline ImageResult<PointT> apply( const PointT& p,
-                                                 bool          east_positive = true )
+        static inline Result<PointT> apply( const PointT& p,
+                                            bool          east_positive = true )
         {
             typename PointT::value_type z = p(2) * std::sin( p( 1 ) * M_PI / 180.0 );
             typename PointT::value_type sqrt_x_sqr_plus_y_sqr = p(2) * std::cos( p(1) * M_PI / 180.0 );

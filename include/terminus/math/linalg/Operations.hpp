@@ -58,8 +58,8 @@ size_t nullity( const Matrix_Base<MatrixT>& A,
  * Solve for the nullspace of a Matrix A. If Ax = [0], the nullspace is an x that is not zero.
  */
 template <typename MatrixT>
-ImageResult<MatrixN<typename MatrixT::value_type>> nullspace( const Matrix_Base<MatrixT>&  A,
-                                                              typename MatrixT::value_type thresh = -1 )
+Result<MatrixN<typename MatrixT::value_type>> nullspace( const Matrix_Base<MatrixT>&  A,
+                                                         typename MatrixT::value_type thresh = -1 )
 {
     typedef typename MatrixT::value_type value_type;
     MatrixN<value_type> U, V;

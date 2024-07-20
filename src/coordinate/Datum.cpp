@@ -287,7 +287,7 @@ math::Vector3d Datum::cartesian_to_geodetic( const math::Vector3d& xyz ) const
 /************************************/
 /*      From Well-Known Name        */
 /************************************/
-ImageResult<Datum> Datum::from_well_known_name( const std::string& name )
+Result<Datum> Datum::from_well_known_name( const std::string& name )
 {
     Datum output;
     output.m_impl->m_meridian_name   = "Greenwich";
@@ -379,7 +379,7 @@ ImageResult<Datum> Datum::from_well_known_name( const std::string& name )
 /********************************************/
 /*          From OGR Spatial Ref            */
 /********************************************/
-ImageResult<Datum> Datum::from_ogr_spatial_ref( const OGRSpatialReference& gdal_spatial_ref )
+Result<Datum> Datum::from_ogr_spatial_ref( const OGRSpatialReference& gdal_spatial_ref )
 {
     Datum result;
 
@@ -424,7 +424,7 @@ ImageResult<Datum> Datum::from_ogr_spatial_ref( const OGRSpatialReference& gdal_
 /************************************************/
 /*          Convert from Proj String            */
 /************************************************/
-ImageResult<Datum> Datum::from_proj_string( const std::string& proj_str )
+Result<Datum> Datum::from_proj_string( const std::string& proj_str )
 {
     OGRSpatialReference gdal_spatial_ref;
     if( gdal_spatial_ref.importFromProj4( proj_str.c_str() ) )

@@ -155,22 +155,22 @@ class Datum
          * 
          * @note:  If you do not have ISIS support, Moon, Mars, and Mola will likely be disabled.
          */
-        static ImageResult<Datum> from_well_known_name( const std::string& name );
+        static Result<Datum> from_well_known_name( const std::string& name );
 
         /**
          * Set Datum from OGR Spatial Ref
          */
-        static ImageResult<Datum> from_ogr_spatial_ref( const OGRSpatialReference& ref );
+        static Result<Datum> from_ogr_spatial_ref( const OGRSpatialReference& ref );
 
         /**
          * Set Datum from Proj String
          */
-        static ImageResult<Datum> from_proj_string( const std::string& proj_str );
+        static Result<Datum> from_proj_string( const std::string& proj_str );
 
         /**
          * Set Datum from WKT string.
          */
-        static ImageResult<Datum> from_well_known_text( const std::string& wkt_string );
+        static Result<Datum> from_well_known_text( const std::string& wkt_string );
 
     private:
 

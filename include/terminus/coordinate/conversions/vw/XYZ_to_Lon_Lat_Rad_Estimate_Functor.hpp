@@ -35,7 +35,7 @@ class XYZ_to_Lon_Lat_Rad_Estimate_Functor : public math::Unary_Return_Same_Type
          * Function Operator
          */
         template <typename PointT>
-        ImageResult<PointT> operator()( const PointT& p ) const
+        Result<PointT> operator()( const PointT& p ) const
         {
             return this->apply( p, m_east_positive, m_centered_on_zero );
         }
@@ -45,9 +45,9 @@ class XYZ_to_Lon_Lat_Rad_Estimate_Functor : public math::Unary_Return_Same_Type
          * Designed to be bound to another functor which applies this to a bulk dataset.
          */
         template <typename PointT>
-        static inline ImageResult<PointT> apply( const PointT& p,
-                                                 bool          east_positive    = true,
-                                                 bool          centered_on_zero = true )
+        static inline Result<PointT> apply( const PointT& p,
+                                            bool          east_positive    = true,
+                                            bool          centered_on_zero = true )
         {
             // Deal with "missing pixels"
             if( p.magnitude() < 0.0001 )
