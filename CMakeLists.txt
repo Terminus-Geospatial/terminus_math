@@ -64,6 +64,7 @@ target_link_libraries( ${PROJECT_NAME} PUBLIC
     terminus_log::terminus_log
     terminus_outcome::terminus_outcome
     GDAL::GDAL
+    ${OpenCV_LIBS}
 )
 
 install( TARGETS ${PROJECT_NAME} )

@@ -8,7 +8,7 @@ from conan.tools.files import copy
 class ConanProject(ConanFile):
 
     name = "terminus_math"
-    version = "0.0.14"
+    version = "0.0.15"
 
     license = "Terminus Proprietary"
     author  = "Marvin Smith <marvin_smith1@me.com>"
