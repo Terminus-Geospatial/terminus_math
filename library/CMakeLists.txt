@@ -26,7 +26,6 @@ target_link_libraries( ${PROJECT_NAME} PUBLIC
     Boost::headers
     Boost::log
     Boost::log_setup
-    Boost::stacktrace
     terminus_core::terminus_core
     terminus_log::terminus_log
     terminus_outcome::terminus_outcome
