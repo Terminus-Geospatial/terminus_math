@@ -46,26 +46,7 @@ LIST( APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules")
 #  Look for dependencies
 include( "${PROJECT_SOURCE_DIR}/cmake/scripts/Find_Dependencies.cmake" )
 
-include_directories( include )
-
-add_library( ${PROJECT_NAME} SHARED
-                src/coordinate/Datum.cpp
-                src/math/linalg/Solvers.cpp
-                src/math/linalg/SVD.cpp
-                src/math/Quaternion.cpp
-                src/math/Quaternion_Utilities.cpp )
-
-target_link_libraries( ${PROJECT_NAME} PUBLIC
-    Boost::headers
-    Boost::log
-    Boost::log_setup
-    Boost::stacktrace
-    terminus_core::terminus_core
-    terminus_log::terminus_log
-    terminus_outcome::terminus_outcome
-    GDAL::GDAL
-    ${OpenCV_LIBS}
-)
+add_subdirectory( library )
 
 install( TARGETS ${PROJECT_NAME} )
 

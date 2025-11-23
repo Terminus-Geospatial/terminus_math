@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    SVD.cpp
  * @author  Marvin Smith
@@ -25,7 +34,7 @@ Result<VectorN<double>> svd( const MatrixN<double>& mat_A )
     // Compute Matrices
     cv::Mat w, u, vt;
     cv::SVD::compute( A, w, u, vt );
-    
+
     VectorN<double> output_tmns( w.ptr<double>(), w.total() );
 
     return outcome::ok<VectorN<double>>( output_tmns );
@@ -42,7 +51,7 @@ Result<VectorN<float>> svd( const MatrixN<float>& mat_A )
     // Compute Matrices
     cv::Mat w, u, vt;
     cv::SVD::compute( A, w, u, vt );
-    
+
     return outcome::ok<VectorN<float>>( w.ptr<float>(), w.total() );
 }
 
@@ -61,7 +70,7 @@ Result<void> complete_svd_impl( const MatrixN<double>& mat_A,
     // Compute Matrices
     cv::Mat w, u, vt;
     cv::SVD::compute( A, w, u, vt, cv::SVD::FULL_UV );
-    
+
     // Grab U and V
     U = ocv::from_opencv<MatrixN<double>>( u );
 
@@ -86,7 +95,7 @@ Result<void> complete_svd_impl( const MatrixN<float>& mat_A,
     // Compute Matrices
     cv::Mat w, u, vt;
     cv::SVD::compute( A, w, u, vt, cv::SVD::FULL_UV );
-    
+
     // Grab U and V
     U = ocv::from_opencv<MatrixN<float>>( u );
 
