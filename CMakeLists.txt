@@ -86,4 +86,4 @@ if( TERMINUS_MATH_ENABLE_TESTS )
 endif()
 
 install( DIRECTORY library/include/terminus DESTINATION include)
-# install( DIRECTORY ${PROJECT_BINARY_DIR}/include/terminus DESTINATION include )
+install( DIRECTORY ${PROJECT_BINARY_DIR}/library/include/terminus DESTINATION include )
