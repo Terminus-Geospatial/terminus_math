@@ -8,7 +8,7 @@
 /*                                                                                    */
 /***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Vector.hpp
+ * @file    vector.hpp
  * @author  Marvin Smith
  * @date    7/12/2023
 */
@@ -21,8 +21,8 @@
 #include <sstream>
 
 // Terminus Libraries
-#include <terminus/math/types/Fundamental_Types.hpp>
-#include <terminus/math/vector/Vector_Base.hpp>
+#include <terminus/math/types/fundamental_types.hpp>
+#include <terminus/math/vector/vector_base.hpp>
 
 namespace tmns::math {
 

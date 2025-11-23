@@ -1,12 +1,21 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    VectorN.hpp
+ * @file    vectorn.hpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
 #pragma once
 
 // Terminus Math Libraries
-#include "Vector.hpp"
+#include <terminus/math/vector/vector.hpp>
 
 // C++ Libraries
 #include <initializer_list>

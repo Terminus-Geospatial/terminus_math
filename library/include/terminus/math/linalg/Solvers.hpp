@@ -16,9 +16,9 @@
 
 // Terminus Libraries
 #include <terminus/error.hpp>
-#include <terminus/math/matrix/MatrixN.hpp>
-#include <terminus/math/types/Type_Deduction.hpp>
-#include <terminus/math/vector/VectorN.hpp>
+#include <terminus/math/matrix/matrixn.hpp>
+#include <terminus/math/types/type_deduction.hpp>
+#include <terminus/math/vector/vectorn.hpp>
 
 namespace tmns::math::linalg {
 

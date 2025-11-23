@@ -1,12 +1,21 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Vector_Proxy.hpp
+ * @file    vector_proxy.hpp
  * @author  Marvin Smith
  * @date    10/14/2023
  */
 #pragma once
 
 // Terminus Libraries
-#include "Vector.hpp"
+#include "vector.hpp"
 
 namespace tmns::math {
 
@@ -17,13 +26,13 @@ namespace tmns::math {
 template <typename ElementT,
           size_t   SizeN = 0>
 class Vector_Proxy : public Vector_Base<Vector_Proxy<ElementT,SizeN>>
-{    
+{
     public:
-    
+
         using value_type = ElementT;
-        
+
         using reference_type = ElementT&;
-        
+
         using const_reference_type = ElementT const&;
 
         using iter_t = ElementT*;
@@ -157,7 +166,7 @@ class Vector_Proxy : public Vector_Base<Vector_Proxy<ElementT,SizeN>>
         {
             return m_ptr[1];
         }
-        
+
         /**
          * Get the Z Value
          */
@@ -197,7 +206,7 @@ class Vector_Proxy : public Vector_Base<Vector_Proxy<ElementT,SizeN>>
         {
             return m_ptr + size();
         }
-        
+
         /**
          * End iterator position
          */
@@ -236,7 +245,7 @@ class Vector_Proxy<ElementT,0> : public Vector_Base<Vector_Proxy<ElementT>>
         using const_reference_type = ElementT const&;
 
         using iter_t = ElementT*;
-        
+
         using const_iter_t = const ElementT*;
 
         /**
@@ -373,7 +382,7 @@ class Vector_Proxy<ElementT,0> : public Vector_Base<Vector_Proxy<ElementT>>
     private:
 
         ElementT* m_ptr { nullptr };
-        
+
         size_t m_size { 0 };
 
 }; // End of Vector_Proxy<>

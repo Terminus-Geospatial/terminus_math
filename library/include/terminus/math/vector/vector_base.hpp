@@ -1,12 +1,21 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Vector_Base.hpp
+ * @file    vector_base.hpp
  * @author  Marvin Smith
  * @date    9/16/2023
 */
 #pragma once
 
 // Terminus Libraries
-#include "Vector_Traits.hpp"
+#include "vector_traits.hpp"
 
 // C++ Libraries
 #include <iomanip>
@@ -100,7 +109,7 @@ class Vector_Base
                 }
                 sout << std::fixed << std::setprecision( precision ) << impl().operator()( r );
             }
-            
+
             return sout.str();
         }
 

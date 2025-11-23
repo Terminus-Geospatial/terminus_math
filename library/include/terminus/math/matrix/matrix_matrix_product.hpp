@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Matrix_Matrix_Product.hpp
  * @author  Marvin Smith
@@ -6,16 +15,16 @@
 #pragma once
 
 // Terminus Math Libraries
-#include "../types/Type_Deduction.hpp"
-#include "Matrix_Base.hpp"
-#include "Matrix_Operations.hpp"
-#include "Matrix_Proxy.hpp"
+#include <terminus/math/types/type_deduction.hpp>
+#include <terminus/math/matrix/matrix_base.hpp>
+#include <terminus/math/matrix/matrix_operations.hpp>
+#include <terminus/math/matrix/matrix_proxy.hpp>
 
 namespace tmns::math {
 
 /**
  * Matrix matrix product.
- * 
+ *
  * A class representing a product of a matrix and a vector.
  */
 template <typename Matrix1T,
@@ -155,9 +164,9 @@ class Matrix_Matrix_Product : public Matrix_Base<Matrix_Matrix_Product<Matrix1T,
         template <typename MatrixT>
         struct Matrix_Closure
         {
-            using type = Matrix<typename MatrixT::value_type>; 
+            using type = Matrix<typename MatrixT::value_type>;
         };
-        
+
         template <typename ElementT,
                   size_t   RowsN,
                   size_t ColsN>
@@ -165,7 +174,7 @@ class Matrix_Matrix_Product : public Matrix_Base<Matrix_Matrix_Product<Matrix1T,
         {
             using type = Matrix<ElementT,RowsN,ColsN> const&;
         };
-        
+
         template <typename ElementT,
                   size_t   RowsN,
                   size_t   ColsN>
@@ -173,11 +182,11 @@ class Matrix_Matrix_Product : public Matrix_Base<Matrix_Matrix_Product<Matrix1T,
         {
             using type = Matrix<ElementT,RowsN,ColsN> const&;
         };
-        
+
         template <typename ElementT,
                   size_t   RowsN,
                   size_t   ColsN>
-        struct Matrix_Closure<Matrix_Proxy<ElementT,RowsN,ColsN> > 
+        struct Matrix_Closure<Matrix_Proxy<ElementT,RowsN,ColsN> >
         {
             using type = Matrix_Proxy<ElementT,RowsN,ColsN> const&;
         };

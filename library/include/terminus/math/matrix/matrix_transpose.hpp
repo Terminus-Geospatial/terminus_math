@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Matrix_Transpose.hpp
  * @author  Marvin Smith
@@ -6,7 +15,7 @@
 #pragma once
 
 // Terminus Math Libraries
-#include "Indexing_Matrix_Iterator.hpp"
+#include "indexing_matrix_iterator.hpp"
 
 namespace tmns::math {
 
@@ -169,7 +178,7 @@ class Matrix_Transpose : public Matrix_Base<Matrix_Transpose<MatrixT> >
         {
             return iter_t( *this, 0, 0 );
         }
-        
+
         /**
          * Get the start iterator position
          */
@@ -177,7 +186,7 @@ class Matrix_Transpose : public Matrix_Base<Matrix_Transpose<MatrixT> >
         {
             return const_iter_t( *this, 0, 0 );
         }
-        
+
         /**
          * Get the end iterator position
          */
@@ -185,7 +194,7 @@ class Matrix_Transpose : public Matrix_Base<Matrix_Transpose<MatrixT> >
         {
             return iter_t( *this, rows(), 0 );
         }
-        
+
         /**
          * Get the end iterator position
          */

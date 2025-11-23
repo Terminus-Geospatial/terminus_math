@@ -5,7 +5,7 @@
 #    Purpose:  Build terminus-math API
 
 #  Set CMake Version
-cmake_minimum_required( VERSION 3.22 FATAL_ERROR )
+cmake_minimum_required( VERSION 4.0.0 FATAL_ERROR )
 
 #  Configure Conan Search Paths
 include( "${CMAKE_BINARY_DIR}/conan_toolchain.cmake" )
@@ -28,15 +28,15 @@ set( CMAKE_CXX_STANDARD_REQUIRED ON )
 #  Give Vscode a fighting chance
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-#  Setup libdl for debug GCC builds
-if( CMAKE_BUILD_TYPE STREQUAL "debug" OR CMAKE_BUILD_TYPE STREQUAL "Debug" )
-    if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-        set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -rdynamic -ldl" )
-    endif()
-endif()
-
 # Bring in CMake helpers for TERMINUS projects
 include( terminus_cmake )
+
+# Force the high warning preset published by terminus_cmake across this project
+set( TERMINUS_CXX_FLAGS ${TERMINUS_CXX_FLAGS_HIGH} CACHE STRING "Terminus warning preset" FORCE )
+
+#  Treat warnings as errors
+set( CMAKE_COMPILE_WARNING_AS_ERROR ON )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror" )
 
 #-------------------------------------#
 #-     Add Manual CMake Scripts      -#

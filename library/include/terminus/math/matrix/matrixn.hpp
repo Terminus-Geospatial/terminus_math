@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    MatrixN.hpp
  * @author  Marvin Smith
@@ -6,9 +15,9 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/math/matrix/Matrix.hpp>
-#include <terminus/math/matrix/Sub_Matrix.hpp>
-#include <terminus/math/vector/Sub_Vector.hpp>
+#include <terminus/math/matrix/matrix.hpp>
+#include <terminus/math/matrix/sub_matrix.hpp>
+#include <terminus/math/vector/sub_vector.hpp>
 
 namespace tmns::math {
 
@@ -22,7 +31,7 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
 
         /// @brief  Array Type
         using array_type = std::vector<ElementT>;
-    
+
         /// @brief Underlying Element / Value Type
         using value_type = ElementT;
 
@@ -58,7 +67,7 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
         }
 
         /**
-         * Constructs a matrix of the given size from given 
+         * Constructs a matrix of the given size from given
          * densely-packed row-mjor data.  This constructor copies the
          * data.  If you wish to make a shallow proxy object instead,
          * Matrix_Proxy
@@ -73,7 +82,7 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
         }
 
         /**
-         * Constructs a matrix of the given size from given 
+         * Constructs a matrix of the given size from given
          * densely-packed row-mjor data.  This constructor copies the
          * data.  If you wish to make a shallow proxy object instead,
          * Matrix_Proxy
@@ -98,7 +107,7 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
              m_cols( mat.m_cols )
         {
         }
-        
+
         /**
          * Generalized copy constructor for any base type
          */
@@ -145,7 +154,7 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
         template <typename OtherMatrixT>
         Matrix& operator = ( const Matrix_No_Tmp<OtherMatrixT>& mat )
         {
-            if( mat.impl().rows() == rows() && 
+            if( mat.impl().rows() == rows() &&
                 mat.impl().cols() == cols() )
             {
                 std::copy( mat.impl().begin(),
@@ -153,13 +162,13 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
                            begin() );
                 return *this;
             }
-            else 
+            else
             {
                 std::cerr << "Matrix must have dimensions of " << rows() << " rows by "
-                          << cols() << " cols.  Actual: " << mat.rows() << " rows x " 
+                          << cols() << " cols.  Actual: " << mat.rows() << " rows x "
                           << mat.cols() << " cols";
                 return *this = mat.impl();
-            } 
+            }
         }
 
         /**
@@ -171,7 +180,7 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
         }
 
         /**
-         * Get matrix columns 
+         * Get matrix columns
          */
         size_t cols() const
         {
@@ -190,7 +199,7 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
             {
                 // Create new array
                 array_type other( rows * cols );
-                
+
                 size_t mr = (std::min)( rows, m_rows );
                 size_t mc = (std::min)( cols, m_cols );
                 for( size_t r=0; r<mr; ++r )
@@ -234,7 +243,7 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
         {
             return &(operator()(0,0));
         }
-        
+
         /**
          * Get pointer to underlying data
          */
@@ -250,7 +259,7 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
         {
             return m_data.begin();
         }
-        
+
         /**
          * Get the beginning of the matrix (const)
          */
@@ -333,12 +342,12 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
             // Make sure the matrix is square
             if( rows() != cols() )
             {
-                tmns::log::error( ADD_CURRENT_LOC(), 
+                tmns::log::error( ADD_CURRENT_LOC(),
                                   "Matrix must be square.  Actual: ",
                                   rows(), " x ", cols() );
                 return result;
             }
-            
+
             std::stack<std::pair<Matrix<value_type>,value_type> > s;
 
             s.push( std::make_pair( (*this), 1 ) );
@@ -348,16 +357,16 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
                 value_type scale = s.top().second;
 
                 s.pop();
-                
+
                 // Make sure matrix is square
                 if( a.rows() != a.cols() )
                 {
-                    tmns::log::error( ADD_CURRENT_LOC(), 
+                    tmns::log::error( ADD_CURRENT_LOC(),
                                   "Matrix must be square.  Actual: ",
                                   a.rows(), " x ", a.cols() );
                     return result;
                 }
-                
+
                 size_t dim = a.rows();
                 Matrix<value_type> sub;
                 switch( dim )
@@ -414,14 +423,14 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
             {
                 Matrix_Col<Matrix<value_type> > mci( buf, i );
                 Matrix_Row<Matrix<value_type> > mri( buf, i );
-      
+
                 size_t i_norm_inf = i + index_norm_inf( subvector( mci, i, sz - i ) );
-      
+
                 if( buf( i_norm_inf, i ) == zero )
                 {
                     throw std::runtime_error( "Matrix is singular in inverse()" );
                 }
-        
+
                 if( i_norm_inf != i )
                 {
                     size_t pbuf = pm(i);
@@ -460,8 +469,8 @@ class Matrix<ElementT,0,0> : public Matrix_Base<Matrix<ElementT,0,0> >
             }} // End of lower-triangle division
 
             // Divide by the upper-triangular term
-            for ( ssize_t i = sz - 1; i >= 0; --i ){
-            for ( ssize_t j = sz - 1; j >= 0; --j ){
+            for ( ssize_t i = static_cast<ssize_t>(sz - 1); i >= 0; --i ){
+            for ( ssize_t j = static_cast<ssize_t>(sz - 1); j >= 0; --j ){
                 value_type t = inverse_mat(i,j) /= buf(i,i);
                 if( t != zero )
                 {

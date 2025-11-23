@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Sub_Vector.hpp
+ * @file    sub_vector.hpp
  * @author  Marvin Smith
  * @date    10/24/2023
  */
@@ -120,7 +129,7 @@ class Sub_Vector : public Vector_Base<Sub_Vector<VectorT>>
         }
 
         reference_type operator()( size_t i )
-        { 
+        {
             return child()(m_pos+i);
         }
 

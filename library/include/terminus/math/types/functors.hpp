@@ -6,7 +6,7 @@
 #pragma once
 
 // Terminus Math Libraries
-#include "Type_Deduction.hpp"
+#include <terminus/math/types/type_deduction.hpp>
 
 namespace tmns::math {
 
@@ -18,7 +18,7 @@ struct Unary_Return_Same_Type
     template <typename Arguments>
     struct result;
 
-    template <typename ChannelT, 
+    template <typename ChannelT,
               typename FunctorT>
     struct result<FunctorT(ChannelT)>
     {
@@ -52,7 +52,7 @@ struct Unary_Return_Template_Type
 template <template<typename,typename> class ResultT>
 struct Binary_Return_Template_Type
 {
-    template <typename Arguments> 
+    template <typename Arguments>
     struct result {};
 
     template <typename FunctorT,
@@ -85,7 +85,7 @@ struct Binary_Return_1st_Type
 {
     template <typename Arguments>
     struct result;
-    
+
     template <typename FunctorT,
               typename Argument1T,
               typename Argument2T>
@@ -96,7 +96,7 @@ struct Binary_Return_1st_Type
 
 /**
  * A mix-in specifying that a binary functor always returns
- * the same type as its second argument. 
+ * the same type as its second argument.
  */
 struct Binary_Return_2nd_Type
 {
@@ -115,14 +115,14 @@ struct Binary_Return_2nd_Type
  * A mix-in specifying that a functor is an unary functor whose return type
  * is determined by the given binary type function with the given first argument.
  */
-template <template<typename,typename> 
-            typename ResultT, 
+template <template<typename,typename>
+            typename ResultT,
             typename ValueT>
 struct Unary_Return_Binary_Template_Bind_1st
 {
     template <typename Arguments>
     struct result { typedef void type; };
-    
+
     template <typename FunctorT,
               typename ArgumentT>
     struct result<FunctorT(ArgumentT)>
@@ -132,8 +132,8 @@ struct Unary_Return_Binary_Template_Bind_1st
 }; // End of Unary_Return_Binary_Template_Bind_1st
 
 /**
- * A mix-in specifying that a functor is an unary functor whose return 
- * type is determined by the given binary type function with the given 
+ * A mix-in specifying that a functor is an unary functor whose return
+ * type is determined by the given binary type function with the given
  * second argument.
  */
 template <template<typename,typename>
@@ -146,7 +146,7 @@ struct Unary_Return_Binary_Template_Bind_2nd
     {
         typedef void type;
     };
-    
+
     template <typename FunctorT,
               typename ArgumentT>
     struct result<FunctorT(ArgumentT)>
@@ -156,11 +156,11 @@ struct Unary_Return_Binary_Template_Bind_2nd
 }; // End of Unary_Return_Binary_Template_Bind_2nd struct
 
 /**
- * A mix-in specifying that a functor is a binary functor whose return 
+ * A mix-in specifying that a functor is a binary functor whose return
  * type is determined by the given ternary type function with the given
  * first argument.
  */
-template <template<typename,typename,typename> 
+template <template<typename,typename,typename>
                 typename ResultT,
                 typename ValueT>
 struct Binary_Return_Ternary_Template_Bind_1st
@@ -170,7 +170,7 @@ struct Binary_Return_Ternary_Template_Bind_1st
     {
         typedef void type;
     };
-    
+
     template <typename FunctorT,
               typename Argument1T,
               typename Argument2T>
@@ -181,11 +181,11 @@ struct Binary_Return_Ternary_Template_Bind_1st
 }; // End of Binary_Return_Ternary_Template_Bind_1st struct
 
 /**
- * A mix-in specifying that a functor is an unary functor 
+ * A mix-in specifying that a functor is an unary functor
  * whose return type is determined by the given ternary
  * type function with the given first and second arguments.
  */
-template <template<typename,typename,typename> 
+template <template<typename,typename,typename>
                         typename ResultT,
                         typename Value1T,
                         typename Value2T>
@@ -196,7 +196,7 @@ struct Unary_Return_Ternary_Template_Bind_1st_2nd
     {
         typedef void type;
     };
-    
+
     template <typename FunctorT,
               typename ArgumentT>
     struct result<FunctorT(ArgumentT)>
@@ -210,7 +210,7 @@ struct Unary_Return_Ternary_Template_Bind_1st_2nd
  * type is determined by the given ternary type function with the given
  * first and third arguments.
  */
-template <template<typename,typename,typename> 
+template <template<typename,typename,typename>
                 typename ResultT,
                 typename Value1T,
                 typename Value3T>
@@ -270,7 +270,7 @@ struct Arg_Arg_Sum_Functor : Binary_Return_Template_Type<Sum_Type>
         sout << "Arg_Arg_Sum_Functor";
         return sout.str();
     }
-    
+
 }; // End of Arg_Arg_Sum_Functor struct
 
 /**
@@ -286,7 +286,7 @@ class Arg_Val_Sum_Functor : Unary_Return_Binary_Template_Bind_2nd<Sum_Type,Value
         {}
 
         template <typename ArgumentT>
-        typename Sum_Type<ArgumentT,ValueT>::type 
+        typename Sum_Type<ArgumentT,ValueT>::type
             operator()( const ArgumentT& arg ) const
         {
             return arg + m_value;
@@ -301,7 +301,7 @@ class Arg_Val_Sum_Functor : Unary_Return_Binary_Template_Bind_2nd<Sum_Type,Value
             sout << "Arg_Val_Sum_Functor<" << Data_Type_Name<ValueT>::name() << ">";
             return sout.str();
         }
-    
+
     private:
 
         const ValueT m_value;
@@ -318,7 +318,7 @@ class Val_Arg_Sum_Functor : Unary_Return_Binary_Template_Bind_1st<Sum_Type,Value
         Val_Arg_Sum_Functor( const ValueT& value ) : m_value( value ) {}
 
         template <typename ArgumentT>
-        typename Sum_Type<ValueT,ArgumentT>::type 
+        typename Sum_Type<ValueT,ArgumentT>::type
             operator()( const ArgumentT& arg ) const
         {
             return m_value + arg;
@@ -358,7 +358,7 @@ class Arg_Val_In_Place_Sum_Functor : Unary_Return_Same_Type
         {
             return arg = (ArgumentT)( arg + m_value );
         }
-    
+
     private:
         const ValueT m_value;
 }; // End of Arg_Val_In_Place_Sum_Functor class
@@ -388,7 +388,7 @@ struct Arg_Arg_Difference_Functor : Binary_Return_Template_Type<Difference_Type>
     }
 }; // End of Arg_Arg_Difference_Functor struct
 
-  
+
 /**
  * Unary difference of an argument and a value
  */
@@ -417,7 +417,7 @@ template <typename ValueT>
 class Val_Arg_Difference_Functor : Unary_Return_Binary_Template_Bind_1st<Difference_Type,ValueT>
 {
     public:
-        
+
         Val_Arg_Difference_Functor( const ValueT& value )
          : m_value( value ) {}
 
@@ -439,7 +439,7 @@ struct Arg_Arg_In_Place_Difference_Functor : Binary_Return_1st_Type
 {
     template <typename Argument1T,
               typename Argument2T>
-    Argument1T& operator()( Argument1T&       arg1, 
+    Argument1T& operator()( Argument1T&       arg1,
                             const Argument2T& arg2 ) const
     {
         return arg1 = (Argument1T)( arg1 - arg2 );
@@ -455,7 +455,7 @@ class Arg_Val_In_Place_Difference_Functor : Unary_Return_Same_Type
     public:
         Arg_Val_In_Place_Difference_Functor( const ValueT& value )
           : m_value( value ) {}
-        
+
         template <typename ArgumentT>
         ArgumentT& operator()( ArgumentT& arg ) const
         {
@@ -539,7 +539,7 @@ struct Arg_Arg_In_Place_Product_Functor : Binary_Return_1st_Type
 {
     template <typename Argument1T,
               typename Argument2T>
-    Argument1T& operator()( Argument1T&       arg1, 
+    Argument1T& operator()( Argument1T&       arg1,
                             const Argument2T& arg2 ) const
     {
         return arg1 = (Argument1T)( arg1 * arg2 );
@@ -685,7 +685,7 @@ template <typename ValueT>
 class Arg_Val_Safe_Quotient_Functor : Unary_Return_Binary_Template_Bind_2nd<Quotient_Type,ValueT>
 {
     public:
-    
+
         Arg_Val_Safe_Quotient_Functor( const ValueT& value )
            : m_value( value ) {}
 
@@ -787,7 +787,7 @@ struct Arg_Arg_Equality_Functor : Return_Fixed_Type<bool>
 {
     template <typename Argument1T,
               typename Argument2T>
-    bool operator()( const Argument1T& arg1, 
+    bool operator()( const Argument1T& arg1,
                      const Argument2T& arg2 ) const
     {
         return arg1 == arg2;
@@ -907,7 +907,7 @@ template <typename ValueT>
 class Arg_Val_Less_Than_Functor : Return_Fixed_Type<bool>
 {
     public:
-    
+
         Arg_Val_Less_Than_Functor( const ValueT& value )
            : m_value( value ) {}
 
@@ -916,7 +916,7 @@ class Arg_Val_Less_Than_Functor : Return_Fixed_Type<bool>
         {
             return arg < m_value;
         }
-    
+
     private:
         const ValueT m_value;
 
@@ -991,9 +991,9 @@ class Val_Arg_Less_Than_Or_Equal_Functor : Return_Fixed_Type<bool>
         {
             return m_value <= arg;
         }
-    
+
     private:
-        const ValueT m_value;    
+        const ValueT m_value;
 }; // End of Val_Arg_Less_Than_Or_Equal_Functor class
 
 /**
@@ -1080,7 +1080,7 @@ class Arg_Val_Greater_Than_Or_Equal_Functor : Return_Fixed_Type<bool>
         {
             return arg >= m_value;
         }
-        
+
     private:
         const ValueT m_value;
 }; // End of Arg_Val_Greater_Than_Or_Equal_Functor class
@@ -1103,7 +1103,7 @@ class Val_Arg_Greater_Than_Or_Equal_Functor : Return_Fixed_Type<bool>
         }
 
     private:
-    
+
         const ValueT m_value;
 }; // End of Val_Arg_Greater_Than_Or_Equal_Functor class
 

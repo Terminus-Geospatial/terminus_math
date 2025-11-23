@@ -14,16 +14,6 @@
  */
 #pragma once
 
-// Terminus Math Libraries
-#include "../types/Fundamental_Types.hpp"
-#include "Matrix_Base.hpp"
-#include "Matrix_Col.hpp"
-#include "Matrix_Row.hpp"
-#include "Matrix_Transpose.hpp"
-
-// Terminus Libraries
-#include <terminus/log/utility.hpp>
-
 // Boost Libraries
 #include <boost/mpl/min_max.hpp>
 
@@ -33,6 +23,14 @@
 #include <ranges>
 #include <stack>
 #include <stdexcept>
+
+// Terminus Libraries
+#include <terminus/log/utility.hpp>
+#include <terminus/math/types/fundamental_types.hpp>
+#include <terminus/math/matrix/matrix_base.hpp>
+#include <terminus/math/matrix/matrix_col.hpp>
+#include <terminus/math/matrix/matrix_row.hpp>
+#include <terminus/math/matrix/matrix_transpose.hpp>
 
 namespace tmns::math {
 

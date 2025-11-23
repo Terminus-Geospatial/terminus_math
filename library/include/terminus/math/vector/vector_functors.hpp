@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Vector_Functors.hpp
  * @author  Marvin Smith
@@ -6,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/math/vector/Vector_Base.hpp>
+#include <terminus/math/vector/vector_base.hpp>
 
 // C++ Libraries
 #include <type_traits>
@@ -24,7 +33,7 @@ template <typename VectorT,
 class Vector_Unary_Functor : public Vector_Base<Vector_Unary_Functor<VectorT,FunctorT>>
 {
     public:
-        
+
         using value_type = std::invoke_result_t<FunctorT,typename VectorT::value_type>;
 
         using reference_type = value_type;
@@ -54,17 +63,17 @@ class Vector_Unary_Functor : public Vector_Base<Vector_Unary_Functor<VectorT,Fun
                 {
                     return m_iter == iter.m_iter;
                 }
-                
+
                 typename Iterator::difference_type distance_to( const Iterator& iter ) const
                 {
                     return iter.m_iter - m_iter;
                 }
-                
+
                 void increment()
                 {
                     ++m_iter;
                 }
-                
+
                 void decrement()
                 {
                     --m_iter;
@@ -74,7 +83,7 @@ class Vector_Unary_Functor : public Vector_Base<Vector_Unary_Functor<VectorT,Fun
                 {
                     m_iter += n;
                 }
-                
+
                 typename Iterator::reference dereference() const
                 {
                     return m_functor( *m_iter );
@@ -87,7 +96,7 @@ class Vector_Unary_Functor : public Vector_Base<Vector_Unary_Functor<VectorT,Fun
 
         using iter_t       = Iterator;
         using const_iter_t = Iterator;
-        
+
         Vector_Unary_Functor( const VectorT& v )
             : m_vector(v) {}
 
@@ -99,7 +108,7 @@ class Vector_Unary_Functor : public Vector_Base<Vector_Unary_Functor<VectorT,Fun
         {
             return m_vector;
         }
-        
+
         size_t size() const
         {
             return child().size();
@@ -109,7 +118,7 @@ class Vector_Unary_Functor : public Vector_Base<Vector_Unary_Functor<VectorT,Fun
         {
             return m_functor( child()(i) );
         }
-        
+
         const_reference_type operator[]( size_t i ) const
         {
             return m_functor( child()(i) );
@@ -119,7 +128,7 @@ class Vector_Unary_Functor : public Vector_Base<Vector_Unary_Functor<VectorT,Fun
         {
             return iter_t( child().begin(), m_functor );
         }
-        
+
         iter_t end() const
         {
             return iter_t( child().end(), m_functor );
@@ -134,7 +143,7 @@ class Vector_Unary_Functor : public Vector_Base<Vector_Unary_Functor<VectorT,Fun
             sout << "Vector_Unary_Functor<" << VectorT::name() << "," << FunctorT::name() << ">";
             return sout.str();
         }
-    
+
     private:
 
         VectorT const& m_vector;
@@ -159,7 +168,7 @@ template <typename Vector1T,
 class Vector_Binary_Functor : public Vector_Base<Vector_Binary_Functor<Vector1T,Vector2T,FunctorT>>
 {
     public:
-        
+
         // Underlying Data Type
         using value_type = std::invoke_result_t<FunctorT,
                                                 typename Vector1T::value_type,
@@ -180,7 +189,7 @@ class Vector_Binary_Functor : public Vector_Base<Vector_Binary_Functor<Vector1T,
                                                        reference_type>
         {
             public:
-                
+
                 Iterator( const typename Vector1T::const_iter_t& i1,
                           const typename Vector2T::const_iter_t& i2,
                           const FunctorT&                        func )
@@ -193,7 +202,7 @@ class Vector_Binary_Functor : public Vector_Base<Vector_Binary_Functor<Vector1T,
                 // Give boost access
                 friend class boost::iterator_core_access;
 
-                bool equal( const Iterator& iter ) const 
+                bool equal( const Iterator& iter ) const
                 {
                     return ( m_i1 == iter.m_i1 ) && ( m_i2 == iter.m_i2 );
                 }
@@ -202,25 +211,25 @@ class Vector_Binary_Functor : public Vector_Base<Vector_Binary_Functor<Vector1T,
                 {
                     return iter.m_i1 - m_i1;
                 }
-                
+
                 void increment()
                 {
                     ++m_i1;
                     ++m_i2;
                 }
-                
+
                 void decrement()
                 {
                     --m_i1;
                     --m_i2;
                 }
-                
+
                 void advance( typename Iterator::difference_type n )
                 {
                     m_i1 += n;
                     m_i2 += n;
                 }
-                
+
                 typename Iterator::reference dereference() const
                 {
                     return m_func( *m_i1, *m_i2 );
@@ -270,7 +279,7 @@ class Vector_Binary_Functor : public Vector_Base<Vector_Binary_Functor<Vector1T,
         }
 
         Vector2T const& child2() const
-        { 
+        {
             return m_vec2;
         }
 
@@ -293,7 +302,7 @@ class Vector_Binary_Functor : public Vector_Base<Vector_Binary_Functor<Vector1T,
 
         using iter_t = Iterator;
         using const_iter_t = Iterator;
-        
+
         /**
          * Get the beginning iterator position
          */

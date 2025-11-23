@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Quaternion.hpp
  * @author  Marvin Smith
@@ -6,8 +15,8 @@
 #pragma once
 
 // Terminus Libraries
-#include "matrix/Matrix.hpp"
-#include "vector/Vector.hpp"
+#include <terminus/math/matrix/matrix.hpp>
+#include <terminus/math/vector/vector.hpp>
 
 // C++ Libraries
 #include <cmath>
@@ -38,7 +47,7 @@ class Quaternion
                     ElementT x,
                     ElementT y,
                     ElementT z );
-        
+
         /**
          * Parameterized Constructor
          */
@@ -75,10 +84,10 @@ class Quaternion
          * Quaternion Division
          */
         Quaternion operator / ( const Quaternion& rhs ) const;
-        
+
         /**
          * Get the magnitude of the quaternion
-         * @note:  This really should be 1.  
+         * @note:  This really should be 1.
          */
         ElementT magnitude() const;
 
@@ -89,7 +98,7 @@ class Quaternion
         ElementT magnitude_sq() const;
 
         /**
-         * Return a normalize quaternion. 
+         * Return a normalize quaternion.
          * This effectively makes it unit-length in case it isn't.
          */
         Quaternion normalize() const;
@@ -162,10 +171,10 @@ class Quaternion
             ElementT zz = 1.0 - diag[0] - diag[1] + diag[2];
 
             ElementT max_val = std::max( ww, std::max( xx, std::max( yy, zz ) ) );
-            
+
             // Depending on the max, we need to determine how to parse the quaternion
             std::array<ElementT,4> components;
-            
+
             static constexpr ElementT EPS { 0.00001 };
 
             if( std::fabs( ww - max_val ) < EPS )
@@ -176,7 +185,7 @@ class Quaternion
                 components[2] = (mat(0,2) - mat(2,0)) / w4;
                 components[3] = (mat(1,0) - mat(0,1)) / w4;
             }
-            
+
             else if( std::fabs( xx - max_val ) < EPS )
             {
                 ElementT x4 = std::sqrt( xx * 4.0 );
@@ -185,7 +194,7 @@ class Quaternion
                 components[2] = ( mat(0,1) + mat(1,0) ) / x4;
                 components[3] = ( mat(0,2) + mat(2,0) ) / x4;
             }
-            
+
             else if( std::fabs( yy - max_val) < EPS )
             {
                 ElementT y4 = std::sqrt(yy * 4.0);
@@ -194,7 +203,7 @@ class Quaternion
                 components[2] =  y4 / 4;
                 components[3] = ( mat(1,2) + mat(2,1) ) / y4;
             }
-            
+
             else
             {
                 ElementT z4 = std::sqrt( zz * 4.0 );
@@ -211,11 +220,11 @@ class Quaternion
         }
 
         /**
-         * Rotate a Vector by the quaternion. 
-         * 
-         * Rotation is notated by (this) Q1, [r, i1, i2, i3] 
+         * Rotate a Vector by the quaternion.
+         *
+         * Rotation is notated by (this) Q1, [r, i1, i2, i3]
          *                         (v)   Q1, [0, v1, v2, v3]
-         * 
+         *
          * Perform (Q1 x Q2)/Q1, return imaginary component.
          */
         template<typename InVectorT>

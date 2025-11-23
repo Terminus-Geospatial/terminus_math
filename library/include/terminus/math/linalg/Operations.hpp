@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Operations.hpp
+ * @file    operations.hpp
  * @author  Marvin Smith
  * @date    11/12/2023
 */
@@ -48,7 +57,7 @@ size_t nullity( const Matrix_Base<MatrixT>& A,
     using value_type = typename MatrixT::value_type;
     MatrixN<value_type> U, V;
     VectorN<value_type> S;
-    
+
     auto res = complete_svd( A.impl(), U, S, V );
     V = transpose( V );
     return nullity( A, U, S, V, thresh );

@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Matrix_Vector_Product.hpp
+ * @file    matrix_vector_product.hpp
  * @author  Marvin Smith
  * @date    10/13/2023
 */
@@ -22,7 +31,7 @@ template <typename MatrixT,
 class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,VectorT,TransposeN> >
 {
     public:
-        
+
         using value_type = typename Product_Type<typename MatrixT::value_type,
                                                  typename VectorT::value_type>::type;
 
@@ -64,7 +73,7 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
                                                        value_type>
         {
             public:
-                
+
                 Iterator( const Matrix_Vector_Product& mvp,
                           size_t                       index )
                     : m_mvp( mvp ),
@@ -76,7 +85,7 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
                 {
                     return m_index == iter.m_index;
                 }
-                
+
                 typename Iterator::difference_type distance_to( const Iterator& iter ) const
                 {
                     return iter.m_index - m_index;
@@ -86,17 +95,17 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
                 {
                     ++m_index;
                 }
-                
+
                 void decrement()
                 {
                     --m_index;
                 }
-                
+
                 void advance( typename Iterator::difference_type n )
                 {
                     m_index += n;
                 }
-                
+
                 typename Iterator::reference dereference() const
                 {
                     return m_mvp( m_index );
@@ -105,15 +114,15 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
                 friend class boost::iterator_core_access;
 
                 Matrix_Vector_Product const& m_mvp;
-            
+
                 size_t m_index;
-        
+
         }; // End of Iterator Class
 
         using iter_t = Iterator;
 
         using const_iter_t = Iterator;
-        
+
 
         /**
          * Get the beginning iterator position
@@ -122,7 +131,7 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
         {
             return Iterator( *this, 0 );
         }
-        
+
         /**
          * Get the end iterator position
          */
@@ -149,7 +158,7 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
         {
             using type = Matrix<typename MatT::value_type>;
         };
-        
+
         template <typename ElementT,
                   size_t   RowsN,
                   size_t   ColsN>
@@ -157,7 +166,7 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
         {
             using type = Matrix<ElementT,RowsN,ColsN> const&;
         };
-        
+
         template <typename ElementT,
                   size_t   RowsN,
                   size_t   ColsN>
@@ -165,7 +174,7 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
         {
             using type = Matrix<ElementT,RowsN,ColsN> const&;
         };
-        
+
         template <typename ElementT,
                   size_t   RowsN,
                   size_t   ColsN>
@@ -173,7 +182,7 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
         {
             using type = Matrix_Proxy<ElementT,RowsN,ColsN> const&;
         };
-        
+
         template <typename ElementT,
                   size_t   RowsN,
                   size_t   ColsN>
@@ -195,28 +204,28 @@ class Matrix_Vector_Product : public Vector_Base<Matrix_Vector_Product<MatrixT,V
         {
             using type = Vector_<ElementT,SizeN> const&;
         };
-        
+
         template <typename ElementT,
                   size_t   SizeN>
         struct Vector_Closure<const Vector_<ElementT,SizeN>>
         {
             using type = Vector_<ElementT,SizeN>const&;
         };
-        
+
         template <typename ElementT,
                   size_t SizeN>
         struct Vector_Closure<Vector_Proxy<ElementT,SizeN> >
         {
             using type = Vector_Proxy<ElementT,SizeN> const&;
         };
-        
+
         template <typename ElementT,
                   size_t   SizeN>
         struct Vector_Closure<const Vector_Proxy<ElementT,SizeN>>
         {
             using type = Vector_Proxy<ElementT,SizeN> const&;
         };
-    
+
         /// @brief Underlying matrix data
         typename Matrix_Closure<MatrixT>::type m_matrix;
 

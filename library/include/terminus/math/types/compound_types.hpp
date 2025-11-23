@@ -9,7 +9,7 @@
 #include <type_traits>
 
 // Terminus Libraries
-#include "Fundamental_Types.hpp"
+#include <terminus/math/types/fundamental_types.hpp>
 
 namespace tmns::math {
 

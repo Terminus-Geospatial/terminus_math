@@ -8,14 +8,14 @@
 /*                                                                                    */
 /***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Datum.cpp
+ * @file    datum.cpp
  * @author  Marvin Smith
  * @date    9/20/2023
  */
-#include <terminus/coordinate/Datum.hpp>
+#include <terminus/coordinate/datum.hpp>
 
 /// Terminus Libraries
-#include "Datum_Impl.hpp"
+#include "datum_impl.hpp"
 
 /// Boost Libraries
 #include <boost/algorithm/string.hpp>

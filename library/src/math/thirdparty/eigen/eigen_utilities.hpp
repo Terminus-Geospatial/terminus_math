@@ -16,8 +16,8 @@
 
 // Terminus Libraries
 #include <terminus/error.hpp>
-#include <terminus/math/matrix.hpp>
-#include <terminus/math/vector/VectorN.hpp>
+#include <terminus/math/matrix/matrix.hpp>
+#include <terminus/math/vector/vectorn.hpp>
 
 // Eigen Libraries
 #include <Eigen/Dense>

@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Matrix_Functors.hpp
+ * @file    matrix_functors.hpp
  * @author  Marvin Smith
  * @date    9/16/2023
  */
@@ -22,7 +31,7 @@ template <typename MatrixT,
 class Matrix_Unary_Functor : public Matrix_Base<Matrix_Unary_Functor<MatrixT,FunctorT> >
 {
     public:
-    
+
         // Applied value type
         using value_type = std::invoke_result_t<FunctorT, typename MatrixT::value_type>;
 
@@ -31,7 +40,7 @@ class Matrix_Unary_Functor : public Matrix_Base<Matrix_Unary_Functor<MatrixT,Fun
 
         /// Const Reference Type
         using const_reference_type = value_type;
-        
+
         /**
          * Constructor
          */
@@ -103,7 +112,7 @@ class Matrix_Unary_Functor : public Matrix_Base<Matrix_Unary_Functor<MatrixT,Fun
                                                        value_type>
         {
             public:
-                
+
                 /**
                  * Constructor
                  */
@@ -114,7 +123,7 @@ class Matrix_Unary_Functor : public Matrix_Base<Matrix_Unary_Functor<MatrixT,Fun
                 {}
 
             private:
-                
+
                 /**
                  * Equal Operator
                  */
@@ -214,7 +223,7 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
     public:
 
         /// Value Type
-        using value_type = std::invoke_result_t<FunctorT, 
+        using value_type = std::invoke_result_t<FunctorT,
                                                 typename Matrix1T::value_type,
                                                 typename Matrix2T::value_type>;
 
@@ -269,7 +278,7 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
         {
             return m_matrix1;
         }
-    
+
         /**
          * Get second matrix
          */
@@ -325,7 +334,7 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
                                                        value_type>
         {
             public:
-                
+
                 /**
                  * Constructor
                 */
@@ -346,7 +355,7 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
                 {
                     return ( m_iter1 == iter.m_iter1 ) && ( m_iter2 == iter.m_iter2 );
                 }
-            
+
                /**
                  * Compute the distance to the other iterator
                 */
@@ -354,7 +363,7 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
                 {
                     return iter.m_iter1 - m_iter1;
                 }
-            
+
                 /**
                  * Increment the iterator
                  */
@@ -363,7 +372,7 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
                     ++m_iter1;
                     ++m_iter2;
                 }
-            
+
                 /**
                  * Decrement the iterator
                  */
@@ -372,7 +381,7 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
                     --m_iter1;
                     --m_iter2;
                 }
-            
+
                 /**
                  * Increment the iterator by the requested amount
                  */
@@ -381,7 +390,7 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
                     m_iter1 += n;
                     m_iter2 += n;
                 }
-            
+
                 /**
                  * Dereference the iterator, applying the functor
                 */
@@ -407,7 +416,7 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
 
         /// @brief Const Iterator Type
         using const_iter_t = Iterator;
-        
+
         /**
          * Starting Iterator Position
         */
@@ -417,7 +426,7 @@ class Matrix_Binary_Functor : public Matrix_Base<Matrix_Binary_Functor<Matrix1T,
                            child2().begin(),
                            m_functor );
         }
-    
+
         /**
          * End Iterator Position
          */
@@ -461,8 +470,8 @@ template <typename Matrix1T,
           typename FunctorT>
 struct Matrix_Rows<Matrix_Binary_Functor<Matrix1T,Matrix2T,FunctorT>>
 {
-    static const size_t value = (Matrix_Rows<Matrix1T>::value != 0 ) ? 
-                                    ( Matrix_Rows<Matrix1T>::value ) : 
+    static const size_t value = (Matrix_Rows<Matrix1T>::value != 0 ) ?
+                                    ( Matrix_Rows<Matrix1T>::value ) :
                                     ( Matrix_Rows<Matrix2T>::value );
 };
 
@@ -474,8 +483,8 @@ template <typename Matrix1T,
           typename FunctorT>
 struct Matrix_Cols<Matrix_Binary_Functor<Matrix1T,Matrix2T,FunctorT>>
 {
-    static const size_t value = (Matrix_Cols<Matrix1T>::value != 0 ) ? 
-                                    ( Matrix_Cols<Matrix1T>::value ) : 
+    static const size_t value = (Matrix_Cols<Matrix1T>::value != 0 ) ?
+                                    ( Matrix_Cols<Matrix1T>::value ) :
                                     ( Matrix_Cols<Matrix2T>::value );
 };
 

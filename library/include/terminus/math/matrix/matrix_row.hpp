@@ -1,15 +1,24 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Matrix_Row.hpp
+ * @file    matrix_row.hpp
  * @author  Marvin Smith
  * @date    9/16/2023
 */
 #pragma once
 
 // Terminus Math Libraries
-#include "../vector/Vector_Base.hpp"
-#include "../vector/VectorN.hpp"
-#include "../vector/Vector_Utilities.hpp"
-#include "Matrix_Traits.hpp"
+#include <terminus/math/vector/vector_base.hpp>
+#include <terminus/math/vector/vectorn.hpp>
+#include <terminus/math/vector/vector_utilities.hpp>
+#include <terminus/math/matrix/matrix_traits.hpp>
 
 // C++ Libraries
 #include <vector>
@@ -32,7 +41,7 @@ class Matrix_Row : public Vector_Base<Matrix_Row<MatrixT>>
         using reference_type = std::conditional_t<std::is_const_v<MatrixT>,
                                                   typename MatrixT::const_reference_type,
                                                   typename MatrixT::reference_type>;
-        
+
         /// @brief Const Reference Type
         using const_reference_type = typename MatrixT::const_reference_type;
 
@@ -42,7 +51,7 @@ class Matrix_Row : public Vector_Base<Matrix_Row<MatrixT>>
                                           typename MatrixT::iter_t>;
 
         /// @brief Const Iterator Type
-        using const_iter_t = typename MatrixT::const_iter_t; 
+        using const_iter_t = typename MatrixT::const_iter_t;
 
         /**
          * Constructor, given reference matrix and row id
@@ -114,7 +123,7 @@ class Matrix_Row : public Vector_Base<Matrix_Row<MatrixT>>
         {
             return m_matrix;
         }
-        
+
         /**
          * Return const reference to underlying matrix
          */
@@ -135,7 +144,7 @@ class Matrix_Row : public Vector_Base<Matrix_Row<MatrixT>>
          * Function operator, return data at specific row
          */
         reference_type operator()( size_t i )
-        { 
+        {
             return child()( m_row, i );
         }
 
@@ -227,7 +236,7 @@ class Matrix_Row : public Vector_Base<Matrix_Row<MatrixT>>
 
         /// @brief  Handle to parent matrix
         MatrixT& m_matrix;
-        
+
         /// @brief  Row identifier
         size_t m_row;
 

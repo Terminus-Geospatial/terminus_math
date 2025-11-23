@@ -15,8 +15,8 @@
 #pragma once
 
 // Terminus Math Libraries
-#include "Matrix_Row.hpp"
-#include "Matrix_Traits.hpp"
+#include <terminus/math/matrix/matrix_row.hpp>
+#include <terminus/math/matrix/matrix_traits.hpp>
 
 // C++ Libraries
 #include <deque>

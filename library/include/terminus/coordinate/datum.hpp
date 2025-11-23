@@ -20,8 +20,8 @@
 
 // Terminus Libraries
 #include <terminus/error.hpp>
-#include <terminus/math/matrix/Matrix.hpp>
-#include <terminus/math/vector/Vector.hpp>
+#include <terminus/math/matrix/matrix.hpp>
+#include <terminus/math/vector/vector.hpp>
 
 // In case GDAL isn't specified
 class OGRSpatialReference;

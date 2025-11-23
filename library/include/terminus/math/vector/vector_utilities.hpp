@@ -8,16 +8,17 @@
 /*                                                                                    */
 /***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Vector_Utilities.hpp
+ * @file    vector_utilities.hpp
  * @author  Marvin Smith
  * @date    7/12/2023
 */
 #pragma once
 
 // Terminus Libraries
-#include <terminus/math/Enums.hpp>
-#include <terminus/math/types/Functors.hpp>
-#include <terminus/math/vector/Vector_Functors.hpp>
+#include <terminus/math/enums.hpp>
+#include <terminus/math/types/functors.hpp>
+#include <terminus/math/vector/vector.hpp>
+#include <terminus/math/vector/vector_functors.hpp>
 #include <terminus/math/vector/vector_transpose.hpp>
 #include <terminus/math/vector/vectorn.hpp>
 

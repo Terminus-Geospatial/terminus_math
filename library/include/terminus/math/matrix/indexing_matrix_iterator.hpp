@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Indexing_Matrix_Iterator.hpp
+ * @file    indexing_matrix_iterator.hpp
  * @author  Marvin Smith
  * @date    9/19/2023
  */
@@ -15,9 +24,9 @@ namespace tmns::math {
 
 /**
  * @class Indexing_Matrix_Iterator<MatrixT>
- * 
+ *
  * A general-purpose matrix iterator type.
- * 
+ *
  * An iterator for an arbitrary matrix type that iterates over the elements of the matrix
  * in the standard (row-major) order.  It keeps track of the element indices, dereferencing
  * via the function call operator.
@@ -36,7 +45,7 @@ class Indexing_Matrix_Iterator : public boost::iterator_facade<Indexing_Matrix_I
 
         /// @brief Pointer Difference Type
         using difference_type = typename Indexing_Matrix_Iterator::difference_type;
-        
+
         /**
          * Constructor
          */
@@ -49,15 +58,15 @@ class Indexing_Matrix_Iterator : public boost::iterator_facade<Indexing_Matrix_I
         {}
 
     private:
-    
+
         friend class boost::iterator_core_access;
-        
+
         /**
          * This has to be a pointer and not a reference because we need to support
          * operator=, and references cannot be reseated.
          */
         MatrixT* m_matrix;
-    
+
         size_t m_row, m_col;
 
         /**
@@ -65,7 +74,7 @@ class Indexing_Matrix_Iterator : public boost::iterator_facade<Indexing_Matrix_I
         */
         bool equal( const Indexing_Matrix_Iterator& iter ) const
         {
-            return ( m_row == iter.m_row && 
+            return ( m_row == iter.m_row &&
                      m_col == iter.m_col );
         }
 

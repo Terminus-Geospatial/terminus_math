@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Datum_Impl.hpp
+ * @file    datum_impl.hpp
  * @author  Marvin Smith
  * @date    9/20/2023
  */
@@ -49,13 +58,13 @@ struct Datum_Impl
 
     /// @brief  Spheroid Name
     std::string m_spheroid_name;
-        
+
     /// @brief Meridian Name
     std::string m_meridian_name;
-    
+
     /// @brief Semi Major Axis
     double      m_semi_major_axis;
-    
+
     /// @brief Semi Minor Axis
     double      m_semi_minor_axis;
 
@@ -64,7 +73,7 @@ struct Datum_Impl
 
     /// @brief Flag if Geocentric
     bool        m_geocentric { false };
-        
+
     /// @brief Proj Command String
     std::string m_proj_str;
 

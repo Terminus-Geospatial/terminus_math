@@ -1,3 +1,13 @@
+
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Sub_Matrix.hpp
  * @author  Marvin Smith
@@ -6,8 +16,8 @@
 #pragma once
 
 // Terminus Libraries
-#include "Indexing_Matrix_Iterator.hpp"
-#include "Matrix_Base.hpp"
+#include <terminus/math/matrix/indexing_matrix_iterator.hpp>
+#include <terminus/math/matrix/matrix_base.hpp>
 
 namespace tmns::math {
 
@@ -26,7 +36,7 @@ class Sub_Matrix : public Matrix_Base<Sub_Matrix<MatrixT> >
         using reference_type = std::conditional_t<std::is_const_v<MatrixT>,
                                                   typename MatrixT::const_reference_type,
                                                   typename MatrixT::reference_type>;
-    
+
         /// @brief  Const reference type
         using const_reference_type = typename MatrixT::const_reference_type;
 
@@ -156,7 +166,7 @@ class Sub_Matrix : public Matrix_Base<Sub_Matrix<MatrixT> >
         {
             return child()( row+m_row, col+m_col );
         }
-        
+
         /**
          * Get the beginning of the sub-matrix
          */
@@ -164,7 +174,7 @@ class Sub_Matrix : public Matrix_Base<Sub_Matrix<MatrixT> >
         {
             return iter_t( *this, 0, 0 );
         }
-        
+
         /**
          * Get the beginning of the sub-matrix (const)
          */
@@ -172,7 +182,7 @@ class Sub_Matrix : public Matrix_Base<Sub_Matrix<MatrixT> >
         {
             return const_iter_t( *this, 0, 0 );
         }
-        
+
         /**
          * Get the end of the sub-matrix
          */
@@ -180,7 +190,7 @@ class Sub_Matrix : public Matrix_Base<Sub_Matrix<MatrixT> >
         {
             return iter_t( *this, rows(), 0 );
         }
-        
+
         /**
          * Get the end of the sub-matrix (const)
          */

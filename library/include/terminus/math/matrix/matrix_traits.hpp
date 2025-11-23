@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Matrix_Traits.hpp
+ * @file    matrix_traits.hpp
  * @author  Marvin Smith
  * @date    9/16/2023
 */
@@ -57,7 +66,7 @@ class Matrix_No_Tmp
 
         /// @brief Underlying Matrix
         const MatrixT& m_value;
-        
+
 }; // End of Matrix_No_Tmp class
 
 } // End of tmns::math namespace

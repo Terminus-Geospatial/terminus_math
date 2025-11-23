@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Matrix_Proxy.hpp
+ * @file    matrix_proxy.hpp
  * @author  Marvin Smith
  * @date    10/9/2023
  */
@@ -12,10 +21,10 @@ namespace tmns::math {
 
 /**
  * @class Matrix_Proxy<ElementT,RowsN,ColsN>
- * 
- * A fixed-dimension matrix proxy class, treating an arbitrary block of memory as a 
+ *
+ * A fixed-dimension matrix proxy class, treating an arbitrary block of memory as a
  * Matrix in packed row-major format.
- * 
+ *
  */
 template <class ElementT,
           size_t RowsN = 0,
@@ -42,8 +51,8 @@ class Matrix_Proxy : public Matrix_Base<Matrix_Proxy<ElementT,RowsN,ColsN> >
         /**
          * Constructor given a random pointer
          */
-        Matrix_Proxy( ElementT* ptr ) 
-            : m_ptr(ptr) 
+        Matrix_Proxy( ElementT* ptr )
+            : m_ptr(ptr)
         {}
 
         /**
@@ -55,7 +64,7 @@ class Matrix_Proxy : public Matrix_Base<Matrix_Proxy<ElementT,RowsN,ColsN> >
                 m.cols() != ColsN )
             {
                 std::stringstream sout;
-                sout << "Matrices are not the same size. This (" << RowsN << " x " 
+                sout << "Matrices are not the same size. This (" << RowsN << " x "
                      << ColsN << ") vs (" << m.rows << " x " << m.cols << ")";
                 throw std::runtime_error( sout.str() );
             }
@@ -70,7 +79,7 @@ class Matrix_Proxy : public Matrix_Base<Matrix_Proxy<ElementT,RowsN,ColsN> >
         template <typename T>
         Matrix_Proxy& operator = ( const Matrix_Base<T>& m )
         {
-            if( m.impl().rows() != RowsN || 
+            if( m.impl().rows() != RowsN ||
                 m.impl().cols() != ColsN )
             {
                 std::stringstream sout;
@@ -84,13 +93,13 @@ class Matrix_Proxy : public Matrix_Base<Matrix_Proxy<ElementT,RowsN,ColsN> >
         }
 
         /**
-         * Temporary-free generalized assignment operator, from arbitrary matrix 
+         * Temporary-free generalized assignment operator, from arbitrary matrix
          * expressions. This is a performance-optimizing function to be used with caution!
          *
         template <typename T>
         Matrix_Proxy& operator = ( const Matrix_No_Tmp<T>& m )
         {
-            if( m.impl().rows() != Rows || 
+            if( m.impl().rows() != Rows ||
                 m.impl().cols() != ColsN )
             {
                 std::stringstream sout;
@@ -109,7 +118,7 @@ class Matrix_Proxy : public Matrix_Base<Matrix_Proxy<ElementT,RowsN,ColsN> >
         {
             return RowsN;
         }
-        
+
         /**
          * Get the number of matrix columns
          */
@@ -117,7 +126,7 @@ class Matrix_Proxy : public Matrix_Base<Matrix_Proxy<ElementT,RowsN,ColsN> >
         {
             return ColsN;
         }
-    
+
         /**
          * Change the size of the matrix.
          * Elements in memory are preserved when specified.
@@ -144,7 +153,7 @@ class Matrix_Proxy : public Matrix_Base<Matrix_Proxy<ElementT,RowsN,ColsN> >
         /**
          * Function Operator
          */
-        value_type const& operator()( size_t row, 
+        value_type const& operator()( size_t row,
                                       size_t col ) const
         {
             return m_ptr[ row * cols() + col ];
@@ -157,12 +166,12 @@ class Matrix_Proxy : public Matrix_Base<Matrix_Proxy<ElementT,RowsN,ColsN> >
         {
             return &( operator()( 0, 0 ) );
         }
-        
+
         /**
          * Get the beginning data pointer
          */
         const value_type* data() const
-        { 
+        {
             return &( operator()( 0, 0 ) );
         }
 
@@ -181,7 +190,7 @@ class Matrix_Proxy : public Matrix_Base<Matrix_Proxy<ElementT,RowsN,ColsN> >
         {
             return m_ptr;
         }
-        
+
         /**
          * Get the beginning of the matrix
          */
@@ -232,10 +241,10 @@ struct Matrix_Cols<Matrix_Proxy<ElementT,RowsN,ColsN> >
 
 /**
  * @class MatrixProxy<ElementT>
- * 
+ *
  * A arbitrary-dimension matrix proxy class, treating an arbitrary
  * block of memory as a Matrix in packed row-major format.
- * 
+ *
  * An arbitrary-dimension matrix proxy class.
  */
 template <typename ElementT>
@@ -248,10 +257,10 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
 
         /// @brief Reference Type
         using reference_type = ElementT&;
-        
+
         /// @brief Const Reference Type
         using const_reference_type = const ElementT&;
-        
+
         /// @brief Iterator Type
         using iter_t = ElementT*;
 
@@ -284,7 +293,7 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
          */
         Matrix_Proxy& operator = ( const Matrix_Proxy& m )
         {
-            if( m.impl().rows() != rows() || 
+            if( m.impl().rows() != rows() ||
                 m.impl().cols() != cols() )
             {
                 std::stringstream sout;
@@ -302,7 +311,7 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
         template <typename T>
         Matrix_Proxy& operator=( const Matrix_Base<T>& m )
         {
-            if( m.impl().rows() != rows() || 
+            if( m.impl().rows() != rows() ||
                 m.impl().cols() != cols() )
             {
                 std::stringstream sout;
@@ -338,7 +347,7 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
         {
             return m_rows;
         }
-        
+
         /**
          * Get the matrix columns
          */
@@ -351,7 +360,7 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
          * Change the size of the matrix.
          * Elements in memory are preserved when specified.
          */
-        void set_size( size_t new_rows, 
+        void set_size( size_t new_rows,
                        size_t new_cols,
                        [[maybe_unused]] bool preserve = false )
         {
@@ -386,7 +395,7 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
         {
             return &( operator()( 0, 0 ) );
         }
-        
+
         /**
          * Get the data pointer
          */
@@ -394,7 +403,7 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
         {
             return &( operator()(0,0) );
         }
-    
+
         /**
          * Get the beginning iterator position
          */
@@ -402,7 +411,7 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
         {
             return m_ptr;
         }
-        
+
         /**
          * Get the beginning iterator position
          */
@@ -410,7 +419,7 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
         {
             return m_ptr;
         }
-        
+
         /**
          * Get the end iterator position
          */
@@ -418,7 +427,7 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
         {
             return m_ptr + rows() * cols();
         }
-        
+
         /**
          * Get the end iterator position
          */
@@ -442,17 +451,17 @@ class Matrix_Proxy<ElementT,0,0> : public Matrix_Base<Matrix_Proxy<ElementT>>
 
         /// Data Pointer
         ElementT* m_ptr { nullptr };
-        
+
         /// Matrix Rows
         size_t m_rows;
-        
+
         /// Matrix Columns
         size_t m_cols;
 
 }; // End of Matrix_Proxy Class
 
 /**
- * Shallow view of an image as a matrix.  Returns a Matrix_Proxy object with the same 
+ * Shallow view of an image as a matrix.  Returns a Matrix_Proxy object with the same
  * element type as the channel type in the original image.
  */
 template <typename ContainerT>
@@ -462,7 +471,7 @@ Matrix_Proxy<typename ContainerT::value_type>  matrix_proxy( const ContainerT& c
 }
 
 /**
- * Shallow view of an image as a matrix.  Returns a Matrix_Proxy object with the same 
+ * Shallow view of an image as a matrix.  Returns a Matrix_Proxy object with the same
  * element type as the channel type in the original image.
  */
 template <typename DataT>
