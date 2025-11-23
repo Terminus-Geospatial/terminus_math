@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Vector_Utilities.hpp
  * @author  Marvin Smith
@@ -9,8 +18,8 @@
 #include <terminus/math/Enums.hpp>
 #include <terminus/math/types/Functors.hpp>
 #include <terminus/math/vector/Vector_Functors.hpp>
-#include <terminus/math/vector/Vector_Transpose.hpp>
-#include <terminus/math/vector/VectorN.hpp>
+#include <terminus/math/vector/vector_transpose.hpp>
+#include <terminus/math/vector/vectorn.hpp>
 
 namespace tmns::math {
 
@@ -264,7 +273,7 @@ Product_Type<typename Vector1T::value_type, typename Vector2T::value_type>::type
 {
     auto result = typename Product_Type<typename Vector1T::value_type,
                                         typename Vector2T::value_type>::type();
-    
+
     typename Vector1T::const_iter_t i1   = v1.impl().begin();
     typename Vector1T::const_iter_t end1 = v1.impl().end();
 
@@ -294,7 +303,7 @@ double magnitude_sq( const VectorT& vec )
  * Get Vector Magnitude
  */
 template <typename VectorT>
-double magnitude( const VectorT& vec, 
+double magnitude( const VectorT& vec,
                   DistanceType   mode = DistanceType::L2 )
 {
     if( mode == DistanceType::L2 )
@@ -311,7 +320,7 @@ double magnitude( const VectorT& vec,
  * Normalize a vector
  */
 template <typename VectorT>
-VectorT normalize( const VectorT& vec, 
+VectorT normalize( const VectorT& vec,
                    DistanceType   mode = DistanceType::L2 )
 {
     // L1 norm not supported at this time

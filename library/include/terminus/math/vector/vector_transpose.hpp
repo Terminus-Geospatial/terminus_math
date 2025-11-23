@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Vector_Transpose.hpp
  * @author  Marvin Smith
@@ -6,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include "VectorN.hpp"
+#include "vectorn.hpp"
 
 namespace tmns::math {
 
@@ -24,14 +33,14 @@ template <typename VectorT>
 class Vector_Transpose
 {
     public:
-    
+
         using value_type = typename VectorT::value_type;
 
         /// @brief Reference Type
         using reference_type = std::conditional_t<std::is_const_v<VectorT>,
                                                   typename VectorT::const_reference_type,
                                                   typename VectorT::reference_type>;
-        
+
         /// @brief Const Reference Type
         using const_reference_type = typename VectorT::const_reference_type;
 
@@ -39,7 +48,7 @@ class Vector_Transpose
         using iter_t = std::conditional_t<std::is_const_v<VectorT>,
                                           typename VectorT::const_iter_t,
                                           typename VectorT::iter_t>;
-        
+
         /// @brief Const iterator type
         using const_iter_t = typename VectorT::const_iter_t;
 
@@ -69,7 +78,7 @@ class Vector_Transpose
         {
             return m_vector;
         }
-        
+
         /**
          * Get underlying vector
          */
@@ -93,7 +102,7 @@ class Vector_Transpose
         {
             return child()(i);
         }
-        
+
         /**
          * Function operator
          */
@@ -101,7 +110,7 @@ class Vector_Transpose
         {
             return child()(i);
         }
-        
+
         /**
          * Index operator
          */
@@ -141,7 +150,7 @@ class Vector_Transpose
         {
             return child().end();
         }
-        
+
         /**
          * Get end iterator position
          */
@@ -149,7 +158,7 @@ class Vector_Transpose
         {
             return child().end();
         }
-    
+
     private:
 
         /**
@@ -176,7 +185,7 @@ class Vector_Transpose
         {
             using type = Vector_<ElementT,SizeN> const&;
         };
-        
+
         /// @brief Underlying Vectors
         typename Vector_Closure<VectorT>::type m_vector;
 

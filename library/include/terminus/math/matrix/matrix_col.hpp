@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Matrix_Col.hpp
  * @author  Marvin Smith
@@ -6,7 +15,7 @@
 #pragma once
 
 /// Terminus Libraries
-#include "../vector/Vector_Base.hpp"
+#include "../vector/vector_base.hpp"
 
 /// Boost Libraries
 #include <boost/iterator/iterator_facade.hpp>
@@ -36,7 +45,7 @@ class Matrix_Col : public Vector_Base<Matrix_Col<MatrixT> >
         using reference_type = std::conditional_t<std::is_const_v<MatrixT>,
                                                   typename MatrixT::const_reference_type,
                                                   typename MatrixT::reference_type>;
-        
+
         /// @brief Const Reference Type
         using const_reference_type = typename MatrixT::const_reference_type;
 
@@ -44,7 +53,7 @@ class Matrix_Col : public Vector_Base<Matrix_Col<MatrixT> >
         using iter_t = std::conditional_t<std::is_const_v<MatrixT>,
                                           Iterator<typename MatrixT::const_iter_t>,
                                           Iterator<typename MatrixT::iter_t>>;
-        
+
         /// @brief Const Iterator Type
         using const_iter_t = Iterator<typename MatrixT::const_iter_t>;
 
@@ -66,7 +75,7 @@ class Matrix_Col : public Vector_Base<Matrix_Col<MatrixT> >
             if( v.size() != size() )
             {
                 std::stringstream sout;
-                sout << "Vectors must have same size.  This: " << size() 
+                sout << "Vectors must have same size.  This: " << size()
                      << ", other: " << v.size();
                 throw std::runtime_error( sout.str() );
             }
@@ -85,7 +94,7 @@ class Matrix_Col : public Vector_Base<Matrix_Col<MatrixT> >
             if( v.impl().size() != size() )
             {
                 std::stringstream sout;
-                sout << "Vectors must have same size.  This: " << size() 
+                sout << "Vectors must have same size.  This: " << size()
                      << ", other: " << v.impl().size();
                 throw std::runtime_error( sout.str() );
             }
@@ -105,7 +114,7 @@ class Matrix_Col : public Vector_Base<Matrix_Col<MatrixT> >
             if( v.size() != size() )
             {
                 std::stringstream sout;
-                sout << "Vectors must have same size.  This: " << size() 
+                sout << "Vectors must have same size.  This: " << size()
                      << ", other: " << v.size();
                 throw std::runtime_error( sout.str() );
             }
@@ -198,9 +207,9 @@ class Matrix_Col : public Vector_Base<Matrix_Col<MatrixT> >
          */
         iter_t end()
         {
-            return begin() + size(); 
+            return begin() + size();
         }
-        
+
         /**
          * @brief Get the end of the matrix
          */
@@ -251,7 +260,7 @@ class Matrix_Col : public Vector_Base<Matrix_Col<MatrixT> >
                                                        typename std::iterator_traits<IteratorT>::difference_type>
         {
             public:
-                
+
                 /// @brief Iterator diff type
                 using difference_type = typename Iterator::difference_type;
 
@@ -262,7 +271,7 @@ class Matrix_Col : public Vector_Base<Matrix_Col<MatrixT> >
                           difference_type  stride )
                     : m_iter( iter ),
                       m_stride( stride ) {}
-    
+
             private:
 
                 /// @brief  Allow boost access to internals

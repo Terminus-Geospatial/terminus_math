@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    Quaternion.cpp
  * @author  Marvin Smith
@@ -88,8 +97,8 @@ Quaternion Quaternion::operator * ( const Quaternion& rhs ) const
     // set the real and imaginary components
     Quaternion output;
     output.m_real = real() * rhs.real() - VectorT::dot( imag(), rhs.imag() );
-    output.m_imag = real()     * rhs.imag() 
-                  + rhs.real() * rhs.imag() 
+    output.m_imag = real()     * rhs.imag()
+                  + rhs.real() * rhs.imag()
                   + VectorT::cross( imag(), rhs.imag() );
     return output;
 }
@@ -108,7 +117,7 @@ Quaternion Quaternion::operator / ( const Quaternion& rhs ) const
     imag.x() = ( -m_real * rhs.m_imag.x() ) + ( m_imag.x() * rhs.m_real     ) + ( m_imag.y() * rhs.m_imag.z() ) + ( m_imag.z() * rhs.m_imag.y() );
     imag.y() = ( -m_real * rhs.m_imag.y() ) + ( m_imag.x() * rhs.m_imag.z() ) + ( m_imag.y() * rhs.m_real     ) - ( m_imag.z() * rhs.m_imag.x() );
     imag.z() = ( -m_real * rhs.m_imag.z() ) - ( m_imag.x() * rhs.m_imag.y() ) + ( m_imag.y() * rhs.m_imag.x() ) + ( m_imag.z() * rhs.m_real     );
-    
+
     return Quaternion( real, imag / denom );
 }
 
