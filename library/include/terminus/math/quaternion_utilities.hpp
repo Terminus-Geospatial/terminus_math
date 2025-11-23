@@ -1,12 +1,21 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Quaternion_Utilities.hpp
+ * @file    quaternion_utilities.hpp
  * @author  Marvin Smith
  * @date    9/16/2023
  */
 #pragma once
 
 // Terminus Libraries
-#include "Quaternion.hpp"
+#include <terminus/math/quaternion.hpp>
 
 // C++ Libraries
 #include <vector>
@@ -15,7 +24,7 @@ namespace tmns::math {
 
 /**
  * Spherical Linear Interpolation
- * 
+ *
  * @param alpha
  * @param a
  * @param b

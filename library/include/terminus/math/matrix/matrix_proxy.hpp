@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include "Matrix_Base.hpp"
+#include <terminus/math/matrix/matrix_base.hpp>
 
 namespace tmns::math {
 
@@ -65,7 +65,7 @@ class Matrix_Proxy : public Matrix_Base<Matrix_Proxy<ElementT,RowsN,ColsN> >
             {
                 std::stringstream sout;
                 sout << "Matrices are not the same size. This (" << RowsN << " x "
-                     << ColsN << ") vs (" << m.rows << " x " << m.cols << ")";
+                     << ColsN << ") vs (" << m.rows() << " x " << m.cols() << ")";
                 throw std::runtime_error( sout.str() );
             }
             Matrix<ElementT,RowsN,ColsN> tmp( m );

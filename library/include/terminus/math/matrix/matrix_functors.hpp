@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include "Matrix_Traits.hpp"
+#include <terminus/math/matrix/matrix_traits.hpp>
 
 // Boost Libraries
 #include <boost/iterator/iterator_facade.hpp>

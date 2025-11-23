@@ -75,7 +75,7 @@ ReturnT from_opencv( const cv::Mat& mat )
 
     for( int r = 0; r < mat.rows; r++ )
     for( int c = 0; c < mat.cols; c++ )
-        output(r,c) = mat.at<typename ReturnT::value_type>(r,c);
+        output(static_cast<size_t>(r),static_cast<size_t>(c)) = mat.at<typename ReturnT::value_type>(r,c);
 
     return output;
 }

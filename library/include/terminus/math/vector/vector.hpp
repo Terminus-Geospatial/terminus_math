@@ -88,7 +88,7 @@ class Vector_ : public Vector_Base<Vector_<ValueT,Dims>>
         Vector_( const ContainerT& container )
         {
             std::copy( container.begin(),
-                       container.begin() + static_cast<typename ContainerT::difference_type>(std::min( m_data.size(), container.size() )),
+                       container.begin() + static_cast<std::ptrdiff_t>(std::min( m_data.size(), container.size() )),
                        m_data.begin() );
         }
 

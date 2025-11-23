@@ -1,17 +1,27 @@
+
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Matrix_Operations.hpp
+ * @file    matrix_operations.hpp
  * @author  Marvin Smith
  * @date    9/16/2023
  */
 #pragma once
 
 // Terminus Libraries
-#include "../types/Functors.hpp"
-#include "../types/Math_Functors.hpp"
-#include "../vector/Vector_Transpose.hpp"
-#include "Matrix_Col.hpp"
-#include "Matrix_Functors.hpp"
-#include "Matrix_Vector_Product.hpp"
+#include <terminus/math/types/functors.hpp>
+#include <terminus/math/types/math_functors.hpp>
+#include <terminus/math/vector/vector_transpose.hpp>
+#include <terminus/math/matrix/matrix_col.hpp>
+#include <terminus/math/matrix/matrix_functors.hpp>
+#include <terminus/math/matrix/matrix_vector_product.hpp>
 
 // C++ Libraries
 #include <type_traits>
@@ -108,7 +118,7 @@ Matrix_Binary_Functor<Matrix1T, Matrix2T, Arg_Arg_Sum_Functor>
 template <typename ScalarT,
           typename MatrixT>
 Matrix_Unary_Functor<MatrixT,Val_Arg_Sum_Functor<ScalarT>>
-    elem_sum( ScalarT                     s, 
+    elem_sum( ScalarT                     s,
               const Matrix_Base<MatrixT>& m ) requires Is_Scalar<ScalarT>::type
 {
     return Matrix_Unary_Functor<MatrixT, Val_Arg_Sum_Functor<ScalarT> >( m.impl(), s );
@@ -325,7 +335,7 @@ Vector_Transpose<const Matrix_Vector_Product<MatrixT,VectorT,true> >
  * Outer product of two vectors.
  */
 template <class Vector1T, class Vector2T>
-Matrix<typename Product_Type<typename Vector1T::value_type, 
+Matrix<typename Product_Type<typename Vector1T::value_type,
                              typename Vector2T::value_type>::type,
                              (Vector_Size<Vector2T>::value?(Vector_Size<Vector1T>::value):0),
                              (Vector_Size<Vector1T>::value?(Vector_Size<Vector2T>::value):0)>
@@ -356,13 +366,13 @@ Matrix<T, 2, 2> inverse( const Matrix<T,2,2>& m)
     {
         throw std::runtime_error( "Matrix is singular in inverse()" );
     }
-    Matrix<T, 2, 2> out( { d[3]/det, 
+    Matrix<T, 2, 2> out( { d[3]/det,
                            -d[1]/det,
                            -d[2]/det,
                            d[0]/det } );
     return out;
 }
-  
+
 /**
  * Matrix inversion
  */
@@ -389,7 +399,7 @@ Matrix<typename MatrixT::value_type> inverse( const Matrix_Base<MatrixT>& m )
         Matrix_Row<MatrixN<value_type> > mri( buf, i );
 
         size_t i_norm_inf = i + index_norm_inf( subvector( mci, i, size - i ) );
-        
+
         if( buf( i_norm_inf, i ) == zero )
         {
             throw std::runtime_error( "Matrix is singular in inverse()" );
@@ -435,9 +445,9 @@ Matrix<typename MatrixT::value_type> inverse( const Matrix_Base<MatrixT>& m )
     }
 
     // Divide by the upper-triangular term
-    for( ssize_t i=size-1; i>=0; --i )
+    for( ssize_t i=static_cast<ssize_t>(size-1); i>=0; --i )
     {
-        for( ssize_t j=size-1; j>=0; --j )
+        for( ssize_t j=static_cast<ssize_t>(size-1); j>=0; --j )
         {
             value_type t = inverse(i,j) /= buf(i,i);
             if( t != zero )

@@ -20,7 +20,11 @@
 #include <terminus/math/vector/vectorn.hpp>
 
 // Eigen Libraries
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wsign-conversion"
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #include <Eigen/Dense>
+#pragma clang diagnostic pop
 
 namespace tmns::math::eigen {
 
@@ -140,7 +144,7 @@ struct TMNS_to_Eigen_Picker<VectorN<VectorValueT>>
     static EigenT map( const VectorN<VectorValueT>& vec )
     {
         return Eigen::Map<EigenT>( to_ptr( vec ),
-                                   vec.size() );
+                                   static_cast<Eigen::Index>(vec.size()) );
     }
 
 }; // End of TMNS_to_Eigen_Picker (VectorN<double>)
@@ -164,7 +168,7 @@ struct TMNS_to_Eigen_Picker<const VectorN<VectorValueT>>
     static EigenT map( const VectorN<VectorValueT>& vec )
     {
         return Eigen::Map<EigenT>( to_ptr( vec ),
-                                   vec.size() );
+                                   static_cast<Eigen::Index>(vec.size()) );
     }
 
 }; // End of TMNS_to_Eigen_Picker (MatrixN<double>)
@@ -212,7 +216,7 @@ Result<VectorN<typename VectorT::value_type>> from_eigen( const EigenT& in )
 {
     using ValueT = typename VectorT::value_type;
     return outcome::ok<VectorN<ValueT>>( VectorT( in.data(),
-                                                  in.size() ) );
+                                                  static_cast<size_t>(in.size()) ) );
 }
 
 } // End of tmns::math::eigen namespace

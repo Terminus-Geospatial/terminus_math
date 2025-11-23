@@ -15,8 +15,8 @@
 #include <terminus/math/linalg/SVD.hpp>
 
 // Project Libraries
-#include "../thirdparty/eigen/Eigen_Utilities.hpp"
-#include "../thirdparty/opencv/OpenCV_Utilities.hpp"
+#include "../thirdparty/eigen/eigen_utilities.hpp"
+#include "../thirdparty/opencv/opencv_utilities.hpp"
 
 // OpenCV Libraries
 #include <opencv4/opencv2/core.hpp>

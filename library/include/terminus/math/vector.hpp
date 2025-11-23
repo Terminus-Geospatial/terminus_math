@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    vector.hpp
  * @author  Marvin Smith
@@ -5,7 +14,7 @@
  */
 
 // Terminus Headers
-#include "vector/Vector.hpp"
-#include "vector/VectorN.hpp"
-#include "vector/Vector_Transpose.hpp"
-#include "vector/Vector_Utilities.hpp"
+#include <terminus/math/vector/vector.hpp>
+#include <terminus/math/vector/vectorn.hpp>
+#include <terminus/math/vector/vector_transpose.hpp>
+#include <terminus/math/vector/vector_utilities.hpp>

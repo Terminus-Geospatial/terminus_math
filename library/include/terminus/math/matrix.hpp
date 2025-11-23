@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    matrix.hpp
  * @author  Marvin Smith
@@ -5,9 +14,9 @@
  */
 
 // Terminus Headers
-#include "matrix/Matrix.hpp"
-#include "matrix/MatrixN.hpp"
-#include "matrix/Matrix_Matrix_Product.hpp"
-#include "matrix/Matrix_Proxy.hpp"
-#include "matrix/Matrix_Transpose.hpp"
-#include "matrix/Sub_Matrix.hpp"
+#include <terminus/math/matrix/matrix.hpp>
+#include <terminus/math/matrix/matrixn.hpp>
+#include <terminus/math/matrix/matrix_matrix_product.hpp>
+#include <terminus/math/matrix/matrix_proxy.hpp>
+#include <terminus/math/matrix/matrix_transpose.hpp>
+#include <terminus/math/matrix/sub_matrix.hpp>

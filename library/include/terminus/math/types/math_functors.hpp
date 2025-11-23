@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Math_Functors.hpp
+ * @file    math_functors.hpp
  * @author  Marvin Smith
  * @date    10/13/2023
  */
@@ -68,14 +77,14 @@ template <typename F, typename T>
 struct Arg_Unary_Functor_Type : public Arg_Unary_Functor_Type_Helper<F,T,Is_Compound<T>::value> {};
 
 
-template <typename FunctorT, 
+template <typename FunctorT,
           typename Arg1T,
           typename Arg2T,
           bool Arg1_Is_Compound,
           bool Arg2_Is_Compound>
 struct Binary_Functor_Type_Helper : public Std_Math_Type_2<Arg1T,Arg2T> {};
 
-template <typename FunctorT, 
+template <typename FunctorT,
           typename Arg1T,
           typename Arg2T>
 struct Binary_Functor_Type_Helper<FunctorT,Arg1T,Arg2T,true,false>
@@ -85,7 +94,7 @@ struct Binary_Functor_Type_Helper<FunctorT,Arg1T,Arg2T,true,false>
     typedef typename Compound_Channel_Cast<Arg1T,result_channel_type>::type type;
 };
 
-template <typename FunctorT, 
+template <typename FunctorT,
           typename Arg1T,
           typename Arg2T>
 struct Binary_Functor_Type_Helper<FunctorT,Arg1T,Arg2T,false,true>
@@ -96,7 +105,7 @@ struct Binary_Functor_Type_Helper<FunctorT,Arg1T,Arg2T,false,true>
 };
 
 
-template <typename FunctorT, 
+template <typename FunctorT,
           typename Argument1T,
           typename Argument2T>
 struct Binary_Functor_Type_Helper<FunctorT,Argument1T,Argument2T,true,true>
@@ -108,9 +117,9 @@ struct Binary_Functor_Type_Helper<FunctorT,Argument1T,Argument2T,true,true>
                                                 channel2_type,
                                                 Is_Compound<channel1_type>::value,
                                                 Is_Compound<channel2_type>::value>::type result_channel_type;
-    typedef typename std::disjunction<Compound_Is_Compatible<Argument1T,Argument2T>, 
+    typedef typename std::disjunction<Compound_Is_Compatible<Argument1T,Argument2T>,
                                       typename Compound_Channel_Cast<Argument1T,
-                                                                     result_channel_type>::type, 
+                                                                     result_channel_type>::type,
                                       Type_Deduction_Error<Binary_Functor_Type_Helper> >::type type;
 };
 
@@ -268,7 +277,7 @@ struct Arg_Real_Functor : Unary_Return_Template_Type<Make_Real>
  * Absolute value functors
  * This one's tricky because we have a bunch of distinct cases
  * for integer types, floating-point types, and complex types.
- * 
+ *
  * @internal This is outside ArgAbsFunctor because explicit template
  *           specialization doesn't work at class scope.
  */
@@ -350,7 +359,7 @@ struct Arg_Abs_Functor
     {
         return ::fabsf(val);
     }
-    
+
     long operator()( long val ) const
     {
         return std::labs(val);
@@ -399,7 +408,7 @@ struct Arg_Square_Functor : Unary_Return_Same_Type
 /**
  * General-purpose accumulation functor
  */
-template <typename AccumulatorT, 
+template <typename AccumulatorT,
           typename FunctorT = Arg_Arg_In_Place_Sum_Functor>
 struct Accumulator : Return_Fixed_Type<AccumulatorT const&>
 {
@@ -408,11 +417,11 @@ struct Accumulator : Return_Fixed_Type<AccumulatorT const&>
         typedef AccumulatorT value_type;
 
         Accumulator() = default;
-        
+
         Accumulator( const FunctorT& func ) : m_func(func) {}
 
         Accumulator( const AccumulatorT& accum ) : m_accum(accum), m_func() {}
-        
+
         Accumulator( const AccumulatorT& accum,
                      const FunctorT&     func ) : m_accum(accum), m_func(func) {}
 
@@ -440,7 +449,7 @@ struct Accumulator : Return_Fixed_Type<AccumulatorT const&>
 
         /// @brief Functor method
         FunctorT m_func;
-}; // 
+}; //
 
 
 /// Computes minimum and maximum values
@@ -448,7 +457,7 @@ template <typename ValueT>
 class Min_Max_Accumulator : public Return_Fixed_Type<void>
 {
     public:
-        
+
         typedef std::pair<ValueT,ValueT> value_type;
 
         Min_Max_Accumulator() = default;
@@ -547,7 +556,7 @@ class Median_Accumulator : public Return_Fixed_Type<void>
         {
             return m_values.size();
         }
-      
+
         ValueT value()
         {
             return destructive_median(m_values);
@@ -560,7 +569,7 @@ class Median_Accumulator : public Return_Fixed_Type<void>
 
 /**
  * Compute the normalized median absolute deviation:
- * nmad = 1.4826 * median(abs(X - median(X)))  
+ * nmad = 1.4826 * median(abs(X - median(X)))
  * Note: This function modifies the input!
  */
 template <typename T>
@@ -573,21 +582,21 @@ T destructive_nmad( std::vector<T>& vec )
         tmns::log::error( sout.str() );
         throw std::runtime_error( sout.str() );
     }
-      
+
     // Find the median. This sorts the vector, but that is not a problem.
     T median = destructive_median(vec);
-      
+
     for( size_t it = 0; it < vec.size(); it++ )
     {
         vec[it] = std::abs(vec[it] - median);
     }
     median = destructive_median(vec);
-      
+
     median *= 1.4826;
-      
+
     return median;
 }
-  
+
 /**
  * Compute the percentile using
  * https://en.wikipedia.org/wiki/Percentile#The_nearest-rank_method
@@ -606,7 +615,7 @@ T destructive_percentile( std::vector<T>& vec,
         tmns::log::error( sout.str() );
         throw std::runtime_error( sout.str() );
     }
-    
+
     if( percentile < 0 || percentile > 100 )
     {
         std::stringstream sout;
@@ -618,14 +627,14 @@ T destructive_percentile( std::vector<T>& vec,
     // Sorting is vital
     std::sort( vec.begin(), vec.end() );
 
-    int index = ceil((percentile/100.0) * double(len));
+    int index = static_cast<int>(ceil((percentile/100.0) * double(len)));
 
-    // Account for the fact that in C++ indices start from 0 
+    // Account for the fact that in C++ indices start from 0
     index--;
 
     if( index < 0 ) index = 0;
     if( index >= len ) index = len-1;
-        
+
     return vec[index];
 }
 
@@ -638,7 +647,7 @@ class Mean_Accumulator : public Return_Fixed_Type<void>
     public:
 
         typedef typename Compound_Channel_Cast<ValueT,double>::type accum_type;
-    
+
         typedef accum_type value_type;
 
         Mean_Accumulator() = default;
@@ -658,7 +667,7 @@ class Mean_Accumulator : public Return_Fixed_Type<void>
                 tmns::log::error( sout.str() );
                 throw std::runtime_error( sout.str() );
             }
-            
+
             return m_accum / m_count;
         }
 
@@ -703,7 +712,7 @@ class Std_Dev_Accumulator : public Return_Fixed_Type<void>
             }
             return sqrt(mom2_accum/num_samples - (mom1_accum/num_samples)*(mom1_accum/num_samples));
         }
-      
+
         /// Return the mean
         value_type mean() const
         {
@@ -716,7 +725,7 @@ class Std_Dev_Accumulator : public Return_Fixed_Type<void>
             }
             return mom1_accum / num_samples;
         }
-    
+
     private:
 
         accum_type mom1_accum, mom2_accum;
@@ -735,7 +744,7 @@ class Std_Dev_Sliding_Functor
 
         /**
          * Constructor set with the sliding window size.
-         */ 
+         */
         Std_Dev_Sliding_Functor( const size_t max_size )
             : m_max_size(max_size),
               m_mean(0),
@@ -809,16 +818,16 @@ class Std_Dev_Sliding_Functor
         }
 
     private:
-        
+
         /// @brief Max Number of Values to Store
         size_t m_max_size;
-        
+
         /// @brief Store Current Values
         std::queue<double> m_values;
-        
+
         /// @brief Store the Mean
         double m_mean { 0 };
-        
+
         /// @brief Store the Sum of Differences Squared
         double m_squared { 0 };
 

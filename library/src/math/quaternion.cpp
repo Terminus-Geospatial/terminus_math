@@ -8,11 +8,11 @@
 /*                                                                                    */
 /***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Quaternion.cpp
+ * @file    quaternion.cpp
  * @author  Marvin Smith
  * @date    7/12/2023
 */
-#include <terminus/math/Quaternion.hpp>
+#include <terminus/math/quaternion.hpp>
 
 // Terminus Libraries
 #include <terminus/math/vector.hpp>

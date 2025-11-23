@@ -8,11 +8,11 @@
 /*                                                                                    */
 /***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Quaternion_Utilities.cpp
+ * @file    quaternion_utilities.cpp
  * @author  Marvin Smith
  * @date    9/16/2023
  */
-#include <terminus/math/Quaternion_Utilities.hpp>
+#include <terminus/math/quaternion_utilities.hpp>
 
 // C++ Libraries
 #include <cmath>

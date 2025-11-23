@@ -15,10 +15,10 @@
 #pragma once
 
 // Terminus Libraries
-#include "../vector/VectorN.hpp"
-#include "../vector/Vector_Proxy.hpp"
-#include "Matrix_Operations.hpp"
-#include "Matrix_Proxy.hpp"
+#include <terminus/math/vector/vectorn.hpp>
+#include <terminus/math/vector/vector_proxy.hpp>
+#include <terminus/math/matrix/matrix_operations.hpp>
+#include <terminus/math/matrix/matrix_proxy.hpp>
 
 namespace tmns::math {
 
