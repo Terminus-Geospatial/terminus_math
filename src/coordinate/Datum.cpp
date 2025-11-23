@@ -24,7 +24,7 @@ Datum::Datum()
 {
     OGRSpatialReference gdal_spatial_ref;
     gdal_spatial_ref.importFromProj4( m_impl->m_proj_str.c_str() );
-    
+
     // Datum Name
     const char* datum_name = gdal_spatial_ref.GetAttrValue("DATUM");
     if( datum_name )
@@ -77,7 +77,7 @@ Datum::Datum( std::string_view name,
               double           semi_minor_axis,
               double           meridian_offset )
     : m_impl( std::make_unique<detail::Datum_Impl>() )
-{ 
+{
     m_impl->m_name            = name;
     m_impl->m_spheroid_name   = spheroid_name;
     m_impl->m_meridian_name   = meridian_name;
@@ -149,7 +149,7 @@ double Datum::radius( [[maybe_unused]] double lat_deg,
                       [[maybe_unused]] double lon_deg ) const
 {
     // Optimize in the case of spherical datum
-    if( m_impl->m_semi_major_axis == 
+    if( m_impl->m_semi_major_axis ==
         m_impl->m_semi_minor_axis )
     {
         return m_impl->m_semi_major_axis;
@@ -190,12 +190,12 @@ math::Vector3d Datum::geodetic_to_cartesian( const math::Vector3d& llh ) const
     return math::Vector3d( { ( radius + llh.z() ) * clat * clon,
                              ( radius + llh.z() ) * clat * slon,
                              ( radius * ( 1 - e2 ) + llh.z() ) * slat } );
-}   
+}
 
 /**
  * This algorithm is a non-iterative algorithm from "An analytical method to transform geocentric into geodetic
  * coordinates" by Hugues Vermeille, Journal of Geodesy 2011.
- * 
+ *
  * This is an improvement over the 1988/Proj4's implementation as it's a smidgen faster and it still works near the
  * center of the datum.
  */
@@ -372,7 +372,7 @@ Result<Datum> Datum::from_well_known_name( const std::string& name )
         return outcome::ok<Datum>( std::move( output ) );
     }
 
-    return outcome::fail( core::error::ErrorCode::NOT_FOUND,
+    return outcome::fail( tmns::error::Error_Code::NOT_FOUND,
                           "No datum found matching name '", name, "'" );
 }
 
@@ -429,10 +429,10 @@ Result<Datum> Datum::from_proj_string( const std::string& proj_str )
     OGRSpatialReference gdal_spatial_ref;
     if( gdal_spatial_ref.importFromProj4( proj_str.c_str() ) )
     {
-        return outcome::fail( core::error::ErrorCode::PARSING_ERROR,
+        return outcome::fail( tmns::error::Error_Code::PARSING_ERROR,
                               "Failed to parse: \"", proj_str, "\"." );
     }
-    
+
     return from_ogr_spatial_ref( gdal_spatial_ref );
 }
 

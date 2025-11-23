@@ -19,13 +19,13 @@ namespace tmns::math {
 
 /**
  * @class Matrix_Base
- * 
+ *
  * I'm really torn on using VW's concept of a Matrix
  * or simply making a dynamic double-precision matrix that
  * is super simple to read.  I like how Eigen does things, but
- * they also are template-based, which means I'd have to 
+ * they also are template-based, which means I'd have to
  * expose this to customers.  I really don't think it's realistic
- * to do a template-heavy API beind PIMPL, so it's just going to 
+ * to do a template-heavy API beind PIMPL, so it's just going to
  * be this for now.
  */
 template <typename MatrixT>
@@ -52,12 +52,12 @@ class Matrix_Base
         /**
          * Matrix Addition Assignment
          */
-        template <typename T> 
+        template <typename T>
         MatrixT& operator += ( const T& m )
         {
             return impl() = impl() + m;
         }
-        
+
         /**
          * Matrix Subtraction Assignment
          */
@@ -65,8 +65,8 @@ class Matrix_Base
         MatrixT& operator -= ( const T& m )
         {
             return impl() = impl() - m;
-        }  
-        
+        }
+
         /**
          * Matrix Multiplication Assignment
          */
@@ -132,7 +132,7 @@ class Matrix_Base
                 temp.str("");
                 temp << std::fixed << std::setprecision(precision) << (*it);
                 str_list.push_back( temp.str() );
-                max_val_len = temp.str().size();
+                max_val_len = static_cast<int>(temp.str().size());
             }
 
             // Print the actual matrix
@@ -144,14 +144,14 @@ class Matrix_Base
                 sout << gap << "|  ";
                 for( size_t c = 0; c < impl().cols(); c++ )
                 {
-                    std::stringstream temp;
-                    temp << std::setw( max_val_len ) << std::setfill( ' ' ) << str_list.front();
+                    std::stringstream temp_str;
+                    temp_str << std::setw( max_val_len ) << std::setfill( ' ' ) << str_list.front();
                     str_list.pop_front();
                     if( c > 0 )
                     {
                         sout << ",  ";
                     }
-                    sout << temp.str();
+                    sout << temp_str.str();
                 }
                 sout << "  |" << std::endl;
             }

@@ -53,7 +53,7 @@ class Vector_ : public Vector_Base<Vector_<ValueT,Dims>>
         }
 
         /**
-         * Constructor given an array.  Performs a deep copy.  If 
+         * Constructor given an array.  Performs a deep copy.  If
          * you want a shallow copy, use the Vector_Proxy class
         */
         Vector_( std::array<ValueT,Dims> data )
@@ -79,7 +79,7 @@ class Vector_ : public Vector_Base<Vector_<ValueT,Dims>>
         Vector_( const ContainerT& container )
         {
             std::copy( container.begin(),
-                       container.begin() + std::min( m_data.size(), container.size() ),
+                       container.begin() + static_cast<typename ContainerT::difference_type>(std::min( m_data.size(), container.size() )),
                        m_data.begin() );
         }
 

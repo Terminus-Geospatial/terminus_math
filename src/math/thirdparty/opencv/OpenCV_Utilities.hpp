@@ -43,14 +43,14 @@ struct OpenCV_Picker<float>
 template <typename ValueT>
 cv::Mat to_opencv( const MatrixN<ValueT>& mat )
 {
-    cv::Mat output( mat.rows(),
-                    mat.cols(),
+    cv::Mat output( static_cast<int>(mat.rows()),
+                    static_cast<int>(mat.cols()),
                     OpenCV_Picker<ValueT>::type_code );
-    
+
     for( size_t r = 0; r < mat.rows(); r++ )
     for( size_t c = 0; c < mat.cols(); c++ )
-        output.at<ValueT>(r,c) = mat(r,c);
-    
+        output.at<ValueT>(static_cast<int>(r),static_cast<int>(c)) = mat(r,c);
+
     return output;
 }
 
@@ -61,13 +61,13 @@ template <typename ReturnT>
 ReturnT from_opencv( const cv::Mat& mat )
     requires (std::is_same<ReturnT,MatrixN<typename ReturnT::value_type>>::value)
 {
-    ReturnT output( mat.rows,
-                    mat.cols );
+    ReturnT output( static_cast<size_t>(mat.rows),
+                    static_cast<size_t>(mat.cols) );
 
     for( int r = 0; r < mat.rows; r++ )
     for( int c = 0; c < mat.cols; c++ )
         output(r,c) = mat.at<typename ReturnT::value_type>(r,c);
-    
+
     return output;
 }
 
@@ -84,7 +84,7 @@ VectorT from_opencv( const cv::Mat& mat )
     for( int r = 0; r < mat.rows; r++ )
     for( int c = 0; c < mat.cols; c++ )
         output[i++] = mat.at<typename VectorT::value_type>(r,c);
-    
+
     return output;
 }
 

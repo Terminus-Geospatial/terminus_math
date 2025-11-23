@@ -25,22 +25,21 @@ class ConanProject(ConanFile):
     default_options = { "shared": True,
                         "with_tests": True,
                         "with_docs": True,
-                        "with_coverage": False,
-                        "boost/*:shared": True
+                        "with_coverage": False
     }
 
     settings = "os", "compiler", "build_type", "arch"
 
     def build_requirements(self):
-        self.test_requires("gtest/1.15.0")
-        self.tool_requires("terminus_cmake/1.0.5")
+        self.test_requires("gtest/1.17.0")
+        self.tool_requires("terminus_cmake/1.0.8")
 
     def requirements(self):
-        self.requires("boost/1.86.0")
+        self.requires("boost/1.89.0")
         self.requires("eigen/3.4.0")
-        self.requires("terminus_core/0.0.9")
-        self.requires("terminus_log/0.0.7")
-        self.requires("terminus_outcome/0.0.6")
+        self.requires("terminus_core/0.0.12")
+        self.requires("terminus_log/0.0.13")
+        self.requires("terminus_outcome/0.0.12")
 
     def _configure_cmake(self):
         cmake = CMake(self)

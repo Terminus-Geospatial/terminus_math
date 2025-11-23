@@ -6,7 +6,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 #include <terminus/math/matrix/MatrixN.hpp>
 #include <terminus/math/types/Type_Deduction.hpp>
 #include <terminus/math/vector/VectorN.hpp>
@@ -31,18 +31,18 @@ Result<VectorN<typename Promote_Type<typename AMatrixT::value_type,
                                             typename BVectorT::value_type>::type;
     MatrixN<real_type> Abuf = A;
     VectorN<real_type> result = B;
-    
+
     return solve_symmetric( A, B );
 }
 
 /**
  * x = solve(A,b) - Computes the solution to a real system of linear equations:
- * 
+ *
  * A*x=b
- * 
+ *
  * Based on the LAPACK GESV routines, this solution is computed using LU decomposition and
  * back/forward substitution.
- * 
+ *
  * Computes the minimum-norm solution to a real linear least squares problem.
  */
 Result<VectorN<double>> solve( const MatrixN<double>& mat_A,

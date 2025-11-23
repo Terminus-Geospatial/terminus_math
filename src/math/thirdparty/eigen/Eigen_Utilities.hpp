@@ -6,7 +6,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 #include <terminus/math/matrix.hpp>
 #include <terminus/math/vector/VectorN.hpp>
 
@@ -17,7 +17,7 @@ namespace tmns::math::eigen {
 
 /**
  * Convert from Terminus Matrix to Eigen Matrix
- * 
+ *
  * @note This is the general Matrix<> type
 */
 template <typename InputTmnsMatrixType>
@@ -48,7 +48,7 @@ struct TMNS_to_Eigen_Picker
 
 /**
  * Convert from Terminus Matrix to Eigen Matrix
- * 
+ *
  * This is the MatrixN<> dynamically-sized variant
 */
 template <typename MatrixValueT>
@@ -60,7 +60,7 @@ struct TMNS_to_Eigen_Picker<MatrixN<MatrixValueT>>
                                    ::Eigen::Dynamic,
                                    ::Eigen::Dynamic,
                                    ::Eigen::RowMajor>;
-    
+
     /**
      * Get the pointer
     */
@@ -73,8 +73,8 @@ struct TMNS_to_Eigen_Picker<MatrixN<MatrixValueT>>
     {
         MatrixN<ValueT> matT = mat; //transpose(mat);
         Eigen::Map<EigenT> result( to_ptr( matT ),
-                                   mat.rows(),
-                                   mat.cols() );
+                                   static_cast<Eigen::Index>(mat.rows()),
+                                   static_cast<Eigen::Index>(mat.cols()) );
         return std::move( result );
     }
 
@@ -106,7 +106,7 @@ struct TMNS_to_Eigen_Picker<const MatrixN<MatrixValueT>>
                                    mat.rows(),
                                    mat.cols() );
     }
-    
+
 }; // End of TMNS_to_Eigen_Picker (MatrixN<double>)
 
 /**
@@ -119,7 +119,7 @@ struct TMNS_to_Eigen_Picker<VectorN<VectorValueT>>
 
     using EigenT = ::Eigen::Vector<ValueT,
                                    ::Eigen::Dynamic>;
-    
+
     /**
      * Get the pointer
     */
@@ -143,7 +143,7 @@ struct TMNS_to_Eigen_Picker<const VectorN<VectorValueT>>
 
     using EigenT = ::Eigen::Vector<ValueT,
                                    ::Eigen::Dynamic>;
-    
+
     /**
      * Get the pointer
     */
@@ -157,13 +157,13 @@ struct TMNS_to_Eigen_Picker<const VectorN<VectorValueT>>
         return Eigen::Map<EigenT>( to_ptr( vec ),
                                    vec.size() );
     }
-    
+
 }; // End of TMNS_to_Eigen_Picker (MatrixN<double>)
 
 /**
  * @brief Function to convert a Terminus matrix into an Eigen matrix.
  * This should remain type-neutral, as the TMNS_to_Eigen_Picker will implement the
- * specializations 
+ * specializations
 */
 template <typename EigenT,
           typename InputMatrixT>
@@ -179,7 +179,7 @@ Result<EigenT> to_eigen( const InputMatrixT& mat )
 */
 template <typename MatrixT,
           typename EigenMatrixT>
-Result<MatrixN<typename MatrixT::value_type>> from_eigen( const EigenMatrixT& mat ) 
+Result<MatrixN<typename MatrixT::value_type>> from_eigen( const EigenMatrixT& mat )
     requires (std::is_same<MatrixT,MatrixN<typename MatrixT::value_type>>::value)
 {
     // @fixme This is the utter worst way.  Someday I'll solve Eigen's Map<> class

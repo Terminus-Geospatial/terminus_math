@@ -6,7 +6,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 #include <terminus/math/matrix.hpp>
 
 // Boost Libraries
@@ -29,7 +29,7 @@ typename VectorT::value_type calc_threshold( const Matrix_Base<MatrixT>& A,
 
 /**
  * Compute the singular values of a Matrix A
- * 
+ *
  * S will be resized if necessary to the appropriate output dimensions
  * based on the dimensions of A.
  */
@@ -37,7 +37,7 @@ Result<VectorN<double>> svd( const MatrixN<double>& A );
 
 /**
  * Compute the singular values of a Matrix A
- * 
+ *
  * S will be resized if necessary to the appropriate output dimensions
  * based on the dimensions of A.
  */
@@ -67,7 +67,7 @@ Result<void> complete_svd_impl( const MatrixN<float>& A,
 
 /**
  * Compute the singular value decomposition of the matrix A.
- * 
+ *
  * U, S, and VT will be resized if necessary to the appropriate output dimensions
  * based on the dimensions of A.
  */
@@ -80,13 +80,13 @@ Result<void> svd( const AMatrixT&  A,
                   SingularValuesT& S,
                   VTMatrixT&       VT )
 {
-    return svd_impl( A, U, S, VT );    
+    return svd_impl( A, U, S, VT );
 }
 
 /**
  * Compute the singular value decomposition of the matrix A, including
  * complete orthogonal bases of the domain and range even when A is rectangular.
- * 
+ *
  * U, S, and VT will be resized if necessary to the appropriate output dimensions
  * based on the dimensions of A.
  */
@@ -115,7 +115,7 @@ int rank( const Matrix_Base<MatrixT>&   A,
           typename VectorT::value_type thresh = -1 )
 {
     using value_type = typename VectorT::value_type;
-    
+
     value_type th = ( thresh >= 0. ? thresh : detail::calc_threshold(A, S) );
     int nr = 0;
     for( size_t j = 0; j < S.impl().size(); j++ )

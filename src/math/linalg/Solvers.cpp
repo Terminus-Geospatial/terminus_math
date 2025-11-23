@@ -34,7 +34,7 @@ Result<VectorN<double>> solve_symmetric( const MatrixN<double>& A,
     std::cout << x << std::endl;
     std::cout << "size: " << x.size() << std::endl;
     return outcome::ok<VectorN<double>>( VectorN<double>( x.data(),
-                                                          x.size() ) );
+                                                          static_cast<size_t>(x.size()) ) );
 }
 
 /************************************************/
@@ -84,9 +84,9 @@ Result<VectorN<double>> solve( const MatrixN<double>& mat_A,
     Eigen::MatrixXd output = inv * b.value();
 
     VectorN<double> output_tmns( output.data(),
-                                 output.size() );
+                                 static_cast<size_t>(output.size()) );
 
-    return outcome::ok<VectorN<double>>( output_tmns );    
+    return outcome::ok<VectorN<double>>( output_tmns );
 }
 
 } // End of tmns::math::linalg namespace

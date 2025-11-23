@@ -54,7 +54,7 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
 
         /// @brief Const Iterator Type
         using const_iter_t = typename array_type::const_iterator;
-        
+
         /**
          * Default Constructor
          */
@@ -88,10 +88,10 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
         Matrix( std::array<OtherValueT,ArrayDims> data ) requires ( ArrayDims <= ColsN * RowsN )
         {
             // Copy the first X elements
-            std::copy( data.begin(), 
+            std::copy( data.begin(),
                        data.end(),
                        m_data.begin() );
-            
+
             // Fill in the remaining items
             auto pos = m_data.begin();
             std::advance( pos, ArrayDims );
@@ -115,10 +115,10 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
                 tmns::log::warn( sout.str() );
             }
             // Copy the first X elements
-            std::copy( data.begin(), 
+            std::copy( data.begin(),
                        data.end(),
                        m_data.begin() );
-            
+
             // Fill in the remaining items
             auto pos = m_data.begin();
             std::advance( pos, RowsN * ColsN );
@@ -146,13 +146,13 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
             if( mat.impl().rows() != RowsN ||
                 mat.impl().cols() != ColsN )
             {
-                std::cerr << "Matrix must have dimensions " << RowsN << " rows by " 
+                std::cerr << "Matrix must have dimensions " << RowsN << " rows by "
                           << ColsN << " cols.";
             }
             else
             {
                 // Copy elements
-                std::copy( mat.impl().begin(), 
+                std::copy( mat.impl().begin(),
                            mat.impl().end(),
                            begin() );
             }
@@ -182,7 +182,7 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
                           << " cols.  Skipping assignment.";
                 return (*this);
             }
-            
+
             // Create a new instance
             Matrix tmp( mat );
             m_data = tmp.m_data;
@@ -358,7 +358,7 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
 
         /**
          * Get the Determinant
-         * 
+         *
          * Optimized for 2x2 matrices
          */
         value_type determinant() const requires( RowsN == 2 && ColsN == 2 )
@@ -377,12 +377,12 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
             // Make sure the matrix is square
             if( rows() != cols() )
             {
-                tmns::log::error( ADD_CURRENT_LOC(), 
+                tmns::log::error( ADD_CURRENT_LOC(),
                                   "Matrix must be square.  Actual: ",
                                   rows(), " x ", cols() );
                 return result;
             }
-            
+
             std::stack<std::pair<Matrix<value_type>,value_type> > s;
 
             s.push( std::make_pair( (*this), 1 ) );
@@ -392,16 +392,16 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
                 value_type scale = s.top().second;
 
                 s.pop();
-                
+
                 // Make sure matrix is square
                 if( a.rows() != a.cols() )
                 {
-                    tmns::log::error( ADD_CURRENT_LOC(), 
+                    tmns::log::error( ADD_CURRENT_LOC(),
                                   "Matrix must be square.  Actual: ",
                                   a.rows(), " x ", a.cols() );
                     return result;
                 }
-                
+
                 size_t dim = a.rows();
                 Matrix<value_type> sub;
                 switch( dim )
@@ -458,14 +458,14 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
             {
                 Matrix_Col<Matrix<value_type> > mci( buf, i );
                 Matrix_Row<Matrix<value_type> > mri( buf, i );
-      
+
                 size_t i_norm_inf = i + index_norm_inf( subvector( mci, i, sz - i ) );
-      
+
                 if( buf( i_norm_inf, i ) == zero )
                 {
                     throw std::runtime_error( "Matrix is singular in inverse()" );
                 }
-        
+
                 if( i_norm_inf != i )
                 {
                     size_t pbuf = pm(i);
@@ -504,8 +504,8 @@ class Matrix : public Matrix_Base<Matrix<ElementT,RowsN,ColsN> >
             }} // End of lower-triangle division
 
             // Divide by the upper-triangular term
-            for ( ssize_t i = sz - 1; i >= 0; --i ){
-            for ( ssize_t j = sz - 1; j >= 0; --j ){
+            for ( ssize_t i = static_cast<ssize_t>(sz - 1); i >= 0; --i ){
+            for ( ssize_t j = static_cast<ssize_t>(sz - 1); j >= 0; --j ){
                 value_type t = inverse_mat(i,j) /= buf(i,i);
                 if( t != zero )
                 {

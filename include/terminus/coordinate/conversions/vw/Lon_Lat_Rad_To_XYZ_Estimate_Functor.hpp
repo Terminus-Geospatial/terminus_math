@@ -6,7 +6,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 #include <terminus/math/types/Functors.hpp>
 #include <terminus/math/vector.hpp>
 
@@ -18,13 +18,13 @@ namespace tmns::coordinate::vw {
 class Lon_Lat_Rad_To_XYZ_Estimate_Functor : public math::Unary_Return_Same_Type
 {
     public:
-    
+
         Lon_Lat_Rad_To_XYZ_Estimate_Functor( bool east_positive = true )
             : m_east_positive( east_positive ) {}
 
         /**
          * Convert from lon, lat, radius to x,y,z:
-         * 
+         *
          * East positive:
          * x = r * cos(latitude) * cos(longitude)
          * y = r * cos(latitude) * sin(longitude)

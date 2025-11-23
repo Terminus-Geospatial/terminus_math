@@ -10,7 +10,7 @@
 #include <string_view>
 
 // Terminus Libraries
-#include <terminus/core/error/ErrorCategory.hpp>
+#include <terminus/error.hpp>
 #include <terminus/math/matrix/Matrix.hpp>
 #include <terminus/math/vector/Vector.hpp>
 
@@ -31,8 +31,8 @@ struct Datum_Impl;
 /**
  * A geodetic datum, i.e. a reference ellipsoid coordinate system for a planetary
  * body.  This implementation assumes a relatively modern notion of a datum, ie. a
- * geocentric bi-axial ellipsoidal model. 
- * 
+ * geocentric bi-axial ellipsoidal model.
+ *
  * To express a spherical datum, set the semi-major axis equal to the semi-minor axis.
  * All angles are measured in degrees, and all distances are measured in meters.  This
  * class incorporates a prime meridian offset, which is not usually strictly considered
@@ -49,7 +49,7 @@ class Datum
 
         /**
          * Constructor for custom datum types
-         * 
+         *
          * @param name
          * @param spheroid_name
          * @param meridian_name
@@ -63,7 +63,7 @@ class Datum
                double           semi_major_axis,
                double           semi_minor_axis,
                double           meridian_offset );
-        
+
         /**
          * Get the name of the datum.
          */
@@ -134,12 +134,12 @@ class Datum
         math::Vector3d geodetic_to_cartesian( const math::Vector3d& llh ) const;
 
         /**
-         * Return the rotation matrix for converting between ECEF and NED vectors. If v 
-         * is a Cartesian (ECEF) vector, the inverse of this matrix times v will find 
+         * Return the rotation matrix for converting between ECEF and NED vectors. If v
+         * is a Cartesian (ECEF) vector, the inverse of this matrix times v will find
          * v's components in the North, East, and Down directions at given lon and lat.
          * And the reverse holds, if v is in the NED coordinate system, this matrix times
          * v will be its expression in ECEF.
-         * This assumes the planet to be a perfect sphere, which can be 
+         * This assumes the planet to be a perfect sphere, which can be
          * problematic.
          */
         math::Matrix_3x3 lonlat_to_ned_matrix( const math::Vector2d& lonlat) const;
@@ -148,11 +148,11 @@ class Datum
          * Convert cartesian XYZ coordinates into latitude/longitude/altitude
          */
         math::Vector3d cartesian_to_geodetic( const math::Vector3d& xyz ) const;
-         
+
         /**
          * Create a Datum using a well-known name
          * - Supported:  WGS84, WGS72, NAD83, NAD27, D_MOON, D_MARS, MOLA.
-         * 
+         *
          * @note:  If you do not have ISIS support, Moon, Mars, and Mola will likely be disabled.
          */
         static Result<Datum> from_well_known_name( const std::string& name );
