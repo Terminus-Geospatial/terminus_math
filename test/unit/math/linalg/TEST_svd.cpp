@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    TEST_SVD.cpp
+ * @file    TEST_svd.cpp
  * @author  Marvin Smith
  * @date    3/9/2024
 */
@@ -19,7 +28,7 @@ TEST( linalg_svd, svd_float )
                               327,   2,  76,  66,
                               234,  26,  76, 662,
                                25,  62, 323,  23 } );
-    
+
     // Find the least squares solution to the overconstrained problem Ax=b;
     auto s = linalg::svd( A );
     ASSERT_FALSE( s.has_error() );
@@ -142,7 +151,7 @@ TEST( linalg_svd, svd_complete_double_test_1 )
                                    0.044208,  -0.142445,  -0.127011,   0.980624,
                                    0.184003,  -0.870965,  -0.414751,  -0.188530,
                                    0.883071,   0.344333,  -0.317278,  -0.030887 } );
-    
+
     double V_diff = ( V_exp - V ).sum();
     ASSERT_NEAR( V_diff, 0, 0.001 );
 
@@ -158,7 +167,7 @@ TEST( linalg_svd, svd_complete_double_test_1 )
 /************************************************/
 TEST( linalg_svd, svd_complete_double_test_2 )
 {
-    Matrix<double> A( 2, 4, { -1, 1, 2,  4, 
+    Matrix<double> A( 2, 4, { -1, 1, 2,  4,
                                2, 0, 1, -7 } );
 
     // Find the least squares solution to the overconstrained problem Ax=b;
@@ -182,7 +191,7 @@ TEST( linalg_svd, svd_complete_double_test_2 )
                                   -0.059885,  -0.360662,  -0.645242, -0.670820,
                                   -0.016577,  -0.930624,   0.289246,  0.223607,
                                   -0.961893,   0.022454,  -0.155748,  0.223607 } );
-    
+
     double V_diff = ( V_exp - V ).sum();
     ASSERT_NEAR( V_diff, 0, 0.001 );
 
@@ -196,5 +205,5 @@ TEST( linalg_svd, svd_complete_double_test_2 )
     auto orig = U * S_mat * Vt;
     auto orig_diff = (orig - A).sum();
     ASSERT_NEAR( orig_diff, 0, 0.001 );
-    
+
 }

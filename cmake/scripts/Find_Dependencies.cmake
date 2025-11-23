@@ -33,8 +33,6 @@ message( STATUS  "${COLOR_BOLD}GDAL_INCLUDE_DIRS:${COLOR_RESET}${GDAL_INCLUDE_DI
 #--------------------#
 #-      Boost       -#
 #--------------------#
-set( Boost_USE_MULTITHREADED ON )
-add_definitions( -DBOOST_ALL_DYN_LINK )
 find_package( Boost REQUIRED )
 include_directories( ${Boost_INCLUDE_DIRS} )
 

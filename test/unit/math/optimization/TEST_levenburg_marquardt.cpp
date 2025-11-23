@@ -1,8 +1,17 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    TEST_Levenburg_Marquardt.cpp
+ * @file    TEST_levenburg_marquardt.cpp
  * @author  Marvin Smith
  * @date    10/15/2023
- */
+*/
 #include <gtest/gtest.h>
 
 // Terminus Libraries
@@ -39,7 +48,7 @@ struct Test_Least_Squares_Model : public tmx::optimize::Least_Squares_Model_Base
 
 TEST( Levenberg_Marquardt, least_squares_model )
 {
-    
+
     Test_Least_Squares_Model model;
 
     tmx::Vector_<double,5> z;
@@ -55,7 +64,7 @@ TEST( Levenberg_Marquardt, least_squares_model )
     ASSERT_EQ( expected_first.size(), first.size() );
     for( size_t i = 0; i < expected_first.size(); i++ )
     {
-        ASSERT_NEAR( expected_first[i], 
+        ASSERT_NEAR( expected_first[i],
                      first[i],
                      0.01 );
     }
@@ -94,10 +103,10 @@ TEST( Levenberg_Marquardt, levenberg_marquardt )
         tmns::log::error( ADD_CURRENT_LOC(), "Test is about to fail: ", best.error().message() );
     }
     ASSERT_FALSE( best.has_error());
-    
+
     tmx::Vector_<double,4> expected_best( { 0.101358, 1.15485, 1.12093, 0.185534 } );
 
     ASSERT_EQ( tmx::optimize::LM_STATUS_CODE::ERROR_CONVERGED_REL_TOLERANCE, status );
-    
+
     EXPECT_NEAR( tmx::VectorN<double>( expected_best - best.value() ).magnitude(), 0, 1e-5 );
 }

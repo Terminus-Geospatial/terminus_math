@@ -1,8 +1,17 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    TEST_Matrix_Transpose.cpp
+ * @file    TEST_matrix_transpose.cpp
  * @author  Marvin Smith
  * @date    10/10/2023
- */
+*/
 #include <gtest/gtest.h>
 
 // Terminus Libraries
@@ -43,7 +52,7 @@ class Matrix_Transpose : public ::testing::Test
 /************************************************/
 TEST_F( Matrix_Transpose, transpose )
 {
-    
+
     // Verify non transpose shape
     size_t counter = 0;
     for( int r = 0; r < test_mat_01.rows(); r++ )
@@ -94,7 +103,7 @@ TEST_F( Matrix_Transpose, transpose )
 TEST_F( Matrix_Transpose, iterator )
 {
     auto mat_trans_01 = tmx::transpose( test_mat_01 );
-    
+
     size_t counter = 0;
     for( auto it = mat_trans_01.begin(); it != mat_trans_01.end(); it++ )
     {

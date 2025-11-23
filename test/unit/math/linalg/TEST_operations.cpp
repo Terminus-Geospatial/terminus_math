@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    TEST_Operations.cpp
  * @author  Marvin Smith
@@ -6,7 +15,7 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/linalg/Operations.hpp>
+#include <terminus/math/linalg/operations.hpp>
 
 #include <opencv4/opencv2/core.hpp>
 
@@ -27,7 +36,7 @@ TEST( linalg_operations, nullity )
     // Common example of nullspace
     tmx::Matrix<double> A( 2, 4, { -1, 1, 2, 4, 2, 0, 1, -7} );
 
-    // Should be 2 
+    // Should be 2
     ASSERT_EQ( tmx::linalg::nullity( A ), 2 );
     ASSERT_EQ( tmx::linalg::nullity( A, 0.1 ), 2 );
 
@@ -46,7 +55,7 @@ TEST( linalg_operations, nullity )
 TEST( linalg_operations, rank_and_nullspace )
 {
     // Square Matrix
-    tmx::MatrixN<double> magic( 3, 3, { 8, 1, 6, 
+    tmx::MatrixN<double> magic( 3, 3, { 8, 1, 6,
                                         3, 5, 7,
                                         4, 9, 2 } );
 
@@ -182,7 +191,7 @@ TEST( linalg_operations, rank_and_nullspace )
             ASSERT_NEAR( 0, definition_check(i), 1e-5 );
         }
         definition_check = shark * tmx::select_col( nullsp5.value(), 1 );
-      
+
         for( size_t i = 0; i < definition_check.size(); i++ )
         {
           ASSERT_NEAR( 0, definition_check(i), 1e-5 );

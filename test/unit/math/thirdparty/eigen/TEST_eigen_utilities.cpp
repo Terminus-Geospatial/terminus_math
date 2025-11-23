@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    TEST_Eigen_Utilities.cpp
+ * @file    TEST_eigen_utilities.cpp
  * @author  Marvin Smith
  * @date    3/9/2023
 */
@@ -21,12 +30,12 @@ TEST( thirdparty_eigen_utilities, to_from_eigen_matrix_float_01 )
                               327,   2,  76,  66,
                               234,  26,  76, 662,
                                25,  62, 323,  23 } );
-    
+
     // Convert the Terminus matrix into an Eigen type
     auto resA = eigen::to_eigen<::Eigen::MatrixXf>( A );
     ::Eigen::MatrixXf eigenA = resA.value();
 
-    // Convert back to 
+    // Convert back to
     auto outResA = eigen::from_eigen<MatrixN<float>>( eigenA );
     MatrixN<float> B = outResA.value();
 
@@ -43,12 +52,12 @@ TEST( thirdparty_eigen_utilities, to_from_eigen_matrix_float_02 )
     MatrixN<float> A( 3, 4, {  23,  1, 25,  98,
                                 327,  2, 76,  66,
                                 234, 26, 76, 662 } );
-    
+
     // Convert the Terminus matrix into an Eigen type
     auto resA = eigen::to_eigen<::Eigen::MatrixXf>( A );
     ::Eigen::MatrixXf eigenA = resA.value();
 
-    // Convert back to 
+    // Convert back to
     auto outResA = eigen::from_eigen<MatrixN<float>>( eigenA );
     MatrixN<float> B = outResA.value();
 

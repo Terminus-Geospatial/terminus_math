@@ -1,8 +1,17 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    TEST_Matrix_Operations.cpp
+ * @file    TEST_matrix_operations.cpp
  * @author  Marvin Smith
  * @date    10/12/2023
- */
+*/
 #include <gtest/gtest.h>
 
 #include <terminus/math/matrix.hpp>
@@ -23,7 +32,7 @@ class Matrix_Operations : public ::testing::Test
                                             4,  5,  6,
                                             7,  8,  9,
                                            10, 11, 12 } };
-        
+
         tmx::Matrix<double,3,4> mat_02 { {  1,  2,  3,  4,
                                             5,  6,  7,  8,
                                             9, 10, 11, 12 } };
@@ -370,7 +379,7 @@ TEST_F( Matrix_Operations, select_row_test_01 )
 /*          Test the Select Row Method           */
 /*************************************************/
 TEST_F( Matrix_Operations, select_row_test_02_transpose )
-{    
+{
     // Tranpose
     auto mat_01_t = tmx::transpose( mat_01 );
     auto mat_02_t = tmx::transpose( mat_02 );
@@ -581,7 +590,7 @@ TEST_F( Matrix_Operations, diagonal )
     ASSERT_NEAR( res_1[0], 1, 0.001 );
     ASSERT_NEAR( res_1[1], 5, 0.001 );
     ASSERT_NEAR( res_1[2], 9, 0.001 );
-    
+
     // Test on matrix addition
     auto res_2 = ( mat01 + mat02 ).diagonal();
     ASSERT_EQ( res_2.size(), 3 );

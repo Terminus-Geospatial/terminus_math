@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    TEST_Matrix.cpp
+ * @file    TEST_matrixn.cpp
  * @author  Marvin Smith
  * @date    9/16/2023
 */
@@ -24,7 +33,7 @@ TEST( MatrixN, constructor_tests )
 
     int counter = 0;
     for( auto it = mat_01.begin();
-         it != mat_01.end(); 
+         it != mat_01.end();
          it++ )
     {
         ASSERT_NEAR( (*it), 0, 0.001 );

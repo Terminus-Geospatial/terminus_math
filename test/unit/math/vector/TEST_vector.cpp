@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    TEST_Vector.cpp
+ * @file    TEST_vector.cpp
  * @author  Marvin Smith
  * @date    7/23/2023
 */
@@ -31,7 +40,7 @@ TEST( Vector, Simple_Operations )
 /**************************************/
 TEST( Vector, Constructors )
 {
-    // Create an array 
+    // Create an array
     std::array<double,3> arr01 { 1, 2, 3 };
     std::vector<double> arr02 { 1, 2, 3 };
 

@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    TEST_Point.cpp
+ * @file    TEST_point.cpp
  * @author  Marvin Smith
  * @date    7/12/2023
 */
@@ -42,7 +51,7 @@ TEST( Point, Conversions )
 
     // Convert to a point using copy-constructor
     tmx::Point4d result_01( vec_03 );
-    
+
     for( size_t i=0; i<4; i++ )
     {
         ASSERT_NEAR( result_01[i], i+2, 0.001 );
@@ -50,7 +59,7 @@ TEST( Point, Conversions )
 
     // Convert to a point using assignment operator
     tmx::Point4d result_02( vec_03 );
-    
+
     for( size_t i=0; i<4; i++ )
     {
         ASSERT_NEAR( result_02[i], i+2, 0.001 );
@@ -116,7 +125,7 @@ TEST( Point, Subtraction_Operator )
 TEST( Point, magnitude_sq )
 {
     auto pt1 = tmns::math::ToPoint3<double>( -1, 2, -3 );
-    
+
     ASSERT_NEAR( pt1.magnitude_sq(), 14, 0.01 );
 }
 

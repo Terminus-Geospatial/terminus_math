@@ -25,7 +25,8 @@ class ConanProject(ConanFile):
     default_options = { "shared": True,
                         "with_tests": True,
                         "with_docs": True,
-                        "with_coverage": False
+                        "with_coverage": False,
+                        "boost/*:shared": True
     }
 
     settings = "os", "compiler", "build_type", "arch"
@@ -38,7 +39,7 @@ class ConanProject(ConanFile):
         self.requires("boost/1.89.0")
         self.requires("eigen/3.4.0")
         self.requires("terminus_core/0.0.12")
-        self.requires("terminus_log/0.0.13")
+        self.requires("terminus_log/0.0.14")
         self.requires("terminus_outcome/0.0.12")
 
     def _configure_cmake(self):

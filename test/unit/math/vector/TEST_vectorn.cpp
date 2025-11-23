@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    TEST_VectorN.cpp
+ * @file    TEST_vectorn.cpp
  * @author  Marvin Smith
  * @date    7/30/2023
 */
@@ -35,7 +44,7 @@ TEST( VectorN, simple_operations )
     ASSERT_NEAR( vec02.y(), 1, 0.001 );
     ASSERT_NEAR( vec02.z(), 2, 0.001 );
     ASSERT_NEAR( vec02[3],  3, 0.001 );
-    
+
 }
 
 /************************************************/
@@ -43,7 +52,7 @@ TEST( VectorN, simple_operations )
 /************************************************/
 TEST( VectorN, Constructors )
 {
-    // Create an array 
+    // Create an array
     std::array<double,3> arr01 { 1, 2, 3 };
 
     // Create Vector

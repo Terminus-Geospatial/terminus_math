@@ -1,3 +1,11 @@
+############################# INTELLECTUAL PROPERTY RIGHTS #############################
+##                                                                                    ##
+##                           Copyright (c) 2024 Terminus LLC                          ##
+##                                All Rights Reserved.                                ##
+##                                                                                    ##
+##          Use of this source code is governed by LICENSE in the repo root.          ##
+##                                                                                    ##
+############################# INTELLECTUAL PROPERTY RIGHTS #############################
 #    File:    CMakeLists.txt
 #    Author:  Marvin Smith
 #    Date:    7/12/2023
@@ -12,21 +20,20 @@ include( "${CMAKE_BINARY_DIR}/conan_toolchain.cmake" )
 set( CMAKE_FIND_PACKAGE_PREFER_CONFIG TRUE )
 
 # Set the Project-Name
-project( ${NAME_FROM_CONANFILE}
-            VERSION ${VERSION_FROM_CONANFILE}
-            HOMEPAGE_URL ${URL_FROM_CONANFILE}
-            DESCRIPTION ${DESCRIPTION_FROM_CONANFILE}
-            LANGUAGES CXX
-)
+project( ${CONAN_PKG_NAME}
+         VERSION      ${CONAN_PKG_VERSION}
+         HOMEPAGE_URL ${CONAN_PKG_URL}
+         DESCRIPTION  ${CONAN_PKG_DESCRIPTION}
+         LANGUAGES    CXX )
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-#  Set C++ 23 Support
+#  Set C++ Standard
 set( CMAKE_CXX_STANDARD 23 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 #  Give Vscode a fighting chance
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
 # Bring in CMake helpers for TERMINUS projects
 include( terminus_cmake )
@@ -34,9 +41,25 @@ include( terminus_cmake )
 # Force the high warning preset published by terminus_cmake across this project
 set( TERMINUS_CXX_FLAGS ${TERMINUS_CXX_FLAGS_HIGH} CACHE STRING "Terminus warning preset" FORCE )
 
-#  Treat warnings as errors
+# Treat warnings as errors globally
 set( CMAKE_COMPILE_WARNING_AS_ERROR ON )
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror" )
+
+#----------------------------------------#
+#-          Update Version File         -#
+#----------------------------------------#
+# Get the current date
+string(TIMESTAMP PROJECT_BUILD_DATE "%Y-%m-%d %H:%M:%S" )
+
+execute_process(
+    COMMAND git rev-parse HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE TERMINUS_MATH_GIT_COMMIT_HASH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+configure_file( ${CMAKE_SOURCE_DIR}/templates/exports.hpp.in
+                ${CMAKE_BINARY_DIR}/library/include/terminus/math/exports.hpp )
+
 
 #-------------------------------------#
 #-     Add Manual CMake Scripts      -#
@@ -62,4 +85,5 @@ if( TERMINUS_MATH_ENABLE_TESTS )
      add_subdirectory( test/unit )
 endif()
 
-install( DIRECTORY include/terminus DESTINATION include)
+install( DIRECTORY library/include/terminus DESTINATION include)
+install( DIRECTORY ${PROJECT_BINARY_DIR}/include/terminus DESTINATION include )

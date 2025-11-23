@@ -1,3 +1,12 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
  * @file    TEST_Point_Transformations.cpp
  * @author  Marvin Smith
@@ -45,4 +54,3 @@ TEST( Point_Transformations, XYZ_LLA_Conversions )
     ASSERT_NEAR( tmns::math::VectorN<double>(( xyz - xyz2.value() )).magnitude(), 0, 0.001 );
 }
 
- 

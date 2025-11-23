@@ -1,5 +1,14 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    TEST_Rectangle.cpp
+ * @file    TEST_rectangle.cpp
  * @author  Marvin Smith
  * @date    7/14/2023
 */
@@ -30,7 +39,7 @@ TEST( Rectangle, Constructors_and_Getters )
     ASSERT_NEAR( rect2.min().x(), 1, 0.0001 );
     ASSERT_NEAR( rect2.min().y(), 2, 0.0001 );
 
-    tmns::math::Rectangle<double,2> rect3( tmns::math::ToPoint2<double>( 1, 2 ), 
+    tmns::math::Rectangle<double,2> rect3( tmns::math::ToPoint2<double>( 1, 2 ),
                                            { 3, 4 });
     ASSERT_NEAR( rect3.bl().x(), 1, 0.0001 );
     ASSERT_NEAR( rect3.bl().y(), 2, 0.0001 );
@@ -55,7 +64,7 @@ TEST( Rectangle, Constructors_and_Getters )
     // Real-world example that was failing in TMNS Image
     tmns::math::Rect2i rect5( tmns::math::Point2i( { 100, 100 } ),
                               tmns::math::Point2i( { 300, 300 } ) );
-    
+
     ASSERT_NEAR( rect5.bl().x(), 100, 0.0001 );
     ASSERT_NEAR( rect5.bl().y(), 100, 0.0001 );
     ASSERT_NEAR( rect5.br().x(), 300, 0.0001 );
@@ -68,7 +77,7 @@ TEST( Rectangle, Constructors_and_Getters )
     ASSERT_NEAR( rect5.height(), 200, 0.0001 );
     ASSERT_NEAR( rect5.min().x(),100, 0.0001 );
     ASSERT_NEAR( rect5.min().y(),100, 0.0001 );
-            
+
 }
 
 /************************************/
