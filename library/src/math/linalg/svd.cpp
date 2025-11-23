@@ -12,7 +12,7 @@
  * @author  Marvin Smith
  * @date    11/13/2023
 */
-#include <terminus/math/linalg/SVD.hpp>
+#include <terminus/math/linalg/svd.hpp>
 
 // Project Libraries
 #include "../thirdparty/eigen/eigen_utilities.hpp"

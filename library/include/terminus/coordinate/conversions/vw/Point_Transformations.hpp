@@ -1,8 +1,17 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Point_Transformations.hpp
+ * @file    point_transformations.hpp
  * @author  Marvin Smith
- * @dat     10/15/2023
- */
+ * @date    10/15/2023
+*/
 #pragma once
 
 // Terminus Libraries
@@ -14,13 +23,13 @@ namespace tmns::coordinate::vw {
 /**
  * Takes a Vector<ElemT,3> in cartesian 3 space and returns a vector that
  * contains the lat, lon, and radius of that point.  For consistency with
- * cartographic convention, angular values are return in degrees rather 
+ * cartographic convention, angular values are return in degrees rather
  * than radians.
- * 
+ *
  * Note: The following assumes latitude is measured from the equatorial plane
  * with north positive. This is different than normal spherical coordinate
  * conversion where the equivalent angle is measured from the positive z axis.
- * 
+ *
  * Note: notice that the order of the returned triple is longitude, latitude,
  * radius.  This ordering of lon/lat is consistent with the notion of
  * horizontal (x) and vertical (y) coordinates in an image.
@@ -39,12 +48,12 @@ Result<math::Vector_<ElementT,3>> xyz_to_lon_lat_radius_estimate( const math::Ve
  * Takes a Vector<ElemT,3> that contains longitude, latitude, and radius, and
  * a vector that is in cartesian 3-space. For consistency with cartographic
  * convention, angular values are expected to be in degrees rather than radians.
- * 
+ *
  * Note: The following assumes latitude is measured from the equatorial plane
  * with north positive. This is different than normal spherical coordinate
  * conversion where the equivalent angle is measured from the positive z axis.
- * 
- * Note: notice that the order of the returned triple is longitude, latitude, radius. 
+ *
+ * Note: notice that the order of the returned triple is longitude, latitude, radius.
  * This ordering of lon/lat is consistent with the notion of horizontal (x) and
  * vertical (y) coordinates in an image.
  */

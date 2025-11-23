@@ -8,10 +8,10 @@
 /*                                                                                    */
 /***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Matrix.hpp
+ * @file    matrix.hpp
  * @author  Marvin Smith
  * @date    9/16/2023
- */
+*/
 #pragma once
 
 // Boost Libraries

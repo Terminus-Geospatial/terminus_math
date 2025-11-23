@@ -1,14 +1,23 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Rectangle.hpp
+ * @file    rectangle.hpp
  * @author  Marvin Smith
  * @date    7/12/2023
 */
 #pragma once
 
 // Terminus Libraries
-#include "Point_Utilities.hpp"
-#include "Size.hpp"
-#include "vector/Vector_Utilities.hpp"
+#include <terminus/math/point_utilities.hpp>
+#include <terminus/math/size.hpp>
+#include <terminus/math/vector/vector_utilities.hpp>
 
 // C++ Libraries
 #include <cmath>
@@ -42,7 +51,7 @@ class Rectangle
                    const ValueT& width,
                    const ValueT& height )
           : m_bl( { x, y } ),
-            m_lengths( { width, 
+            m_lengths( { width,
                          height } )
         {}
 
@@ -57,7 +66,7 @@ class Rectangle
         {
             m_bl = Point_<ValueT,Dims>::elementwise_min( min_corner,
                                                          max_corner );
-            
+
             auto min_point = Point_<ValueT,Dims>::elementwise_min( min_corner,
                                                                    max_corner );
             auto max_point = Point_<ValueT,Dims>::elementwise_max( min_corner,
@@ -259,7 +268,7 @@ class Rectangle
 
         /**
          * Recursive component for the subdivision method.
-         * 
+         *
          * @param bounds
          * @param dim
          * @param current_min
@@ -334,7 +343,7 @@ class Rectangle
 
                 bounds.push_back( dim_indices );
             }
-            
+
             Point_<ValueT,Dims> current_min;
             Size_<ValueT,Dims>  current_size;
             std::vector<Rectangle<ValueT,Dims>> output;
@@ -469,16 +478,16 @@ class Rectangle
         /**
          * Compute the Rectangle Union
         */
-        template <typename ValueT1, 
+        template <typename ValueT1,
                   int      Dims1,
-                  typename ValueT2, 
+                  typename ValueT2,
                   int      Dims2>
         static Rectangle<ValueT1,Dims1> set_union( const Rectangle<ValueT1,Dims1>&  rect1,
                                                    const Point_<ValueT2,Dims2>&     point )
         {
             auto point_min = Point_<ValueT2,Dims2>::elementwise_min( rect1.min(),
                                                                      point );
-            
+
             auto point_max = Point_<ValueT2,Dims2>::elementwise_max( rect1.max(),
                                                                      point );
 

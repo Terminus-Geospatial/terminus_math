@@ -15,7 +15,7 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/vector/Vector_Transpose.hpp>
+#include <terminus/math/vector/vector_transpose.hpp>
 
 namespace tmx = tmns::math;
 

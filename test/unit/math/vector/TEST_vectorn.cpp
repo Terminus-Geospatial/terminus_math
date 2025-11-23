@@ -15,7 +15,7 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/vector/VectorN.hpp>
+#include <terminus/math/vector/vectorn.hpp>
 
 /***************************************************/
 /*      Test Constructors, Getters, and Setters    */

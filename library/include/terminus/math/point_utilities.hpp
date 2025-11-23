@@ -1,12 +1,21 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Point_Utilities.hpp
+ * @file    point_utilities.hpp
  * @author  Marvin Smith
  * @date    7/14/2023
 */
 #pragma once
 
 // Terminus Libraries
-#include "Point.hpp"
+#include <terminus/math/point.hpp>
 
 namespace tmns::math {
 

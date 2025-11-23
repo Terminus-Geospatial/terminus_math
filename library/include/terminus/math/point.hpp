@@ -1,13 +1,22 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Point.hpp
+ * @file    point.hpp
  * @author  Marvin Smith
  * @date    7/12/2023
 */
 #pragma once
 
 // Terminus Libraries
-#include "Enums.hpp"
-#include "vector/Vector.hpp"
+#include <terminus/math/enums.hpp>
+#include <terminus/math/vector/vector.hpp>
 
 // C++ Libraries
 #include <sstream>
@@ -51,7 +60,7 @@ class Point_ : public Vector_<ValueT,Dims>
             if( other.impl().size() != Dims )
             {
                 std::stringstream sout;
-                sout << "Input vector has incorrect size. Expected: " << Dims 
+                sout << "Input vector has incorrect size. Expected: " << Dims
                      << ", Actual: " << other.impl().size();
                 throw std::runtime_error( sout.str() );
             }
@@ -72,7 +81,7 @@ class Point_ : public Vector_<ValueT,Dims>
             if( other.impl().size() != Dims )
             {
                 std::stringstream sout;
-                sout << "Input vector has incorrect size. Expected: " << Dims 
+                sout << "Input vector has incorrect size. Expected: " << Dims
                      << ", Actual: " << other.impl().size();
                 throw std::runtime_error( sout.str() );
             }
@@ -250,11 +259,11 @@ class Point_ : public Vector_<ValueT,Dims>
 
         /**
          * Compute the distance between the 2 points
-         * 
+         *
          * @param point1 - First point
          * @param point2 - Second point (Doesn't need to be the same value-type)
-         * @param method - L1 or L2 
-         * 
+         * @param method - L1 or L2
+         *
          * L1:  https://en.wikipedia.org/wiki/Taxicab_geometry
          * L2:  Distance Formula
         */
@@ -276,7 +285,7 @@ class Point_ : public Vector_<ValueT,Dims>
             }
             else if( method == DistanceType::L2 )
             {
-                dist = ( point1 - point2 ).magnitude();             
+                dist = ( point1 - point2 ).magnitude();
             }
             return dist;
         }

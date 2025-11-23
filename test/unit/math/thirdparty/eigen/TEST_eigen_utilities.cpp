@@ -16,7 +16,12 @@
 
 // Terminus Libraries
 #include <terminus/math/matrix.hpp>
-#include "../../../../../src/math/thirdparty/eigen/Eigen_Utilities.hpp"
+
+// Suppress Eigen deprecation warnings
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#include "../../../../../library/src/math/thirdparty/eigen/eigen_utilities.hpp"
+#pragma clang diagnostic pop
 
 using namespace tmns::math;
 

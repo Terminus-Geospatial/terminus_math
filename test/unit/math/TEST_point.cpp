@@ -16,8 +16,8 @@
 
 // Terminus Libraries
 #include <terminus/log/utility.hpp>
-#include <terminus/math/Point.hpp>
-#include <terminus/math/Point_Utilities.hpp>
+#include <terminus/math/point.hpp>
+#include <terminus/math/point_utilities.hpp>
 #include <terminus/math/vector.hpp>
 
 namespace tmx = tmns::math;

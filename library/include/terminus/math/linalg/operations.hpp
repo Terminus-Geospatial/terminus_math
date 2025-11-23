@@ -15,7 +15,7 @@
 #pragma once
 
 // Terminus Libraries
-#include <terminus/math/linalg/SVD.hpp>
+#include <terminus/math/linalg/svd.hpp>
 #include <terminus/math/matrix.hpp>
 #include <terminus/math/vector.hpp>
 

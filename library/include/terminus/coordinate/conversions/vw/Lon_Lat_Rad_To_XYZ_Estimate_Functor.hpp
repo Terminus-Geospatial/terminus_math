@@ -8,15 +8,15 @@
 /*                                                                                    */
 /***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Lon_Lat_Rad_To_XYZ_Estimate_Functor.hpp
+ * @file    lon_lat_rad_to_xyz_estimate_functor.hpp
  * @author  Marvin Smith
  * @date    10/15/2023
- */
+*/
 #pragma once
 
 // Terminus Libraries
 #include <terminus/error.hpp>
-#include <terminus/math/types/Functors.hpp>
+#include <terminus/math/types/functors.hpp>
 #include <terminus/math/vector.hpp>
 
 namespace tmns::coordinate::vw {

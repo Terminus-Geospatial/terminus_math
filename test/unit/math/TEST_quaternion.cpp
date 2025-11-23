@@ -15,7 +15,8 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/Quaternion.hpp>
+#include <terminus/math/quaternion.hpp>
+#include <terminus/math/vector/vector_utilities.hpp>
 
 /************************************************/
 /*      Test the Quaternion Constructors        */

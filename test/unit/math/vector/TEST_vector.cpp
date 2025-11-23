@@ -15,7 +15,7 @@
 #include <gtest/gtest.h>
 
 // Terminus Math Libraries
-#include <terminus/math/vector/Vector.hpp>
+#include <terminus/math/vector/vector.hpp>
 
 /************************************/
 /*      Test Simple Operations      */

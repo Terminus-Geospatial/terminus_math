@@ -15,7 +15,7 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/types/Fundamental_Types.hpp>
+#include <terminus/math/types/fundamental_types.hpp>
 
 /******************************************/
 /*      Test the Is-Scalar Type-Trait     */

@@ -16,7 +16,7 @@
 
 // Terminus Libraries
 #include <terminus/log/utility.hpp>
-#include <terminus/math/vector/Vector_Utilities.hpp>
+#include <terminus/math/vector/vector_utilities.hpp>
 
 namespace tmx = tmns::math;
 

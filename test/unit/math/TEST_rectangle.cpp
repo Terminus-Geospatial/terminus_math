@@ -15,7 +15,7 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/Rectangle.hpp>
+#include <terminus/math/rectangle.hpp>
 
 /********************************************************/
 /*          Test the Constructors and Accessors         */

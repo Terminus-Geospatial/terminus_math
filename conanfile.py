@@ -49,10 +49,10 @@ class ConanProject(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.variables["NAME_FROM_CONANFILE"]        = self.name
-        tc.variables["VERSION_FROM_CONANFILE"]     = self.version
-        tc.variables["DESCRIPTION_FROM_CONANFILE"] = self.description
-        tc.variables["URL_FROM_CONANFILE"]         = self.url
+        tc.variables["CONAN_PKG_NAME"]        = self.name
+        tc.variables["CONAN_PKG_VERSION"]     = self.version
+        tc.variables["CONAN_PKG_DESCRIPTION"] = self.description
+        tc.variables["CONAN_PKG_URL"]         = self.url
 
         tc.variables["TERMINUS_MATH_ENABLE_TESTS"]    = self.options.with_tests
         tc.variables["TERMINUS_MATH_ENABLE_DOCS"]     = self.options.with_docs

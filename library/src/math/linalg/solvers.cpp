@@ -12,7 +12,7 @@
  * @author  Marvin Smith
  * @date    10/15/2023
  */
-#include <terminus/math/linalg/Solvers.hpp>
+#include <terminus/math/linalg/solvers.hpp>
 
 // Project Libraries
 #include "../thirdparty/eigen/eigen_utilities.hpp"

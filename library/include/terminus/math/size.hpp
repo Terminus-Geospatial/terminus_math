@@ -1,12 +1,21 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Size.hpp
+ * @file    size.hpp
  * @author  Marvin Smith
  * @date    7/20/2023
 */
 #pragma once
 
 // Terminus Math Libraries
-#include "vector/Vector.hpp"
+#include "vector/vector.hpp"
 
 namespace tmns::math {
 

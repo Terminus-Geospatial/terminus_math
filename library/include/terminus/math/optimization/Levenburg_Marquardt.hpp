@@ -1,34 +1,43 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Levenburg_Marquardt.hpp
+ * @file    levenburg_marquardt.hpp
  * @author  Marvin Smith
  * @date    10/14/2023
 */
 #pragma once
 
 // Terminus Libraries
-#include <terminus/math/linalg/Solvers.hpp>
-#include <terminus/math/matrix/Matrix_Operations.hpp>
-#include <terminus/math/optimization/Least_Squares_Model_Base.hpp>
-#include <terminus/math/optimization/LM_Enums.hpp>
+#include <terminus/math/linalg/solvers.hpp>
+#include <terminus/math/matrix/matrix_operations.hpp>
+#include <terminus/math/optimization/least_squares_model_base.hpp>
+#include <terminus/math/optimization/lm_enums.hpp>
 
 namespace tmns::math::optimize {
 
 /**
  * Levenberg-Marquardt is an algorithm for solving problems of the form
- * 
+ *
  * J(p) = sum_i ( z_i - h(x_i) )^2
- * 
+ *
  * That is, a least squares problem where the objective is to find a parameter vector
  * x such that the model function h(x), evaluates as closely as possible to the
  * observations z in a least squares sense, that is, the cost function J(p) is minimized.
- * 
+ *
  * Requires:
  * - a seed parameter vector x
  * - an observation vector z
  * - a data model derived from LeastSquaresModelBase, which includes
  *      - the model function,
  *      - its Jacobian
- * 
+ *
  * The cost function in L-M is always the inner product of the difference between an
  * observation and the expected observation given the model parameters.  This means
  * we can compute the cost function and its derivatives if we know the measurement
@@ -90,7 +99,7 @@ Result<typename ImplT::domain_type> levenberg_marquardt( const Least_Squares_Mod
         // Difference between observed and predicted and error (2-norm of difference)
         error = model.difference( observation, h );
         norm_start = error.magnitude();
-        tmns::log::debug( ADD_CURRENT_LOC(), 
+        tmns::log::debug( ADD_CURRENT_LOC(),
                           "LM: outer iteration starting robust norm: ",
                           norm_start );
 
@@ -339,7 +348,7 @@ Result<typename ImplT::domain_type> levenberg_marquardt_fixed( const Least_Squar
     Matrix<double, NI, NI> J_trans_J;
     Vector_<double, NI> del_J;
     Matrix<double, NI, NI> hessian, hessian_lm, hessian_lm_inv;
-    
+
     tmns::log::debug( "Start of loops" );
     int outer_iter = 0;
     while( !done )
@@ -358,7 +367,7 @@ Result<typename ImplT::domain_type> levenberg_marquardt_fixed( const Least_Squar
         // Difference between observed and predicted and error (2-norm of difference)
         error = model.difference( observation, h );
         norm_start = error.magnitude();
-        tmns::log::debug( ADD_CURRENT_LOC(), 
+        tmns::log::debug( ADD_CURRENT_LOC(),
                           "LM: outer iteration starting robust norm: ",
                           norm_start );
 
@@ -366,7 +375,7 @@ Result<typename ImplT::domain_type> levenberg_marquardt_fixed( const Least_Squar
         J = model.jacobian(x);
 
         tmns::log::trace( "J: ", J.to_log_string() );
-      
+
         J_trans = transpose( J );
         tmns::log::trace( "J Transpose: ", J_trans.to_log_string() );
 
@@ -381,7 +390,7 @@ Result<typename ImplT::domain_type> levenberg_marquardt_fixed( const Least_Squar
         //Matrix<double> hessian = Rinv * J_trans_J;
 
         //std::cout << "hessian = " << hessian << std::endl;
-      
+
         int iterations = 0;
         double norm_try = norm_start+1.0;
         while (norm_try > norm_start)
@@ -420,7 +429,7 @@ Result<typename ImplT::domain_type> levenberg_marquardt_fixed( const Least_Squar
                     auto solve_res = linalg::solve( hessian_lm, del_J );
                     if( solve_res.has_error() )
                     {
-                        return outcome::fail( (core::error::ErrorCode)(solve_res.error().code().value()),
+                        return outcome::fail( (error::Error_Code)(solve_res.error().code().value()),
                                               solve_res.error().message() );
                     }
                     delta_x = solve_res.value();
@@ -445,7 +454,7 @@ Result<typename ImplT::domain_type> levenberg_marquardt_fixed( const Least_Squar
             }
 
             ++iterations; // Sanity check on iterations in this loop
-        
+
             if( iterations > 5 )
             {
                 tmns::log::debug( "\n****LM: too many inner iterations - short circuiting" );

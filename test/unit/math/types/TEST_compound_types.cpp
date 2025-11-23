@@ -15,7 +15,7 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/types/Compound_Types.hpp>
+#include <terminus/math/types/compound_types.hpp>
 
 // C++ Libraries
 #include <type_traits>

@@ -15,9 +15,9 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/matrix/MatrixN.hpp>
-#include <terminus/math/optimization/Levenburg_Marquardt.hpp>
-#include <terminus/math/vector/Sub_Vector.hpp>
+#include <terminus/math/matrix/matrixn.hpp>
+#include <terminus/math/optimization/levenburg_marquardt.hpp>
+#include <terminus/math/vector/sub_vector.hpp>
 
 namespace tmx = tmns::math;
 

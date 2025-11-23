@@ -22,9 +22,12 @@
 // C++ Libraries
 #include <iostream>
 
-// Eigen Libraries
+// Eigen Libraries - Suppress deprecation warnings
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #include <Eigen/LU>
 #include <Eigen/SVD>
+#pragma clang diagnostic pop
 
 namespace tmx = tmns::math;
 

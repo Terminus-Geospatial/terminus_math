@@ -15,7 +15,7 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/Size.hpp>
+#include <terminus/math/size.hpp>
 
 
 /****************************************/

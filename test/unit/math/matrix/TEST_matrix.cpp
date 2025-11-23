@@ -15,7 +15,7 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/matrix/Matrix.hpp>
+#include <terminus/math/matrix/matrix.hpp>
 
 namespace tmx = tmns::math;
 

@@ -15,7 +15,7 @@
 #include <gtest/gtest.h>
 
 // Terminus Libraries
-#include <terminus/math/linalg/SVD.hpp>
+#include <terminus/math/linalg/svd.hpp>
 
 using namespace tmns::math;
 

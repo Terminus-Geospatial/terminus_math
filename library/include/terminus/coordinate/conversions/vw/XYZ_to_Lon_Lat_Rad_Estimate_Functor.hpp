@@ -1,28 +1,37 @@
+/**************************** INTELLECTUAL PROPERTY RIGHTS ****************************/
+/*                                                                                    */
+/*                           Copyright (c) 2024 Terminus LLC                          */
+/*                                                                                    */
+/*                                All Rights Reserved.                                */
+/*                                                                                    */
+/*          Use of this source code is governed by LICENSE in the repo root.          */
+/*                                                                                    */
+/***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    XYZ_to_Lon_Lat_Rad_Estimate_Functor.hpp
+ * @file    xyz_to_lon_lat_rad_estimate_functor.hpp
  * @author  Marvin Smith
  * @date    10/15/2023
- */
+*/
 #pragma once
 
 // Terminus Libraries
-#include <terminus/math/types/Functors.hpp>
+#include <terminus/math/types/functors.hpp>
 #include <terminus/math/vector.hpp>
 
 namespace tmns::coordinate::vw {
 
 /**
  * XYZ to LLA Conversion
- * 
+ *
  * @Note: These functions are estimations, they do not produce
  * accurate results. They seem to assume the datum to be spherical.
- * 
+ *
  * GCC to GDC conversion with elevation being distance from 0,0,0
  */
 class XYZ_to_Lon_Lat_Rad_Estimate_Functor : public math::Unary_Return_Same_Type
 {
     public:
-        
+
         /**
          * Constructor
         */
@@ -52,7 +61,7 @@ class XYZ_to_Lon_Lat_Rad_Estimate_Functor : public math::Unary_Return_Same_Type
             // Deal with "missing pixels"
             if( p.magnitude() < 0.0001 )
             {
-                return outcome::fail( core::error::ErrorCode::UNINITIALIZED,
+                return outcome::fail( error::Error_Code::UNINITIALIZED,
                                       "Uninitialized input coordinate." );
             }
 
@@ -102,7 +111,7 @@ class XYZ_to_Lon_Lat_Rad_Estimate_Functor : public math::Unary_Return_Same_Type
         }
 
         bool m_east_positive;
-        
+
         bool m_centered_on_zero; // Use the range [-180,180] otherwise [0,360]
 
 }; // End of XYZ_to_Lon_Lat_Rad_Estimate_Functor class

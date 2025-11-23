@@ -8,7 +8,7 @@
 /*                                                                                    */
 /***************************# INTELLECTUAL PROPERTY RIGHTS ****************************/
 /**
- * @file    Quaternion.hpp
+ * @file    quaternion.hpp
  * @author  Marvin Smith
  * @date    7/12/2023
 */
