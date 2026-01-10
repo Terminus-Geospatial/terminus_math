@@ -1,14 +1,24 @@
+#**************************** INTELLECTUAL PROPERTY RIGHTS ****************************#
+#*                                                                                    *#
+#*                           Copyright (c) 2024 Terminus LLC                          *#
+#*                                                                                    *#
+#*                                All Rights Reserved.                                *#
+#*                                                                                    *#
+#*          Use of this source code is governed by LICENSE in the repo root.          *#
+#*                                                                                    *#
+############################# INTELLECTUAL PROPERTY RIGHTS ****************************#
+#
 #    File:    conanfile.py
 #    Author:  Marvin Smith
 #    Date:    7/8/2023
-from conan import ConanFile, tools
+from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps
 from conan.tools.files import copy
 
 class ConanProject(ConanFile):
 
     name = "terminus_math"
-    version = "0.0.15"
+    version = "1.0.0"
 
     license = "Terminus Proprietary"
     author  = "Marvin Smith <marvin_smith1@me.com>"
@@ -33,14 +43,18 @@ class ConanProject(ConanFile):
 
     def build_requirements(self):
         self.test_requires("gtest/1.17.0")
-        self.tool_requires("terminus_cmake/1.0.8")
+        self.tool_requires("terminus_cmake/1.0.9")
 
     def requirements(self):
+
+        # External Dependencies
         self.requires("boost/1.89.0")
         self.requires("eigen/3.4.0")
-        self.requires("terminus_core/0.0.12")
-        self.requires("terminus_log/0.0.14")
-        self.requires("terminus_outcome/0.0.12")
+
+        # Terminus Dependencies
+        self.requires("terminus_core/1.0.1")
+        self.requires("terminus_log/1.0.1")
+        self.requires("terminus_outcome/1.0.1")
 
     def _configure_cmake(self):
         cmake = CMake(self)
@@ -78,7 +92,7 @@ class ConanProject(ConanFile):
 
     def export_sources(self):
 
-        for p in [ "CMakeLists.txt", "include/*", "src/*", "test/*", "README.md" ]:
+        for p in [ "CMakeLists.txt", "library/include/*", "library/src/*", "templates/*", "test/*", "README.md" ]:
             copy( self,
                   p,
                   self.recipe_folder,

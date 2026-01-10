@@ -16,7 +16,6 @@
 include_directories( include )
 
 add_library( ${PROJECT_NAME} SHARED
-                src/coordinate/Datum.cpp
                 src/math/linalg/Solvers.cpp
                 src/math/linalg/SVD.cpp
                 src/math/Quaternion.cpp
@@ -26,7 +25,6 @@ target_link_libraries( ${PROJECT_NAME} PUBLIC
     Boost::headers
     Boost::log
     Boost::log_setup
-    terminus_core::terminus_core
     terminus_log::terminus_log
     terminus_outcome::terminus_outcome
     GDAL::GDAL

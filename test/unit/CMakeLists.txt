@@ -20,7 +20,6 @@ include_directories( ${CMAKE_SOURCE_DIR}/library/include )
 
 set( TEST ${PROJECT_NAME}_test )
 add_executable( ${TEST}
-    coordinate/vw/TEST_Point_Transformations.cpp
     math/linalg/TEST_Operations.cpp
     math/linalg/TEST_SVD.cpp
     math/matrix/TEST_Matrix_Base.cpp
