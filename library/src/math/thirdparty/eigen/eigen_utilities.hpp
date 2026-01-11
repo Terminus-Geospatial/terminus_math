@@ -20,11 +20,22 @@
 #include <terminus/math/vector/vectorn.hpp>
 
 // Eigen Libraries
+#if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wsign-conversion"
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #include <Eigen/Dense>
 #pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wclass-memaccess"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#include <Eigen/Dense>
+#pragma GCC diagnostic pop
+#else
+#include <Eigen/Dense>
+#endif
 
 namespace tmns::math::eigen {
 

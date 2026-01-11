@@ -53,9 +53,9 @@ class ConanProject(ConanFile):
         self.requires("eigen/3.4.0")
 
         # Terminus Dependencies
-        self.requires("terminus_core/1.0.1")
-        self.requires("terminus_log/1.0.1")
-        self.requires("terminus_outcome/1.0.1")
+        self.requires("terminus_core/1.0.2")
+        self.requires("terminus_log/1.0.2")
+        self.requires("terminus_outcome/1.0.2")
 
     def _configure_cmake(self):
         cmake = CMake(self)

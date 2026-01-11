@@ -16,10 +16,10 @@
 include_directories( include )
 
 add_library( ${PROJECT_NAME} SHARED
-                src/math/linalg/Solvers.cpp
-                src/math/linalg/SVD.cpp
-                src/math/Quaternion.cpp
-                src/math/Quaternion_Utilities.cpp )
+                src/math/linalg/solvers.cpp
+                src/math/linalg/svd.cpp
+                src/math/quaternion.cpp
+                src/math/quaternion_utilities.cpp )
 
 target_link_libraries( ${PROJECT_NAME} PUBLIC
     Boost::headers

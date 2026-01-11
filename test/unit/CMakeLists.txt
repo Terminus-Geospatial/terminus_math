@@ -20,26 +20,26 @@ include_directories( ${CMAKE_SOURCE_DIR}/library/include )
 
 set( TEST ${PROJECT_NAME}_test )
 add_executable( ${TEST}
-    math/linalg/TEST_Operations.cpp
-    math/linalg/TEST_SVD.cpp
-    math/matrix/TEST_Matrix_Base.cpp
-    math/matrix/TEST_Matrix_Multiplication.cpp
-    math/matrix/TEST_Matrix_Operations.cpp
-    math/matrix/TEST_Matrix_Transpose.cpp
-    math/matrix/TEST_Matrix.cpp
-    math/matrix/TEST_MatrixN.cpp
-    math/optimization/TEST_Levenburg_Marquardt.cpp
-    math/thirdparty/eigen/TEST_Eigen_Utilities.cpp
-    math/types/TEST_Compound_Types.cpp
-    math/types/TEST_Fundamental_Types.cpp
-    math/vector/TEST_Vector.cpp
-    math/vector/TEST_VectorN.cpp
-    math/vector/TEST_Vector_Transpose.cpp
-    math/vector/TEST_Vector_Utilities.cpp
-    math/TEST_Point.cpp
-    math/TEST_Quaternion.cpp
-    math/TEST_Rectangle.cpp
-    math/TEST_Size.cpp
+    math/linalg/TEST_operations.cpp
+    math/linalg/TEST_svd.cpp
+    math/matrix/TEST_matrix_base.cpp
+    math/matrix/TEST_matrix_multiplication.cpp
+    math/matrix/TEST_matrix_operations.cpp
+    math/matrix/TEST_matrix_transpose.cpp
+    math/matrix/TEST_matrix.cpp
+    math/matrix/TEST_matrixn.cpp
+    math/optimization/TEST_levenburg_marquardt.cpp
+    math/thirdparty/eigen/TEST_eigen_utilities.cpp
+    math/types/TEST_compound_types.cpp
+    math/types/TEST_fundamental_types.cpp
+    math/vector/TEST_vector.cpp
+    math/vector/TEST_vectorn.cpp
+    math/vector/TEST_vector_transpose.cpp
+    math/vector/TEST_vector_utilities.cpp
+    math/TEST_point.cpp
+    math/TEST_quaternion.cpp
+    math/TEST_rectangle.cpp
+    math/TEST_size.cpp
 )
 
 target_link_libraries( ${TEST} PRIVATE
