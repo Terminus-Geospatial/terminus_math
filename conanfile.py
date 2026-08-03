@@ -18,11 +18,11 @@ from conan.tools.files import copy
 class ConanProject(ConanFile):
 
     name = "terminus_math"
-    version = "1.0.1"
+    version = "1.0.2"
 
     license = "Terminus Proprietary"
     author  = "Marvin Smith <marvin_smith1@me.com>"
-    url     = "https://bitbucket.org/msmith81886/terminus-outcome/src"
+    url     = "https://github.com/Terminus-Geospatial/terminus_math"
     description = "Straightforward Math APIs"
     topics = ("terminus","math")
 
@@ -53,9 +53,9 @@ class ConanProject(ConanFile):
         self.requires("eigen/3.4.0")
 
         # Terminus Dependencies
-        self.requires("terminus_core/1.0.2")
+        self.requires("terminus_core/1.0.3")
         self.requires("terminus_log/1.0.2")
-        self.requires("terminus_outcome/1.0.2")
+        self.requires("terminus_outcome/1.0.3")
 
     def _configure_cmake(self):
         cmake = CMake(self)
