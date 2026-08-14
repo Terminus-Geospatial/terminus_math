@@ -18,7 +18,7 @@
 #include <terminus/math/matrix.hpp>
 
 // OpenCV Libraries
-#include <opencv4/opencv2/core.hpp>
+#include <opencv2/core.hpp>
 
 namespace tmns::math::ocv {
 

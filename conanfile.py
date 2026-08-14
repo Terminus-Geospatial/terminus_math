@@ -18,7 +18,7 @@ from conan.tools.files import copy
 class ConanProject(ConanFile):
 
     name = "terminus_math"
-    version = "1.0.2"
+    version = "1.0.4"
 
     license = "Terminus Proprietary"
     author  = "Marvin Smith <marvin_smith1@me.com>"
@@ -87,9 +87,6 @@ class ConanProject(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = ["terminus_math"]
-
-    def package_id(self):
-        self.info.clear()
 
     def export_sources(self):
 

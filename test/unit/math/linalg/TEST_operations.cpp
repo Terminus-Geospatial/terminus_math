@@ -17,7 +17,7 @@
 // Terminus Libraries
 #include <terminus/math/linalg/operations.hpp>
 
-#include <opencv4/opencv2/core.hpp>
+#include <opencv2/core.hpp>
 
 // C++ Libraries
 #include <iostream>
