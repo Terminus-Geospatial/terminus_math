@@ -18,7 +18,7 @@ from conan.tools.files import copy
 class ConanProject(ConanFile):
 
     name = "terminus_math"
-    version = "1.0.4"
+    version = "1.0.6"
 
     license = "Terminus Proprietary"
     author  = "Marvin Smith <marvin_smith1@me.com>"
@@ -36,7 +36,8 @@ class ConanProject(ConanFile):
                         "with_tests": True,
                         "with_docs": True,
                         "with_coverage": False,
-                        "boost/*:shared": True
+                        "boost/*:shared": True,
+                        "gdal/*:shared": True
     }
 
     settings = "os", "compiler", "build_type", "arch"
@@ -51,11 +52,13 @@ class ConanProject(ConanFile):
         # External Dependencies
         self.requires("boost/1.89.0")
         self.requires("eigen/3.4.0")
+        self.requires("gdal/3.13.0")
+        self.requires("opencv/4.14.0")
 
         # Terminus Dependencies
-        self.requires("terminus_core/1.0.3")
-        self.requires("terminus_log/1.0.2")
-        self.requires("terminus_outcome/1.0.3")
+        self.requires("terminus_core/1.0.5")
+        self.requires("terminus_log/1.0.4")
+        self.requires("terminus_outcome/1.0.5")
 
     def _configure_cmake(self):
         cmake = CMake(self)

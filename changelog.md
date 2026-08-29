@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.6] - 2026-08-17
+
+### Changed
+- Bumped version to force a new upload to the Conan remote; no functional changes.
+- Updated `terminus_core` dependency to `1.0.5`, `terminus_log` dependency to `1.0.4`, and `terminus_outcome` dependency to `1.0.5`.
+
+## [1.0.5] - 2026-08-15
+
+### Added
+
+- Added `docker/Dockerfile.rhel10.build` for building, testing, and uploading the package on RHEL 10.
+- Added `.dockerignore` to reduce the Docker build context size.
+
 ## [1.0.4] - 2026-08-14
 
 ### Fixed

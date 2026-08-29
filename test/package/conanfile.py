@@ -10,13 +10,13 @@ from conan.tools.build import can_run
 class MathPackageTestConan( ConanFile ):
 
     name = "terminus_math_test"
-    version = "1.0.4"
+    version = "1.0.6"
     description = "Test for Terminus Math Package"
 
     settings = "os", "compiler", "build_type", "arch"
 
     def requirements(self):
-        self.requires("terminus_math/1.0.4")
+        self.requires("terminus_math/1.0.6")
 
     def _configure_cmake(self):
         cmake = CMake(self)
