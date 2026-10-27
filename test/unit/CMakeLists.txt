@@ -18,8 +18,11 @@ include( GoogleTest )
 
 include_directories( ${CMAKE_SOURCE_DIR}/library/include )
 
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
+
 set( TEST ${PROJECT_NAME}_test )
 add_executable( ${TEST}
+    geo/TEST_geographic.cpp
     math/linalg/TEST_operations.cpp
     math/linalg/TEST_svd.cpp
     math/matrix/TEST_matrix_base.cpp

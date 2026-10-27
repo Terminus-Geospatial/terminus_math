@@ -430,7 +430,7 @@ class Vector_ : public Vector_Base<Vector_<ValueT,Dims>>
 
     private:
 
-        array_type m_data;
+        array_type m_data{};
 
 }; // End of Vector class
 

@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-10-26
+
+### Added
+
+- New `terminus/geo` coordinate API: `Datum` ellipsoid model (WGS-84, GRS-80, spherical), `coord::Base`/`coord::Geo` interfaces, and `coord::Geographic` — a geodetic coordinate with validated `Result<>` factories, degrees/radians accessors, and Haversine/Vincenty geodesic distance.
+- Table-driven unit test harness for geo types (`test/unit/geo/geo_test_data.hpp` + `TEST_geographic.cpp`), with reference values verified against GeographicLib.
+
+## [1.0.8] - 2026-09-27
+
+### Changed
+
+- Updated the `terminus_core` dependency to `1.0.6`.
+
+## [1.0.7] - 2026-08-29
+
+### Fixed
+
+- Value-initialize `Vector_`’s internal `m_data` member to prevent `-Wmaybe-uninitialized` warnings (treated as errors downstream) when the generalized copy-constructor/assignment path is used with `VectorN` inputs.
+
+### Added
+
+- Added a unit test in `test/unit/math/vector/TEST_vector.cpp` that assigns a dynamic `VectorN<double>` to a fixed `Vector2d`, covering the code path that triggered the warning.
+
 ## [1.0.6] - 2026-08-17
 
 ### Changed

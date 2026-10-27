@@ -16,6 +16,7 @@
 
 // Terminus Math Libraries
 #include <terminus/math/vector/vector.hpp>
+#include <terminus/math/vector/vectorn.hpp>
 
 /************************************/
 /*      Test Simple Operations      */
@@ -90,4 +91,21 @@ TEST( Vector, dot )
     auto dp_01 = tmns::math::Vector3f::dot( vec_01, vec_02 );
 
     ASSERT_NEAR( dp_01, 15, 0.001 );
+}
+
+/********************************************/
+/*      Test Assignment from Dynamic Vector   */
+/********************************************/
+TEST( Vector, assign_from_dynamic )
+{
+    // Dynamic vector with the same number of elements as the fixed target.
+    tmns::math::VectorN<double> dyn_vec( { 1.0, 2.0 } );
+
+    // Assign to a fixed-size vector.  This exercises the generalized
+    // fixed-size copy-constructor path that GCC flagged as maybe-uninitialized.
+    tmns::math::Vector2d fixed_vec;
+    fixed_vec = dyn_vec;
+
+    ASSERT_NEAR( fixed_vec[0], 1.0, 0.001 );
+    ASSERT_NEAR( fixed_vec[1], 2.0, 0.001 );
 }

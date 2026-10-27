@@ -18,7 +18,7 @@ from conan.tools.files import copy
 class ConanProject(ConanFile):
 
     name = "terminus_math"
-    version = "1.0.6"
+    version = "1.1.0"
 
     license = "Terminus Proprietary"
     author  = "Marvin Smith <marvin_smith1@me.com>"
@@ -56,7 +56,7 @@ class ConanProject(ConanFile):
         self.requires("opencv/4.14.0")
 
         # Terminus Dependencies
-        self.requires("terminus_core/1.0.5")
+        self.requires("terminus_core/1.0.6")
         self.requires("terminus_log/1.0.4")
         self.requires("terminus_outcome/1.0.5")
 
@@ -93,7 +93,14 @@ class ConanProject(ConanFile):
 
     def export_sources(self):
 
-        for p in [ "CMakeLists.txt", "library/include/*", "library/src/*", "templates/*", "test/*", "README.md" ]:
+        for p in [ "CMakeLists.txt",
+                   "library/CMakeLists.txt",
+                   "library/include/*",
+                   "library/src/*",
+                   "cmake/*",
+                   "templates/*",
+                   "test/*",
+                   "README.md" ]:
             copy( self,
                   p,
                   self.recipe_folder,
