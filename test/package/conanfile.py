@@ -16,7 +16,7 @@ class MathPackageTestConan( ConanFile ):
     settings = "os", "compiler", "build_type", "arch"
 
     def requirements(self):
-        self.requires("terminus_math/1.0.8")
+        self.requires("terminus_math/1.1.1")
 
     def _configure_cmake(self):
         cmake = CMake(self)

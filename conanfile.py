@@ -18,7 +18,7 @@ from conan.tools.files import copy
 class ConanProject(ConanFile):
 
     name = "terminus_math"
-    version = "1.1.0"
+    version = "1.1.1"
 
     license = "Terminus Proprietary"
     author  = "Marvin Smith <marvin_smith1@me.com>"
@@ -45,7 +45,7 @@ class ConanProject(ConanFile):
     def build_requirements(self):
         self.build_requires("cmake/4.1.2")
         self.test_requires("gtest/1.17.0")
-        self.tool_requires("terminus_cmake/1.0.10")
+        self.tool_requires("terminus_cmake/1.0.11")
 
     def requirements(self):
 
@@ -56,9 +56,9 @@ class ConanProject(ConanFile):
         self.requires("opencv/4.14.0")
 
         # Terminus Dependencies
-        self.requires("terminus_core/1.0.6")
-        self.requires("terminus_log/1.0.4")
-        self.requires("terminus_outcome/1.0.5")
+        self.requires("terminus_core/1.0.7")
+        self.requires("terminus_log/1.0.5")
+        self.requires("terminus_outcome/1.0.6")
 
     def _configure_cmake(self):
         cmake = CMake(self)
