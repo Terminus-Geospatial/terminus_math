@@ -22,7 +22,11 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
 
 set( TEST ${PROJECT_NAME}_test )
 add_executable( ${TEST}
+    geo/TEST_bounds.cpp
+    geo/TEST_conversions.cpp
     geo/TEST_geographic.cpp
+    geo/TEST_transform.cpp
+    math/TEST_affine_transform.cpp
     math/linalg/TEST_operations.cpp
     math/linalg/TEST_svd.cpp
     math/matrix/TEST_matrix_base.cpp
@@ -52,3 +56,4 @@ target_link_libraries( ${TEST} PRIVATE
 
 # Comment out automatic test discovery to avoid timeout issues
 # gtest_discover_tests( ${TEST} )
+add_test( NAME ${TEST} COMMAND ${TEST} )

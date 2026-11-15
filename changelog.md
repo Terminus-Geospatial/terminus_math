@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.1] - 2026-11-08
+## [1.1.1] - 2026-11-15
+
+### Added
+
+- `terminus/geo` coordinate-transform API: `CRS` (EPSG/WKT, native WGS-84/UTM/ECEF paths, `Axis_Set`, `Vertical_Datum`), `Transform` (native pairs + injected backends), `Georeference` (affine pose + CRS), `Sensor_Model` stub, and `coord` conversions (geodetic <-> ECEF <-> UTM).
+- `terminus/math` transform primitives: `Affine_Transform<Dim>` (`from_geotransform`), `Composite_Transform`, `Elevation_Policy`.
+- `geo/bounds.hpp`: `raster_bounds`, `transform_edge_points`/`transform_bounds` (densified-edge footprint ring and extent), `calculate_default_georeference` — the `rasterio.warp` bounds analogs.
+- Design doc at `docs/design/coordinate_transformation_design.md`; unit tests registered with CTest.
+
+### Fixed
+
+- `UTM::central_meridian` off by 3 degrees (`zone*6 - 186` -> `zone*6 - 183`).
+- Geographic->UTM transforms now honor the target CRS's declared hemisphere (negative northing instead of a ~10M jump across the equator); `UTM::create` bounds widened by `VALIDITY_MARGIN` for out-of-domain points.
 
 ### Changed
 - Replaced the local `cpp-goals` rule with the shared Terminus C++ template and added the shared `conan` template under `.devin/rules/`.

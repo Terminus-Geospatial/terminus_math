@@ -148,7 +148,6 @@ int rank( const Matrix_Base<MatrixT>& A,
     MatrixN<value_type> U, V;
     VectorN<value_type> S;
     complete_svd( A.impl(), U, S, V );
-    V = transpose(V);
     return rank( A, U, S, V, thresh );
 }
 

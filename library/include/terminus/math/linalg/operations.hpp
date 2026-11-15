@@ -59,7 +59,6 @@ size_t nullity( const Matrix_Base<MatrixT>& A,
     VectorN<value_type> S;
 
     auto res = complete_svd( A.impl(), U, S, V );
-    V = transpose( V );
     return nullity( A, U, S, V, thresh );
 }
 
@@ -74,12 +73,6 @@ Result<MatrixN<typename MatrixT::value_type>> nullspace( const Matrix_Base<Matri
     MatrixN<value_type> U, V;
     VectorN<value_type> S;
     auto svd_res = complete_svd( A.impl(), U, S, V );
-
-    std::cout << "A: " << A.to_log_string() << std::endl;
-    std::cout << "U: " << U.to_log_string() << std::endl;
-    std::cout << "S: " << S.to_log_string() << std::endl;
-    std::cout << "V: " << V.to_log_string() << std::endl;
-    V = transpose(V);
 
     // Nullity must be greater than 0
     size_t nty = nullity( A.impl(), U, S, V, thresh );

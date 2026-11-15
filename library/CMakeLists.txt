@@ -16,10 +16,15 @@
 include_directories( include )
 
 add_library( ${PROJECT_NAME} SHARED
+                src/geo/axis.cpp
+                src/geo/bounds.cpp
+                src/geo/conversions.cpp
                 src/geo/coord/ecef.cpp
                 src/geo/coord/geographic.cpp
                 src/geo/coord/utm.cpp
+                src/geo/crs.cpp
                 src/geo/datum.cpp
+                src/geo/transform.cpp
                 src/math/linalg/solvers.cpp
                 src/math/linalg/svd.cpp
                 src/math/quaternion.cpp

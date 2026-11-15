@@ -47,12 +47,14 @@ Result<UTM> UTM::create( std::int32_t zone,
         return outcome::fail( error::Error_Code::OUT_OF_BOUNDS,
                                 "UTM zone out of range [1, 60]" );
     }
-    if( easting_m < UTM::MIN_EASTING || easting_m > UTM::MAX_EASTING )
+    if( easting_m < UTM::MIN_EASTING - UTM::VALIDITY_MARGIN ||
+        easting_m > UTM::MAX_EASTING + UTM::VALIDITY_MARGIN )
     {
         return outcome::fail( error::Error_Code::OUT_OF_BOUNDS,
                                 "UTM easting out of range" );
     }
-    if( northing_m < UTM::MIN_NORTHING || northing_m > UTM::MAX_NORTHING )
+    if( northing_m < UTM::MIN_NORTHING - UTM::VALIDITY_MARGIN ||
+        northing_m > UTM::MAX_NORTHING + UTM::VALIDITY_MARGIN )
     {
         return outcome::fail( error::Error_Code::OUT_OF_BOUNDS,
                                 "UTM northing out of range" );
@@ -75,7 +77,7 @@ std::int32_t UTM::zone_for_longitude( double lon_rad )
 /****************************************/
 double UTM::central_meridian( std::int32_t zone )
 {
-    return ( -183.0 + ( zone - 1 ) * 6.0 + 3.0 ) * DEG_TO_RAD;
+    return ( zone * 6.0 - 183.0 ) * DEG_TO_RAD;
 }
 
 /****************************************/

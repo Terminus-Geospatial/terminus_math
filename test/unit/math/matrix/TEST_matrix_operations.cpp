@@ -499,7 +499,10 @@ TEST_F( Matrix_Operations, matrix_multiplication_blended )
     // Create Proxy Matrix
     const tmx::Matrix_Proxy<const double,3,3> mat_p( mat_01.data() );
 
-    const tmx::Matrix_Transpose mat_t( mat_02 );
+    tmx::Matrix<double,3,3> mat_02_t { { 1, 4, 7,
+                                        2, 5, 8,
+                                        3, 6, 9 } };
+    const tmx::Matrix_Transpose mat_t( mat_02_t );
 
     // Multiply matrices
     auto result = mat_p * mat_t;
@@ -552,7 +555,10 @@ TEST_F( Matrix_Operations, matrix_multiplication_vector_blended )
     // Create Proxy Matrix
     const tmx::Matrix_Proxy<const double,3,3> mat_p( mat_01.data() );
 
-    const tmx::Matrix_Transpose mat_t( mat_02 );
+    tmx::Matrix<double,3,3> mat_02_t { { 1, 4, 7,
+                                        2, 5, 8,
+                                        3, 6, 9 } };
+    const tmx::Matrix_Transpose mat_t( mat_02_t );
 
     // Multiply matrices
     auto result = mat_p * mat_t;

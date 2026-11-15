@@ -214,7 +214,7 @@ Matrix_Matrix_Product<Matrix1T,Matrix2T,true,true>
     operator * ( const Matrix_Transpose<Matrix1T>& m1,
                  const Matrix_Transpose<Matrix2T>& m2 )
 {
-    return Matrix_Matrix_Product<Matrix1T,Matrix2T,true,true>( m1, m2 );
+    return Matrix_Matrix_Product<Matrix1T,Matrix2T,true,true>( m1.child(), m2.child() );
 }
 
 /**
@@ -226,7 +226,7 @@ Matrix_Matrix_Product<Matrix1T,Matrix2T,false,true>
     operator * ( const Matrix_Base<Matrix1T>&      m1,
                  const Matrix_Transpose<Matrix2T>& m2 )
 {
-    return Matrix_Matrix_Product<Matrix1T,Matrix2T,false,true>( m1.impl(), m2 );
+    return Matrix_Matrix_Product<Matrix1T,Matrix2T,false,true>( m1.impl(), m2.child() );
 }
 
 /**
@@ -238,7 +238,7 @@ Matrix_Matrix_Product<Matrix1T,Matrix2T,true,false>
     operator * ( const Matrix_Transpose<Matrix1T>& m1,
                  const Matrix_Base<Matrix2T>&      m2 )
 {
-    return Matrix_Matrix_Product<Matrix1T,Matrix2T,true,false>( m1, m2.impl() );
+    return Matrix_Matrix_Product<Matrix1T,Matrix2T,true,false>( m1.child(), m2.impl() );
 }
 
 /**

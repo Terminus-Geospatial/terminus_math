@@ -53,13 +53,28 @@ class UTM : public Base
         static constexpr std::int32_t MIN_ZONE = 1;
         static constexpr std::int32_t MAX_ZONE = 60;
 
-        /// @brief Valid easting range in meters.
+        /// @brief Valid easting range in meters (within the declared zone).
         static constexpr double MIN_EASTING  = 100000.0;
         static constexpr double MAX_EASTING  = 900000.0;
 
-        /// @brief Valid northing range in meters.
+        /// @brief Valid northing range in meters (within the declared
+        ///        hemisphere).
         static constexpr double MIN_NORTHING = 0.0;
         static constexpr double MAX_NORTHING = 10000000.0;
+
+        /**
+         * @brief Grace margin applied to the easting/northing range checks.
+         *
+         * Points outside a CRS's nominal domain still produce valid
+         * coordinates — a latitude south of the equator in a north-zone
+         * CRS yields a small negative northing, and an out-of-zone
+         * longitude yields an easting outside [MIN, MAX].  PROJ behaves
+         * the same way, and transforms need that continuity (an image
+         * crossing the equator in a north-zone UTM frame must not
+         * disintegrate at the boundary).  ~18 degrees of latitude
+         * overshoot is allowed.
+         */
+        static constexpr double VALIDITY_MARGIN = 2000000.0;
 
         /**
          * @brief Create a UTM coordinate.
