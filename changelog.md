@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-11-15
+
+### Added
+
+- `math/clip_segment.hpp`: `clip_segment_to_rect` — Cohen-Sutherland line-segment clip against an axis-aligned `Rectangle`, returning the visible endpoint pair or `std::nullopt` for fully outside segments. Unit tests cover inside/outside/edge-crossing, corner bypass, and degenerate cases.
+
 ## [1.1.1] - 2026-11-15
 
 ### Added

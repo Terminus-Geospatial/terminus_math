@@ -73,16 +73,29 @@ std::vector<math::Point2d> densified_edge( const math::Size2i& size,
 
     std::vector<math::Point2d> points;
     points.reserve( static_cast<size_t>( samples_per_edge ) * 4 );
+
+    // Perimeter order: top left->right, right top->bottom, bottom
+    // right->left, left bottom->top.  Corner samples repeat at edge
+    // joints so each edge keeps the full `samples_per_edge` count.
     for( int i = 0; i < samples_per_edge; ++i )
     {
         const double t = static_cast<double>( i ) / ( samples_per_edge - 1 );
-        const double x = min_x + t * ( max_x - min_x );
-        const double y = min_y + t * ( max_y - min_y );
-
-        points.push_back( { { x,     min_y } } );
-        points.push_back( { { max_x, y     } } );
-        points.push_back( { { x,     max_y } } );
-        points.push_back( { { min_x, y     } } );
+        points.push_back( { { min_x + t * ( max_x - min_x ), min_y } } );
+    }
+    for( int i = 0; i < samples_per_edge; ++i )
+    {
+        const double t = static_cast<double>( i ) / ( samples_per_edge - 1 );
+        points.push_back( { { max_x, min_y + t * ( max_y - min_y ) } } );
+    }
+    for( int i = samples_per_edge - 1; i >= 0; --i )
+    {
+        const double t = static_cast<double>( i ) / ( samples_per_edge - 1 );
+        points.push_back( { { min_x + t * ( max_x - min_x ), max_y } } );
+    }
+    for( int i = samples_per_edge - 1; i >= 0; --i )
+    {
+        const double t = static_cast<double>( i ) / ( samples_per_edge - 1 );
+        points.push_back( { { min_x, min_y + t * ( max_y - min_y ) } } );
     }
     return points;
 }

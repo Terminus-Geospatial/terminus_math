@@ -115,6 +115,68 @@ TEST( Transform_Edge_Points, ring_size_and_extent )
 }
 
 /**
+ * transform_edge_points must emit samples in perimeter order — top edge
+ * left->right, right edge top->bottom, bottom edge right->left, left
+ * edge bottom->top.  An interleaved edge walk draws chords across the
+ * footprint instead of the outline (regression: debug overlays showed
+ * crisscrossing streaks).
+ */
+TEST( Transform_Edge_Points, perimeter_ordering )
+{
+    auto georef = make_wgs84_georef( -10.0, 40.0, 0.01 );
+    tmns::math::Size2i src_size( { 100, 50 } );
+
+    auto xform = Transform::create( georef.crs(), georef.crs() );
+    ASSERT_FALSE( xform.has_error() );
+
+    auto identity = [&xform]( const tmns::math::Point2d& p )
+    {
+        return xform.value().forward( p );
+    };
+
+    constexpr int n = 5;
+    auto ring = transform_edge_points( georef, src_size, identity, n );
+    ASSERT_FALSE( ring.has_error() );
+    ASSERT_EQ( ring.value().size(), 4u * n );
+    const auto& pts = ring.value();
+
+    // North-up affine: pixel y=-0.5 -> lat 40.005 (top), y=49.5 -> 39.505
+    // (bottom), x=-0.5 -> lon -10.005 (left), x=99.5 -> -9.005 (right).
+    for( int i = 0; i < n; ++i )
+    {
+        EXPECT_NEAR( pts[i].y(), 40.005, 1e-9 ) << "top edge point " << i;
+        if( i > 0 )
+        {
+            EXPECT_GT( pts[i].x(), pts[i - 1].x() ) << "top edge x not increasing at " << i;
+        }
+    }
+    for( int i = 0; i < n; ++i )
+    {
+        EXPECT_NEAR( pts[n + i].x(), -9.005, 1e-9 ) << "right edge point " << i;
+        if( i > 0 )
+        {
+            EXPECT_LT( pts[n + i].y(), pts[n + i - 1].y() ) << "right edge y not decreasing at " << i;
+        }
+    }
+    for( int i = 0; i < n; ++i )
+    {
+        EXPECT_NEAR( pts[2 * n + i].y(), 39.505, 1e-9 ) << "bottom edge point " << i;
+        if( i > 0 )
+        {
+            EXPECT_LT( pts[2 * n + i].x(), pts[2 * n + i - 1].x() ) << "bottom edge x not decreasing at " << i;
+        }
+    }
+    for( int i = 0; i < n; ++i )
+    {
+        EXPECT_NEAR( pts[3 * n + i].x(), -10.005, 1e-9 ) << "left edge point " << i;
+        if( i > 0 )
+        {
+            EXPECT_GT( pts[3 * n + i].y(), pts[3 * n + i - 1].y() ) << "left edge y not increasing at " << i;
+        }
+    }
+}
+
+/**
  * calculate_default_georeference with an identity transform: output
  * extent and size mirror the source.
  */

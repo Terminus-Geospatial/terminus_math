@@ -27,6 +27,7 @@ add_executable( ${TEST}
     geo/TEST_geographic.cpp
     geo/TEST_transform.cpp
     math/TEST_affine_transform.cpp
+    math/TEST_clip_segment.cpp
     math/linalg/TEST_operations.cpp
     math/linalg/TEST_svd.cpp
     math/matrix/TEST_matrix_base.cpp
